@@ -1,0 +1,20 @@
+{
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": false,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "cSpell.words": ["chatgpt"]
+}

@@ -1,0 +1,44 @@
+{
+  "overrides": [
+    {
+      "files": ["./**/*.ts", "./**/*.tsx"],
+      "extends": ["@right/typescript/react"],
+      "settings": {
+        "import/resolver": {
+          "typescript": {
+            "project": "./"
+          }
+        }
+      },
+      "rules": {
+        "jsx-a11y/anchor-is-valid": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "no-shadow": "off",
+        "no-param-reassign": [
+          "error",
+          {
+            "props": false
+          }
+        ],
+        "@typescript-eslint/ban-types": "off"
+      }
+    },
+    {
+      "files": ["./**/*.js"],
+      "extends": "@right/typescript/javascript-node",
+      "settings": {},
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    },
+    {
+      "files": ["./**/*.spec.{js,jsx,ts,tsx}"],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": true }
+        ]
+      }
+    }
+  ]
+}
