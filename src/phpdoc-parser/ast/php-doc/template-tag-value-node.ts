@@ -12,9 +12,11 @@ export class TemplateTagValueNode extends PhpDocTagValueNode {
   }
 
   public toString(): string {
-    const bound = this.bound !== null ? ` of ${this.bound}` : '';
+    const bound = this.bound !== null ? ` of ${this.bound.toString()}` : '';
     const defaultString =
-      this.defaultTypeNode !== null ? ` = ${this.defaultTypeNode}` : '';
+      this.defaultTypeNode !== null
+        ? ` = ${this.defaultTypeNode.toString()}`
+        : '';
     return `${this.name}${bound}${defaultString} ${this.description}`.trim();
   }
 

@@ -6,7 +6,7 @@ export class NullableTypeNode extends TypeNode {
   }
 
   public toString(): string {
-    return `?${this.type}`;
+    return `?${this.type.toString()}`;
   }
 
   public getNodeType(): string {

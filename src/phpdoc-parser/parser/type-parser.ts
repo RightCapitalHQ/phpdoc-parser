@@ -395,9 +395,10 @@ export class TypeParser {
         break;
       }
 
-      const [genericType, variance] = this.parseGenericTypeArgument(tokens);
-      genericTypes.push(genericType as GenericTypeNode);
-      variances.push(variance);
+      const [genericTypeToAddInWhileLoop, varianceToAddInWhileLoop] =
+        this.parseGenericTypeArgument(tokens);
+      genericTypes.push(genericTypeToAddInWhileLoop as GenericTypeNode);
+      variances.push(varianceToAddInWhileLoop);
       tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
     }
 
@@ -418,7 +419,7 @@ export class TypeParser {
         type,
         baseType.getAttribute(Attribute.START_LINE) as number,
         baseType.getAttribute(Attribute.START_INDEX) as number,
-      ) as GenericTypeNode;
+      );
     }
     return type;
   }
@@ -463,7 +464,7 @@ export class TypeParser {
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_PARENTHESES);
     tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
 
-    const parameters = [];
+    const parameters: CallableTypeParameterNode[] = [];
 
     if (!tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PARENTHESES)) {
       parameters.push(this.parseCallableParameter(tokens));
@@ -519,7 +520,7 @@ export class TypeParser {
       ),
       startLine,
       startIndex,
-    ) as CallableTypeParameterNode;
+    );
   }
 
   private parseCallableReturnType(tokens: TokenIterator): TypeNode {
@@ -539,7 +540,7 @@ export class TypeParser {
       return type;
     }
     if (tokens.tryConsumeTokenType(Lexer.TOKEN_THIS_VARIABLE)) {
-      let type = new ThisTypeNode();
+      type = new ThisTypeNode();
       if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_SQUARE_BRACKET)) {
         type = this.tryParseArrayOrOffsetAccess(
           tokens,
@@ -686,7 +687,7 @@ export class TypeParser {
   ): ArrayShapeNode {
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_CURLY_BRACKET);
 
-    const items = [];
+    const items: (string | ArrayShapeItemNode)[] = [];
     let sealed = true;
 
     do {
@@ -758,7 +759,7 @@ export class TypeParser {
       tokens.next();
       return this.enrichWithAttributes(tokens, key, startLine, startIndex);
     }
-    let key;
+    let key: ConstExprIntegerNode | IdentifierTypeNode | ConstExprStringNode;
     if (tokens.isCurrentTokenType(Lexer.TOKEN_SINGLE_QUOTED_STRING)) {
       if (this.quoteAwareConstExprString) {
         key = new QuoteAwareConstExprStringNode(
@@ -787,13 +788,15 @@ export class TypeParser {
       key = new IdentifierTypeNode(tokens.currentTokenValue());
       tokens.consumeTokenType(Lexer.TOKEN_IDENTIFIER);
     }
-    return this.enrichWithAttributes(tokens, key, startLine, startIndex);
+    return this.enrichWithAttributes<
+      ConstExprIntegerNode | IdentifierTypeNode | ConstExprStringNode
+    >(tokens, key, startLine, startIndex);
   }
 
   private parseObjectShape(tokens: TokenIterator): ObjectShapeNode {
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_CURLY_BRACKET);
 
-    const items = [];
+    const items: ObjectShapeItemNode[] = [];
 
     do {
       tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
@@ -837,7 +840,7 @@ export class TypeParser {
     const startLine = tokens.currentTokenLine();
     const startIndex = tokens.currentTokenIndex();
 
-    let key;
+    let key: ConstExprStringNode | IdentifierTypeNode;
     if (tokens.isCurrentTokenType(Lexer.TOKEN_SINGLE_QUOTED_STRING)) {
       if (this.quoteAwareConstExprString) {
         key = new QuoteAwareConstExprStringNode(

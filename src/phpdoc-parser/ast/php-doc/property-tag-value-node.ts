@@ -11,7 +11,9 @@ export class PropertyTagValueNode extends PhpDocTagValueNode {
   }
 
   public toString(): string {
-    return `${this.type} ${this.propertyName} ${this.description}`.trim();
+    return `${this.type.toString()} ${this.propertyName} ${
+      this.description
+    }`.trim();
   }
 
   public getNodeType(): string {

@@ -14,11 +14,13 @@ export class MethodTagValueParameterNode extends PhpDocTagValueNode {
   }
 
   public toString(): string {
-    const type = this.type ? `${this.type} ` : '';
+    const type = this.type ? `${this.type.toString()} ` : '';
     const isReference = this.isReference ? '&' : '';
     const isVariadic = this.isVariadic ? '...' : '';
     const defaultVal =
-      this.defaultValue !== undefined ? ` = ${this.defaultValue}` : '';
+      this.defaultValue !== undefined
+        ? ` = ${this.defaultValue.toString()}`
+        : '';
 
     return `${type}${isReference}${isVariadic}${this.parameterName}${defaultVal}`;
   }

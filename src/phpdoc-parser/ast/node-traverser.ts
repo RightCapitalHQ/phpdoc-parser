@@ -63,7 +63,7 @@ export class NodeTraverser {
         continue;
       }
 
-      let subNode = node[name];
+      let subNode = node[name] as Node | Node[];
 
       if (Array.isArray(subNode)) {
         subNode = this.traverseArray(subNode);
@@ -156,6 +156,7 @@ export class NodeTraverser {
         }
       }
 
+      // eslint-disable-next-line no-param-reassign
       node[name] = subNode;
     }
 
@@ -163,7 +164,7 @@ export class NodeTraverser {
   }
 
   private traverseArray(nodes: Node[]): Node[] {
-    const doNodes = [];
+    const doNodes: [number, Node[]][] = [];
 
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];

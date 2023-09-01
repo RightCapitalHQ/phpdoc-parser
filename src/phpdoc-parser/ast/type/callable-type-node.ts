@@ -14,10 +14,10 @@ export class CallableTypeNode extends TypeNode {
   public toString(): string {
     let { returnType }: { returnType: TypeNode | string } = this;
     if (returnType instanceof CallableTypeNode) {
-      returnType = `(${returnType})`;
+      returnType = `(${returnType.toString()})`;
     }
     const parameters = this.parameters.join(', ');
-    return `${this.identifier}(${parameters}): ${returnType}`;
+    return `${this.identifier.toString()}(${parameters}): ${returnType.toString()}`;
   }
 
   public getNodeType(): string {

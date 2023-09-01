@@ -11,7 +11,7 @@ export class SelfOutTagValueNode extends PhpDocTagValueNode {
 
   // Methods need to have explicit modifiers (public in this case)
   public toString(): string {
-    return `${this.type} ${this.description}`.trim();
+    return `${this.type.toString()} ${this.description}`.trim();
   }
 
   public getNodeType(): string {

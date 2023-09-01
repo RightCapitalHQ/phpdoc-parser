@@ -27,7 +27,7 @@ export class GenericTypeNode extends TypeNode {
   public toString(): string {
     const genericTypes: string[] = [];
 
-    // eslint-disable-next-line no-restricted-syntax, guard-for-in
+    // eslint-disable-next-line no-restricted-syntax, guard-for-in, @typescript-eslint/no-for-in-array
     for (const index in this.genericTypes) {
       const type = this.genericTypes[index];
       const variance =
@@ -37,11 +37,11 @@ export class GenericTypeNode extends TypeNode {
       } else if (variance === GenericTypeNode.VARIANCE_BIVARIANT) {
         genericTypes.push('*');
       } else {
-        genericTypes.push(`${variance} ${type}`);
+        genericTypes.push(`${variance} ${type.toString()}`);
       }
     }
 
-    return `${this.type}<${genericTypes.join(', ')}>`;
+    return `${this.type.toString()}<${genericTypes.join(', ')}>`;
   }
 
   public getNodeType(): string {

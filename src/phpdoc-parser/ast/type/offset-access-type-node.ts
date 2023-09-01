@@ -17,10 +17,10 @@ export class OffsetAccessTypeNode extends TypeNode {
       this.type instanceof ConstTypeNode ||
       this.type instanceof NullableTypeNode
     ) {
-      return `(${this.type})[${this.offset}]`;
+      return `(${this.type.toString()})[${this.offset.toString()}]`;
     }
 
-    return `${this.type}[${this.offset}]`;
+    return `${this.type.toString()}[${this.offset.toString()}]`;
   }
 
   public getNodeType(): string {

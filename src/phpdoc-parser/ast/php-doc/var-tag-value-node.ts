@@ -11,7 +11,9 @@ export class VarTagValueNode extends PhpDocTagValueNode {
   }
 
   public toString(): string {
-    return `${this.type} ${this.variableName} ${this.description}`.trim();
+    return `${this.type.toString()} ${this.variableName} ${
+      this.description
+    }`.trim();
   }
 
   public getNodeType(): string {

@@ -12,9 +12,9 @@ export class ConditionalTypeNode extends TypeNode {
   }
 
   public toString(): string {
-    return `(${this.subjectType} ${this.negated ? 'is not' : 'is'} ${
-      this.targetType
-    } ? ${this.ifType} : ${this.elseType})`;
+    return `(${this.subjectType.toString()} ${
+      this.negated ? 'is not' : 'is'
+    } ${this.targetType.toString()} ? ${this.ifType.toString()} : ${this.elseType.toString()})`;
   }
 
   public getNodeType(): string {

@@ -11,7 +11,8 @@ export class TypeAliasImportTagValueNode extends PhpDocTagValueNode {
   }
 
   public toString(): string {
-    return `${this.importedAlias} from ${this.importedFrom}${(this.importedAs
+    return `${this.importedAlias} from ${this.importedFrom.toString()}${(this
+      .importedAs
       ? ` as ${this.importedAs}`
       : ''
     ).trim()}`;

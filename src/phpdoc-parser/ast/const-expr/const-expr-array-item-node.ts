@@ -10,7 +10,7 @@ export class ConstExprArrayItemNode extends ConstExprNode {
 
   public toString(): string {
     if (this.key !== null) {
-      return `${this.key} =>  ${this.value}`;
+      return `${this.key.toString()} =>  ${this.value.toString()}`;
     }
 
     return this.value.toString();

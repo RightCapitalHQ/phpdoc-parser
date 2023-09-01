@@ -11,7 +11,9 @@ export class ParamOutTagValueNode extends PhpDocTagValueNode {
   }
 
   public toString(): string {
-    return `${this.type} ${this.parameterName} ${this.description}`.trim();
+    return `${this.type.toString()} ${this.parameterName} ${
+      this.description
+    }`.trim();
   }
 
   public getNodeType(): string {

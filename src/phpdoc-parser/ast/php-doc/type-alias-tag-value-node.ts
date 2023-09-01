@@ -10,7 +10,7 @@ export class TypeAliasTagValueNode extends PhpDocTagValueNode {
   }
 
   public toString(): string {
-    return `${this.alias} ${this.type}`.trim();
+    return `${this.alias} ${this.type.toString()}`.trim();
   }
 
   public getNodeType(): string {

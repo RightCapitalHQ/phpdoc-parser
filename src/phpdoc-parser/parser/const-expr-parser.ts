@@ -210,7 +210,7 @@ export class ConstExprParser {
     endToken: string,
     startIndex: number,
   ): ConstExprArrayNode {
-    const items = [];
+    const items: ConstExprArrayItemNode[] = [];
 
     const startLine = tokens.currentTokenLine();
 
@@ -238,8 +238,8 @@ export class ConstExprParser {
 
     const expr = this.parse(tokens);
 
-    let key;
-    let value;
+    let key: ConstExprNode;
+    let value: ConstExprNode;
     if (tokens.tryConsumeTokenType(Lexer.TOKEN_DOUBLE_ARROW)) {
       key = expr;
       value = this.parse(tokens);

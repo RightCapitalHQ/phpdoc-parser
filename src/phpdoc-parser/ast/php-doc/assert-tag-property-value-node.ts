@@ -16,7 +16,9 @@ export class AssertTagPropertyValueNode extends PhpDocTagValueNode {
   public toString(): string {
     const isNegated = this.isNegated ? '!' : '';
     const isEquality = this.isEquality ? '=' : '';
-    return `${isNegated}${isEquality}${this.type} ${this.parameter}->${this.property} ${this.description}`.trim();
+    return `${isNegated}${isEquality}${this.type.toString()} ${
+      this.parameter
+    }->${this.property} ${this.description}`.trim();
   }
 
   public getNodeType(): string {

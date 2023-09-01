@@ -10,7 +10,7 @@ export class ExtendsTagValueNode extends PhpDocTagValueNode {
   }
 
   public toString(): string {
-    return `${this.type} ${this.description}`.trim();
+    return `${this.type.toString()} ${this.description}`.trim();
   }
 
   public getNodeType(): string {

@@ -17,7 +17,8 @@ export class MethodTagValueNode extends PhpDocTagValueNode {
 
   public toString(): string {
     const staticKeyword = this.isStatic ? 'static ' : '';
-    const returnTypeStr = this.returnType !== null ? `${this.returnType} ` : '';
+    const returnTypeStr =
+      this.returnType !== null ? `${this.returnType.toString()} ` : '';
     const parametersStr = this.parameters.join(', ');
     const descriptionStr =
       this.description !== '' ? ` ${this.description}` : '';

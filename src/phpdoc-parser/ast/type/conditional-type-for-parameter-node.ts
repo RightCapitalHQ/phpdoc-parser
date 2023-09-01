@@ -12,9 +12,9 @@ export class ConditionalTypeForParameterNode extends TypeNode {
   }
 
   public toString(): string {
-    return `(${this.parameterName} ${this.negated ? 'is not' : 'is'} ${
-      this.targetType
-    } ? ${this.ifCondition} : ${this.elseCondition})`;
+    return `(${this.parameterName} ${
+      this.negated ? 'is not' : 'is'
+    } ${this.targetType.toString()} ? ${this.ifCondition.toString()} : ${this.elseCondition.toString()})`;
   }
 
   public getNodeType(): string {

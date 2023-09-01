@@ -12,7 +12,7 @@ export class CallableTypeParameterNode extends TypeNode {
   }
 
   public toString(): string {
-    const type = `${this.type} `;
+    const type = `${this.type.toString()} `;
     const isReference: string = this.isReference ? '&' : '';
     const isVariadic: string = this.isVariadic ? '...' : '';
     const isOptional: string = this.isOptional ? '=' : '';

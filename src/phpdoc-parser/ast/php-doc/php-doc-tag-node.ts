@@ -33,7 +33,7 @@ export class PhpDocTagNode extends PhpDocChildNode {
   }
 
   public toString(): string {
-    return `${this.name} ${this.value}`.trim();
+    return `${this.name} ${this.value.toString()}`.trim();
   }
 
   public getNodeType(): string {

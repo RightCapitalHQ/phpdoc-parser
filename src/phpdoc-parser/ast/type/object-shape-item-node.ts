@@ -13,7 +13,9 @@ export class ObjectShapeItemNode extends TypeNode {
 
   public toString(): string {
     if (this.keyName !== null) {
-      return `${this.keyName}${this.optional ? '?' : ''}: ${this.valueType}`;
+      return `${this.keyName.toString()}${
+        this.optional ? '?' : ''
+      }: ${this.valueType.toString()}`;
     }
 
     return this.valueType.toString();

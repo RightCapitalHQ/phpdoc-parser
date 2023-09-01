@@ -1,4 +1,5 @@
 import { ConstExprParser } from './const-expr-parser';
+import { ParserException } from './parser-exception';
 import { TokenIterator } from './token-iterator';
 import { TypeParser } from './type-parser';
 import { BaseNode } from '../ast/base-node';
@@ -308,7 +309,10 @@ export class PhpDocParser {
       tokens.dropSavePoint();
     } catch (e) {
       tokens.rollback();
-      return new InvalidTagValueNode(this.parseOptionalDescription(tokens), e);
+      return new InvalidTagValueNode(
+        this.parseOptionalDescription(tokens),
+        e as ParserException,
+      );
     }
 
     return this.enrichWithAttributes(tokens, tagValue, startLine, startIndex);
@@ -398,8 +402,8 @@ export class PhpDocParser {
   private parseMethodTagValue(tokens: TokenIterator): MethodTagValueNode {
     let isStatic = tokens.tryConsumeTokenValue('static');
 
-    const startLine = tokens.currentTokenLine();
-    const startIndex = tokens.currentTokenIndex();
+    let startLine = tokens.currentTokenLine();
+    let startIndex = tokens.currentTokenIndex();
 
     const returnTypeOrName = this.typeParser.parse(tokens);
     let returnType: TypeNode;
@@ -428,8 +432,8 @@ export class PhpDocParser {
 
     if (tokens.tryConsumeTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET)) {
       do {
-        const startLine = tokens.currentTokenLine();
-        const startIndex = tokens.currentTokenIndex();
+        startLine = tokens.currentTokenLine();
+        startIndex = tokens.currentTokenIndex();
         const templateType = this.parseTemplateTagValue(tokens, false);
         templateTypes.push(
           this.enrichWithAttributes(
@@ -452,8 +456,7 @@ export class PhpDocParser {
       parameters.push(parameter);
 
       while (tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
-        const parameter = this.parseMethodTagValueParameter(tokens);
-        parameters.push(parameter);
+        parameters.push(this.parseMethodTagValueParameter(tokens));
       }
     }
 
@@ -597,7 +600,7 @@ export class PhpDocParser {
           alias,
           this.enrichWithAttributes(
             tokens,
-            new InvalidTypeNode(e),
+            new InvalidTypeNode(e as ParserException),
             startLine,
             startIndex,
           ),
