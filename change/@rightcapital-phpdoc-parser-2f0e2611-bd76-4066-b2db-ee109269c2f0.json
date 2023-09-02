@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "docs: add LICENSE file",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "i@rainx.cc",
+  "dependentChangeType": "none"
+}
