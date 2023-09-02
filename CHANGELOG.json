@@ -1,0 +1,20 @@
+{
+  "name": "@rightcapital/phpdoc-parser",
+  "entries": [
+    {
+      "date": "Sat, 02 Sep 2023 12:41:20 GMT",
+      "version": "0.2.0",
+      "tag": "@rightcapital/phpdoc-parser_v0.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "0cd956bca807f44ae1abf8869db81d53cd78e9cd",
+            "comment": "feat: add and config beachball"
+          }
+        ]
+      }
+    }
+  ]
+}
