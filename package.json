@@ -56,9 +56,9 @@
   },
   "scripts": {
     "commit": "cz",
+    "clean": "tsc --build --clean",
     "change": "beachball change --no-commit",
     "check": "beachball check",
-    "clean": "tsc --build --clean",
     "build": "pnpm run clean && tsc",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",

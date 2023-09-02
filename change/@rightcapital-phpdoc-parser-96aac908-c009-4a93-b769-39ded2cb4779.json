@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix: update NPM script name for beachball to be consistent with other projects",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "i@rainx.cc",
+  "dependentChangeType": "patch"
+}
