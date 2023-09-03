@@ -70,3 +70,4 @@ export { MixinTagValueNode } from './phpdoc-parser/ast/php-doc/mixin-tag-value-n
 export { PhpDocTagNode } from './phpdoc-parser/ast/php-doc/php-doc-tag-node';
 export { PhpDocTagValueNode } from './phpdoc-parser/ast/php-doc/php-doc-tag-value-node';
 export { ReturnTagValueNode } from './phpdoc-parser/ast/php-doc/return-tag-value-node';
+export { Printer } from './phpdoc-parser/printer/printer';
