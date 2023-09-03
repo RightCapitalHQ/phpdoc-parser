@@ -1,3 +1,4 @@
+import { DiffElemType } from './diff-elem';
 import { Differ } from './differ';
 import { BaseNode } from '../ast/base-node';
 import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
@@ -10,10 +11,22 @@ import { ExtendsTagValueNode } from '../ast/php-doc/extends-tag-value-node';
 import { ImplementsTagValueNode } from '../ast/php-doc/implements-tag-value-node';
 import { MethodTagValueNode } from '../ast/php-doc/method-tag-value-node';
 import { MethodTagValueParameterNode } from '../ast/php-doc/method-tag-value-parameter-node';
+import { MixinTagValueNode } from '../ast/php-doc/mixin-tag-value-node';
+import { ParamOutTagValueNode } from '../ast/php-doc/param-out-tag-value-node';
+import { ParamTagValueNode } from '../ast/php-doc/param-tag-value-node';
 import { PhpDocNode } from '../ast/php-doc/php-doc-node';
 import { PhpDocTagNode } from '../ast/php-doc/php-doc-tag-node';
 import { PhpDocTagValueNode } from '../ast/php-doc/php-doc-tag-value-node';
 import { PhpDocTextNode } from '../ast/php-doc/php-doc-text-node';
+import { PropertyTagValueNode } from '../ast/php-doc/property-tag-value-node';
+import { ReturnTagValueNode } from '../ast/php-doc/return-tag-value-node';
+import { SelfOutTagValueNode } from '../ast/php-doc/self-out-tag-value-node';
+import { TemplateTagValueNode } from '../ast/php-doc/template-tag-value-node';
+import { ThrowsTagValueNode } from '../ast/php-doc/throws-tag-value-node';
+import { TypeAliasImportTagValueNode } from '../ast/php-doc/type-alias-import-tag-value-node';
+import { TypeAliasTagValueNode } from '../ast/php-doc/type-alias-tag-value-node';
+import { UsesTagValueNode } from '../ast/php-doc/uses-tag-value-node';
+import { VarTagValueNode } from '../ast/php-doc/var-tag-value-node';
 import { ArrayShapeItemNode } from '../ast/type/array-shape-item-node';
 import { ArrayShapeNode } from '../ast/type/array-shape-node';
 import { ArrayTypeNode } from '../ast/type/array-type-node';
@@ -34,6 +47,7 @@ import { ThisTypeNode } from '../ast/type/this-type-node';
 import { TypeNode } from '../ast/type/type-node';
 import { UnionTypeNode } from '../ast/type/union-type-node';
 import { Attribute } from '../ast/types';
+import { Lexer } from '../lexer/lexer';
 import { TokenIterator } from '../parser/token-iterator';
 
 export class Printer {
@@ -224,7 +238,92 @@ export class Printer {
 
       return `${type} ${node.description}`.trim();
     }
-    // TODO: to be continued....
+
+    if (node instanceof MethodTagValueNode) {
+      const staticValue = node.isStatic ? 'static ' : '';
+      const returnType =
+        node.returnType !== null ? `${this.printType(node.returnType)} ` : '';
+      const parameters = node.parameters
+        .map((parameter: MethodTagValueParameterNode): string => {
+          return this.print(parameter);
+        })
+        .join(', ');
+      const description = node.description !== '' ? ` ${node.description}` : '';
+      const templateTypes =
+        node.templateTypes.length > 0
+          ? `<${node.templateTypes
+              .map((templateTag: TemplateTagValueNode): string => {
+                return this.print(templateTag);
+              })
+              .join(', ')}>`
+          : '';
+      return `${staticValue}${returnType}${node.methodName}${templateTypes}(${parameters})${description}`;
+    }
+    if (node instanceof MixinTagValueNode) {
+      const type = this.printType(node.type);
+      return `${type} ${node.description}`.trim();
+    }
+    if (node instanceof ParamOutTagValueNode) {
+      const type = this.printType(node.type);
+      return `${type} ${node.parameterName} ${node.description}`.trim();
+    }
+    if (node instanceof ParamTagValueNode) {
+      const reference = node.isReference ? '&' : '';
+      const variadic = node.isVariadic ? '...' : '';
+      const type = this.printType(node.type);
+      return `${type} ${reference}${variadic}${node.parameterName} ${node.description}`.trim();
+    }
+
+    if (node instanceof PropertyTagValueNode) {
+      const type = this.printType(node.type);
+      return `${type} ${node.propertyName} ${node.description}`.trim();
+    }
+
+    if (node instanceof ReturnTagValueNode) {
+      const type = this.printType(node.type);
+      return `${type} ${node.description}`.trim();
+    }
+
+    if (node instanceof SelfOutTagValueNode) {
+      const type = this.printType(node.type);
+      return `${type} ${node.description}`.trim();
+    }
+
+    if (node instanceof TemplateTagValueNode) {
+      const bound =
+        node.bound !== null ? ` of ${this.printType(node.bound)}` : '';
+      const defaultValue =
+        node.defaultTypeNode !== null
+          ? ` = ${this.printType(node.defaultTypeNode)}`
+          : '';
+      return `${node.name}${bound}${defaultValue} ${node.description}`.trim();
+    }
+
+    if (node instanceof ThrowsTagValueNode) {
+      const type = this.printType(node.type);
+      return `${type} ${node.description}`.trim();
+    }
+
+    if (node instanceof TypeAliasImportTagValueNode) {
+      return `${node.importedAlias} from ${this.printType(
+        node.importedFrom,
+      )}${(node.importedAs !== null ? ` as ${node.importedAs}` : '').trim()}`;
+    }
+
+    if (node instanceof TypeAliasTagValueNode) {
+      const type = this.printType(node.type);
+      return `${node.alias} ${type}`.trim();
+    }
+
+    if (node instanceof UsesTagValueNode) {
+      const type = this.printType(node.type);
+      return `${type} ${node.description}`.trim();
+    }
+
+    if (node instanceof VarTagValueNode) {
+      const type = this.printType(node.type);
+      return `${type} ${node.variableName} ${node.description}`.trim();
+    }
 
     return node.toString();
   }
@@ -285,7 +384,6 @@ export class Printer {
       return this.printConstExpr(node.constExpr);
     }
     if (node instanceof GenericTypeNode) {
-      // 处理variance
       const genericTypes = node.genericTypes.map((type, index) => {
         const variance =
           node.variances[index] ?? GenericTypeNode.VARIANCE_INVARIANT;
@@ -379,14 +477,247 @@ export class Printer {
   }
 
   private printArrayFormatPreserving(
-    nodes: Node[],
-    originalNodes: Node[],
+    nodes: BaseNode[],
+    originalNodes: BaseNode[],
     originalTokens: TokenIterator,
     tokenIndex: number,
     parentNodeClass: string,
     subNodeName: string,
   ): string | null {
-    // ...
+    const diff = this.differ.diffWithReplacements(originalNodes, nodes);
+
+    // eslint-disable-next-line no-restricted-syntax
+    const mapKey = `${parentNodeClass.constructor.name}->${subNodeName}`;
+    let insertStr = this.listInsertionMap[mapKey] ?? null;
+
+    let result = '';
+    let beforeFirstKeepOrReplace: boolean = true;
+    let delayedAdd: BaseNode[] = [];
+
+    let insertNewline: boolean = false;
+    const [isMultiline, beforeAsteriskIndent, afterAsteriskIndent] =
+      this.isMultiline(tokenIndex, originalNodes, originalTokens);
+
+    if (insertStr === '\n * ') {
+      insertStr = `\n${beforeAsteriskIndent}*${afterAsteriskIndent}`;
+    }
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < diff.length; i++) {
+      const diffElem = diff[i];
+      const newNode = diffElem.new;
+      const originalNode = diffElem.old;
+
+      if (
+        diffElem.type === DiffElemType.KEEP ||
+        diffElem.type === DiffElemType.REPLACE
+      ) {
+        beforeFirstKeepOrReplace = false;
+
+        if (
+          !(newNode instanceof BaseNode) ||
+          !(originalNode instanceof BaseNode)
+        ) {
+          return null;
+        }
+
+        const itemStartPos = originalNode.getAttribute(
+          Attribute.START_INDEX,
+        ) as number;
+        const itemEndPos = originalNode.getAttribute(
+          Attribute.END_INDEX,
+        ) as number;
+
+        if (itemStartPos < 0 || itemEndPos < 0 || itemStartPos < tokenIndex) {
+          throw new Error('Invalid position');
+        }
+
+        result += originalTokens.getContentBetween(tokenIndex, itemStartPos);
+
+        if (delayedAdd.length > 0) {
+          for (const delayedNode of delayedAdd) {
+            const parenthesesNeeded =
+              mapKey in this.parenthesesListMap &&
+              this.parenthesesListMap[mapKey].includes(
+                // eslint-disable-next-line no-restricted-syntax
+                delayedNode.constructor.name,
+              );
+
+            if (parenthesesNeeded) {
+              result += '(';
+            }
+
+            result += this.printNodeFormatPreserving(
+              delayedNode,
+              originalTokens,
+            );
+
+            if (parenthesesNeeded) {
+              result += ')';
+            }
+
+            if (insertNewline) {
+              result += `\n${beforeAsteriskIndent}*${afterAsteriskIndent}`;
+            } else {
+              result += insertStr;
+            }
+          }
+
+          delayedAdd = [];
+        }
+
+        const parenthesesNeeded =
+          // eslint-disable-next-line no-restricted-syntax
+          this.parenthesesListMap[mapKey]?.includes(newNode.constructor.name) &&
+          !this.parenthesesListMap[mapKey]?.includes(
+            // eslint-disable-next-line no-restricted-syntax
+            originalNode.constructor.name,
+          );
+
+        const addParentheses =
+          parenthesesNeeded &&
+          !originalTokens.hasParentheses(itemStartPos, itemEndPos);
+
+        if (addParentheses) {
+          result += '(';
+        }
+
+        result += this.printNodeFormatPreserving(newNode, originalTokens);
+
+        if (addParentheses) {
+          result += ')';
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        tokenIndex = itemEndPos + 1;
+      } else if (diffElem.type === DiffElemType.ADD) {
+        if (insertStr === null) {
+          return null;
+        }
+
+        if (!(newNode instanceof BaseNode)) {
+          return null;
+        }
+
+        if (insertStr === ', ' && isMultiline) {
+          insertStr = ',';
+          insertNewline = true;
+        }
+
+        if (beforeFirstKeepOrReplace) {
+          delayedAdd.push(newNode);
+          // eslint-disable-next-line no-continue
+          continue;
+        }
+
+        const itemEndPos = tokenIndex - 1;
+
+        if (insertNewline) {
+          result += `${insertStr}\n${beforeAsteriskIndent}*${afterAsteriskIndent}`;
+        } else {
+          result += insertStr;
+        }
+
+        const parenthesesNeeded = this.parenthesesListMap[mapKey]?.includes(
+          // eslint-disable-next-line no-restricted-syntax
+          newNode.constructor.name,
+        );
+
+        if (parenthesesNeeded) {
+          result += '(';
+        }
+
+        result += this.printNodeFormatPreserving(newNode, originalTokens);
+
+        if (parenthesesNeeded) {
+          result += ')';
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        tokenIndex = itemEndPos + 1;
+      } else if (diffElem.type === DiffElemType.REMOVE) {
+        if (!(originalNode instanceof BaseNode)) {
+          return null;
+        }
+
+        const itemStartPos = originalNode.getAttribute(
+          Attribute.START_INDEX,
+        ) as number;
+        const itemEndPos = originalNode.getAttribute(
+          Attribute.END_INDEX,
+        ) as number;
+
+        if (itemStartPos < 0 || itemEndPos < 0) {
+          throw new Error('Invalid index');
+        }
+
+        if (i === 0) {
+          const originalTokensArray = originalTokens.getTokens();
+
+          // eslint-disable-next-line no-plusplus
+          for (let j = tokenIndex; j < itemStartPos; j++) {
+            if (
+              originalTokensArray[j][Lexer.TYPE_OFFSET] ===
+              Lexer.TOKEN_PHPDOC_EOL
+            ) {
+              break;
+            }
+            result += originalTokensArray[j][Lexer.VALUE_OFFSET];
+          }
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        tokenIndex = itemEndPos + 1;
+      }
+
+      if (delayedAdd.length > 0) {
+        if (!(mapKey in this.emptyListInsertionMap)) {
+          return null;
+        }
+
+        const [findToken, extraLeft, extraRight] =
+          this.emptyListInsertionMap[mapKey];
+
+        if (findToken !== null) {
+          const originalTokensArray = originalTokens.getTokens();
+          // eslint-disable-next-line no-plusplus, no-param-reassign
+          for (; tokenIndex < originalTokensArray.length; tokenIndex++) {
+            result += originalTokensArray[tokenIndex][Lexer.VALUE_OFFSET];
+            if (
+              originalTokensArray[tokenIndex][Lexer.VALUE_OFFSET] !== findToken
+            ) {
+              // eslint-disable-next-line no-continue
+              continue;
+            }
+
+            // eslint-disable-next-line no-plusplus, no-param-reassign
+            tokenIndex++;
+            break;
+          }
+        }
+        let isFirst: boolean = true;
+        result += extraLeft;
+        for (const delayedAddNode of delayedAdd) {
+          if (!isFirst) {
+            result += insertStr;
+            if (insertNewline) {
+              result += `${
+                originalTokens.getDetectedNewline() ?? '\n'
+              }${beforeAsteriskIndent}${afterAsteriskIndent}`;
+            }
+
+            result += this.printNodeFormatPreserving(
+              delayedAddNode,
+              originalTokens,
+            );
+            isFirst = false;
+          }
+          result += extraRight;
+        }
+      }
+    }
+
+    return result;
   }
 
   private isMultiline(
@@ -394,13 +725,158 @@ export class Printer {
     nodes: Node[],
     originalTokens: TokenIterator,
   ): [boolean, string, string] {
-    // ...
+    let isMultiline = nodes.length > 1;
+    let pos = initialIndex;
+    let allText = '';
+
+    for (const node of nodes) {
+      if (!(node instanceof BaseNode)) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      const endPos = (node.getAttribute(Attribute.END_INDEX) as number) + 1;
+      const text = originalTokens.getContentBetween(pos, endPos);
+      allText += text;
+
+      if (text.indexOf('\n') === -1) {
+        isMultiline = false;
+      }
+
+      pos = endPos;
+    }
+
+    const matches = allText.matchAll(/\n(\s*)\*(\s*)/g);
+
+    let before = '';
+    let after = '';
+
+    for (const match of matches) {
+      if (match[1].length > before.length) {
+        // eslint-disable-next-line prefer-destructuring
+        before = match[1];
+      }
+      if (match[2].length > after.length) {
+        // eslint-disable-next-line prefer-destructuring
+        after = match[2];
+      }
+    }
+
+    return [isMultiline, before, after];
   }
 
   private printNodeFormatPreserving(
-    node: Node,
+    node: BaseNode,
     originalTokens: TokenIterator,
   ): string {
-    // ...
+    const originalNode = node.getAttribute(Attribute.ORIGINAL_NODE) as BaseNode;
+    if (!originalNode) {
+      return this.print(node);
+    }
+
+    // eslint-disable-next-line no-restricted-syntax
+    const className = node.constructor.name;
+    // eslint-disable-next-line no-restricted-syntax
+    if (className !== originalNode.constructor.name) {
+      throw new Error('Class name mismatch');
+    }
+
+    const startPos = originalNode.getAttribute(Attribute.START_INDEX) as number;
+    const endPos = originalNode.getAttribute(Attribute.END_INDEX) as number;
+
+    if (startPos < 0 || endPos < 0) {
+      throw new Error('Invalid start or end index');
+    }
+
+    let result = '';
+    let pos = startPos;
+
+    const subNodeNames = Object.keys(node);
+
+    for (const subNodeName of subNodeNames) {
+      const subNode = node[subNodeName] as BaseNode;
+      const origSubNode = originalNode[subNodeName] as BaseNode;
+
+      if (
+        !(subNode instanceof BaseNode) ||
+        !(origSubNode instanceof BaseNode)
+      ) {
+        if (subNode === origSubNode) {
+          // eslint-disable-next-line no-continue
+          continue;
+        }
+
+        if (Array.isArray(subNode) && Array.isArray(origSubNode)) {
+          const listResult = this.printArrayFormatPreserving(
+            subNode,
+            origSubNode,
+            originalTokens,
+            pos,
+            className,
+            subNodeName,
+          );
+
+          if (listResult === null) {
+            return this.print(node);
+          }
+
+          result += listResult;
+          // eslint-disable-next-line no-continue
+          continue;
+        }
+
+        return this.print(node);
+      }
+
+      const subStartPos = origSubNode.getAttribute(
+        Attribute.START_INDEX,
+      ) as number;
+      const subEndPos = origSubNode.getAttribute(Attribute.END_INDEX) as number;
+
+      if (subStartPos < 0 || subEndPos < 0) {
+        throw new Error('Invalid start or end index');
+      }
+
+      if (!subNode) {
+        return this.print(node);
+      }
+
+      result += originalTokens.getContentBetween(pos, subStartPos);
+
+      // eslint-disable-next-line no-restricted-syntax
+      const mapKey = `${node.constructor.name}->${subNodeName}`;
+      let isParenthesesNeeded: boolean =
+        mapKey in this.parenthesesMap &&
+        // eslint-disable-next-line no-restricted-syntax
+        this.parenthesesMap[mapKey].includes(subNode.constructor.name);
+
+      if (subNode.getAttribute(Attribute.ORIGINAL_NODE) !== null) {
+        isParenthesesNeeded =
+          isParenthesesNeeded &&
+          this.parenthesesMap[mapKey].includes(
+            // eslint-disable-next-line no-restricted-syntax
+            (subNode.getAttribute(Attribute.ORIGINAL_NODE) as BaseNode)
+              .constructor.name,
+          );
+      }
+
+      const addParentheses =
+        isParenthesesNeeded &&
+        !originalTokens.hasParentheses(subStartPos, subEndPos);
+
+      if (addParentheses) {
+        result += '(';
+      }
+
+      result += this.printNodeFormatPreserving(subNode, originalTokens);
+
+      if (addParentheses) {
+        result += ')';
+      }
+
+      pos = subEndPos + 1;
+    }
+
+    return result + originalTokens.getContentBetween(pos, endPos + 1);
   }
 }
