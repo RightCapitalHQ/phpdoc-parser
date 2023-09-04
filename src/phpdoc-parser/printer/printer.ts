@@ -129,8 +129,10 @@ export class Printer {
       return false;
     });
 
-    const tokenIndex = 0;
-    const result = this.printArrayFormatPreserving(
+    let tokenIndex = 0;
+    let result;
+    // eslint-disable-next-line prefer-const
+    [result, tokenIndex] = this.printArrayFormatPreserving(
       node.children,
       originalNode.children,
       originalTokens,
@@ -481,13 +483,12 @@ export class Printer {
     originalNodes: BaseNode[],
     originalTokens: TokenIterator,
     tokenIndex: number,
-    parentNodeClass: string,
+    parentNodeClassName: string,
     subNodeName: string,
-  ): string | null {
+  ): [string | null, number] {
     const diff = this.differ.diffWithReplacements(originalNodes, nodes);
 
-    // eslint-disable-next-line no-restricted-syntax
-    const mapKey = `${parentNodeClass.constructor.name}->${subNodeName}`;
+    const mapKey = `${parentNodeClassName}->${subNodeName}`;
     let insertStr = this.listInsertionMap[mapKey] ?? null;
 
     let result = '';
@@ -717,7 +718,7 @@ export class Printer {
       }
     }
 
-    return result;
+    return [result, tokenIndex];
   }
 
   private isMultiline(
@@ -807,7 +808,8 @@ export class Printer {
         }
 
         if (Array.isArray(subNode) && Array.isArray(origSubNode)) {
-          const listResult = this.printArrayFormatPreserving(
+          let listResult;
+          [listResult, pos] = this.printArrayFormatPreserving(
             subNode,
             origSubNode,
             originalTokens,
