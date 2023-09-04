@@ -115,7 +115,6 @@ console.log(newPhpDocWithFormatPreserving); // '/** @param Ipsum $a */'
 
 We are stilling waiting for someones to contribute, especially for the following features.
 
-- Printer module
 - Doctrine Annotations support
 - More tests
 - More docs
