@@ -48,6 +48,11 @@ export class PhpDocParser {
 
   private useIndexAttributes: boolean;
 
+  private static readonly DISALLOWED_DESCRIPTION_START_TOKENS = [
+    Lexer.TOKEN_UNION,
+    Lexer.TOKEN_INTERSECTION,
+  ];
+
   constructor(
     public typeParser: TypeParser,
     public constantExprParser: ConstExprParser,
@@ -58,6 +63,7 @@ export class PhpDocParser {
       indexes: false,
     },
     public parseDoctrineAnnotations: boolean = false,
+    private textBetweenTagsBelongsToDescription: boolean = false,
   ) {
     this.useLinesAttributes = usedAttributes.lines ?? false;
     this.useIndexAttributes = usedAttributes.indexes ?? false;
@@ -70,48 +76,73 @@ export class PhpDocParser {
     const children: PhpDocChildNode[] = [];
 
     if (!tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PHPDOC)) {
-      let lastChild = this.parseChild(tokens);
-      children.push(lastChild);
-
-      while (!tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PHPDOC)) {
-        if (
-          lastChild instanceof PhpDocTagNode &&
-          lastChild.value instanceof GenericTagValueNode
-        ) {
-          tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
-          if (tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PHPDOC)) {
-            break;
-          }
-          lastChild = this.parseChild(tokens);
-          children.push(lastChild);
-          // eslint-disable-next-line no-continue
-          continue;
-        }
-
-        if (!tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-          break;
-        }
-        if (tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PHPDOC)) {
-          break;
-        }
-
-        lastChild = this.parseChild(tokens);
-        children.push(lastChild);
+      children.push(this.parseChild(tokens));
+      while (
+        tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL) &&
+        !tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PHPDOC)
+      ) {
+        children.push(this.parseChild(tokens));
       }
     }
 
-    tokens.consumeTokenType(Lexer.TOKEN_CLOSE_PHPDOC);
+    try {
+      tokens.consumeTokenType(Lexer.TOKEN_CLOSE_PHPDOC);
+    } catch (error) {
+      let name = '';
+      let startLine = tokens.currentTokenLine();
+      let startIndex = tokens.currentTokenIndex();
+      if (children.length > 0) {
+        const lastChild = children[children.length - 1];
+        if (lastChild instanceof PhpDocTagNode) {
+          name = lastChild.name;
+          startLine = tokens.currentTokenLine();
+          startIndex = tokens.currentTokenIndex();
+        }
+      }
 
-    return new PhpDocNode(children);
+      const tag = new PhpDocTagNode(
+        name,
+        this.enrichWithAttributes(
+          tokens,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
+          new InvalidTagValueNode(`${error?.message as string}`, error),
+          startLine,
+          startIndex,
+        ),
+      );
+
+      tokens.forwardToTheEnd();
+
+      return this.enrichWithAttributes(
+        tokens,
+        new PhpDocNode([
+          this.enrichWithAttributes(tokens, tag, startLine, startIndex),
+        ]),
+        1,
+        0,
+      );
+    }
+
+    return this.enrichWithAttributes(tokens, new PhpDocNode(children), 1, 0);
   }
 
   private parseChild(tokens: TokenIterator): PhpDocChildNode {
     if (tokens.isCurrentTokenType(Lexer.TOKEN_PHPDOC_TAG)) {
-      return this.parseTag(tokens);
+      const startLine = tokens.currentTokenLine();
+      const startIndex = tokens.currentTokenIndex();
+      return this.enrichWithAttributes(
+        tokens,
+        this.parseTag(tokens),
+        startLine,
+        startIndex,
+      );
     }
 
+    const startLine = tokens.currentTokenLine();
+    const startIndex = tokens.currentTokenIndex();
     const text = this.parseText(tokens);
-    return text;
+
+    return this.enrichWithAttributes(tokens, text, startLine, startIndex);
   }
 
   private enrichWithAttributes<T extends BaseNode>(
@@ -139,35 +170,58 @@ export class PhpDocParser {
   private parseText(tokens: TokenIterator): PhpDocTextNode {
     let text = '';
 
-    while (!tokens.isCurrentTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-      text += tokens.getSkippedHorizontalWhiteSpaceIfAny();
-      text += tokens.joinUntil(
-        Lexer.TOKEN_PHPDOC_EOL,
-        Lexer.TOKEN_CLOSE_PHPDOC,
-        Lexer.TOKEN_END,
-      );
+    let endTokens = [
+      Lexer.TOKEN_PHPDOC_EOL,
+      Lexer.TOKEN_CLOSE_PHPDOC,
+      Lexer.TOKEN_END,
+    ];
+    if (this.textBetweenTagsBelongsToDescription) {
+      endTokens = [Lexer.TOKEN_CLOSE_PHPDOC, Lexer.TOKEN_END];
+    }
+
+    let savepoint = false;
+
+    while (
+      this.textBetweenTagsBelongsToDescription ||
+      !tokens.isCurrentTokenType(Lexer.TOKEN_PHPDOC_EOL)
+    ) {
+      const tmpText =
+        tokens.getSkippedHorizontalWhiteSpaceIfAny() +
+        tokens.joinUntil(Lexer.TOKEN_PHPDOC_EOL, ...endTokens);
+      text += tmpText;
 
       if (!tokens.isCurrentTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
         break;
       }
 
+      if (this.textBetweenTagsBelongsToDescription) {
+        if (!savepoint) {
+          tokens.pushSavePoint();
+          savepoint = true;
+        } else if (tmpText !== '') {
+          tokens.dropSavePoint();
+          tokens.pushSavePoint();
+        }
+      }
+
       tokens.pushSavePoint();
       tokens.next();
 
-      if (
-        tokens.isCurrentTokenType(
-          Lexer.TOKEN_PHPDOC_TAG,
-          Lexer.TOKEN_PHPDOC_EOL,
-          Lexer.TOKEN_CLOSE_PHPDOC,
-          Lexer.TOKEN_END,
-        )
-      ) {
+      if (tokens.isCurrentTokenType(Lexer.TOKEN_PHPDOC_TAG, ...endTokens)) {
         tokens.rollback();
         break;
       }
 
       tokens.dropSavePoint();
       text += tokens.getDetectedNewline() ?? '\n';
+    }
+
+    if (savepoint) {
+      tokens.rollback();
+      text = text.replace(
+        new RegExp(`[${tokens.getDetectedNewline() ?? '\n'}]+$`, 'g'),
+        '',
+      );
     }
 
     return new PhpDocTextNode(text.trim());

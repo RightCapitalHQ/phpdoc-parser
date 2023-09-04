@@ -51,11 +51,70 @@ console.log(paramTags[0].parameterName); // '$a'
 console.log(paramTags[0].type); // IdentifierTypeNode { attributes: {}, name: 'Lorem' }
 ```
 
+## Format-preserving printer
+
+This component can be used to modify the AST and print it again as close as possible to the original.
+
+It's heavily inspired by format-preserving printer component in nikic/PHP-Parser.
+
+```typescript
+import {
+  CloningVisitor,
+  ConstExprParser,
+  IdentifierTypeNode,
+  Lexer,
+  NodeTraverser,
+  PhpDocNode,
+  PhpDocParser,
+  TokenIterator,
+  TypeParser,
+  Printer,
+} from '@rightcapital/phpdoc-parser';
+
+const usedAttributes = { lines: true, indexes: true };
+
+const lexer = new Lexer();
+const constExprParser = new ConstExprParser(true, true, usedAttributes);
+const typeParser = new TypeParser(constExprParser, true, usedAttributes);
+const phpDocParser = new PhpDocParser(
+  typeParser,
+  constExprParser,
+  true,
+  true,
+  usedAttributes,
+);
+
+const tokens = new TokenIterator(lexer.tokenize('/** @param Lorem $a */'));
+const phpDocNode = phpDocParser.parse(tokens); // PhpDocNode
+
+const cloningTraverser = new NodeTraverser([new CloningVisitor()]);
+
+const [newPhpDocNode] = cloningTraverser.traverse([phpDocNode]) as [PhpDocNode];
+
+// change something in newPhpDocNode
+newPhpDocNode.getParamTagValues()[0].type = new IdentifierTypeNode('Ipsum');
+
+// print changed PHPDoc
+const printer = new Printer();
+const newPhpDoc = printer.print(newPhpDocNode);
+console.log(newPhpDoc);
+// --- result ---
+// /**
+//  * @param Ipsum $a
+//  */
+
+const newPhpDocWithFormatPreserving = printer.printFormatPreserving(
+  newPhpDocNode,
+  phpDocNode,
+  tokens,
+);
+console.log(newPhpDocWithFormatPreserving); // '/** @param Ipsum $a */'
+```
+
 # Welcome to contribute
 
 We are stilling waiting for someones to contribute, especially for the following features.
 
-- Printer module
 - Doctrine Annotations support
 - More tests
 - More docs

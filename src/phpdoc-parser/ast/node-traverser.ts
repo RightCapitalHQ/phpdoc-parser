@@ -1,8 +1,12 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-plusplus */
 import { BaseNode } from './base-node';
+import { ConstExprNode } from './const-expr/const-expr-node';
 import { Node } from './node';
 import { NodeVisitor } from './node-visitor';
+import { PhpDocChildNode } from './php-doc/php-doc-child-node';
+import { PhpDocTagValueNode } from './php-doc/php-doc-tag-value-node';
+import { TypeNode } from './type/type-node';
 import { NodeTraverserState } from './types';
 
 export class NodeTraverser {
@@ -269,19 +273,35 @@ export class NodeTraverser {
   }
 
   private ensureReplacementReasonable(old: Node, newNode: Node): void {
-    // eslint-disable-next-line no-console
-    console.log(old === newNode);
-    // if (old instanceof TypeNode && !(newNode instanceof TypeNode)) {
-    //   throw new Error(`Trying to replace TypeNode with ${(<any>newNode).constructor.name}`);
-    // }
-    // if (old instanceof ConstExprNode && !(newNode instanceof ConstExprNode)) {
-    //   throw new Error(`Trying to replace ConstExprNode with ${(<any>newNode).constructor.name}`);
-    // }
-    // if (old instanceof PhpDocChildNode && !(newNode instanceof PhpDocChildNode)) {
-    //   throw new Error(`Trying to replace PhpDocChildNode with ${(<any>newNode).constructor.name}`);
-    // }
-    // if (old instanceof PhpDocTagValueNode && !(newNode instanceof PhpDocTagValueNode)) {
-    //   throw new Error(`Trying to replace PhpDocTagValueNode with ${(<any>newNode).constructor.name}`);
-    // }
+    if (old instanceof TypeNode && !(newNode instanceof TypeNode)) {
+      throw new Error(
+        // eslint-disable-next-line no-restricted-syntax
+        `Trying to replace TypeNode with ${newNode.constructor.name}`,
+      );
+    }
+    if (old instanceof ConstExprNode && !(newNode instanceof ConstExprNode)) {
+      throw new Error(
+        // eslint-disable-next-line no-restricted-syntax
+        `Trying to replace ConstExprNode with ${newNode.constructor.name}`,
+      );
+    }
+    if (
+      old instanceof PhpDocChildNode &&
+      !(newNode instanceof PhpDocChildNode)
+    ) {
+      throw new Error(
+        // eslint-disable-next-line no-restricted-syntax
+        `Trying to replace PhpDocChildNode with ${newNode.constructor.name}`,
+      );
+    }
+    if (
+      old instanceof PhpDocTagValueNode &&
+      !(newNode instanceof PhpDocTagValueNode)
+    ) {
+      throw new Error(
+        // eslint-disable-next-line no-restricted-syntax
+        `Trying to replace PhpDocTagValueNode with ${newNode.constructor.name}`,
+      );
+    }
   }
 }
