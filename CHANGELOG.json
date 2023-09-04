@@ -2,6 +2,37 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 04 Sep 2023 13:47:01 GMT",
+      "version": "0.3.0",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "bb4df9e7a16d66d6217dcb62f6118cab9d7f91bb",
+            "comment": "feat: add Printer feature to allow generate PHP code from AST"
+          }
+        ],
+        "none": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "9a470132a34cad7c2c284cca5f1b08de7e3937df",
+            "comment": "docs: add LICENSE file"
+          }
+        ],
+        "patch": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "79c406f572736c990873d4dcd18f3da3e7d26735",
+            "comment": "fix: update NPM script name for beachball to be consistent with other projects"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 02 Sep 2023 12:41:20 GMT",
       "version": "0.2.0",
       "tag": "@rightcapital/phpdoc-parser_v0.2.0",

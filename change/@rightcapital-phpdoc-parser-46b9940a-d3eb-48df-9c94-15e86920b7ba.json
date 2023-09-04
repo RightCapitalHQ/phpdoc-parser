@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: add Printer feature to allow generate PHP code from AST",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "i@rainx.cc",
-  "dependentChangeType": "patch"
-}
