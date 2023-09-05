@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Tue, 05 Sep 2023 06:03:52 GMT",
+      "version": "0.3.1",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "2e9abfb6b6e42c6e4d43d51b84c0486fb3875414",
+            "comment": "chore: update the dependent package name for ESLint and Prettier config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Sep 2023 13:47:01 GMT",
       "version": "0.3.0",
       "tag": "@rightcapital/phpdoc-parser_v0.3.0",

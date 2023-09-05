@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Mon, 04 Sep 2023 13:47:01 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Sep 2023 06:03:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.1](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.1) (2023-9-5)
+
+- chore: update the dependent package name for ESLint and Prettier config ([2e9abfb](https://github.com/RightCapitalHQ/phpdoc-parser/commit/2e9abfb6b6e42c6e4d43d51b84c0486fb3875414))
 
 ## [0.3.0](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.0) (2023-9-4)
 

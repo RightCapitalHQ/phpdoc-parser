@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore: update the dependent package name for ESLint and Prettier config",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "i@rainx.cc",
-  "dependentChangeType": "patch"
-}
