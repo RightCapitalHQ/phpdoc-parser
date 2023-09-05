@@ -111,7 +111,7 @@ const newPhpDocWithFormatPreserving = printer.printFormatPreserving(
 console.log(newPhpDocWithFormatPreserving); // '/** @param Ipsum $a */'
 ```
 
-# Welcome to contribute
+## Welcome to contribute
 
 We are stilling waiting for someones to contribute, especially for the following features.
 
