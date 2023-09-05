@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Tue, 05 Sep 2023 06:50:46 GMT",
+      "version": "0.3.2",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "not available",
+            "comment": "docs: correct the heading level for section `Welcome to contribute``"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Sep 2023 06:03:52 GMT",
       "version": "0.3.1",
       "tag": "@rightcapital/phpdoc-parser_v0.3.1",
