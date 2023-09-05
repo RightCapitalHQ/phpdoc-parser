@@ -9,7 +9,6 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "rootDir": "./src",
     "outDir": "./dist"
   },
   "include": ["src/**/*", "tests/**/*"]
