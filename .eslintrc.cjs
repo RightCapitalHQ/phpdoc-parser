@@ -9,20 +9,20 @@ module.exports = {
   overrides: [
     {
       files: ['src/**/*.ts'],
-      extends: ['@right/eslint-config-typescript'],
+      extends: ['@rightcapital/eslint-config-typescript'],
       env: { node: true },
     },
     {
       // test files
       files: ['tests/**/*.test.{ts,tsx}'],
-      extends: ['@right/eslint-config-typescript'],
+      extends: ['@rightcapital/eslint-config-typescript'],
       env: { jest: true, node: true },
     },
     {
       // JavaScript config and scripts
       files: ['./**/*.{js,cjs,mjs,jsx}'],
       excludedFiles: ['src/**'],
-      extends: ['@right/eslint-config-javascript'],
+      extends: ['@rightcapital/eslint-config-javascript'],
       env: { node: true },
       rules: {
         'import/no-extraneous-dependencies': 'off',
@@ -32,7 +32,7 @@ module.exports = {
       // TypeScript config and scripts
       files: ['./**/*.{ts,cts,mts,tsx}'],
       excludedFiles: ['src/**'],
-      extends: ['@right/eslint-config-typescript'],
+      extends: ['@rightcapital/eslint-config-typescript'],
       rules: {
         'import/no-extraneous-dependencies': 'off',
       },
