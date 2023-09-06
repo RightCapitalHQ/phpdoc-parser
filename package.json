@@ -27,7 +27,7 @@
     "npm": ">=999.0.0"
   },
   "files": [
-    "./dist/"
+    "dist"
   ],
   "devDependencies": {
     "@babel/core": "^7.17.5",
