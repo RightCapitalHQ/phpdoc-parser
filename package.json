@@ -27,7 +27,7 @@
     "npm": ">=999.0.0"
   },
   "files": [
-    "./dist/"
+    "dist"
   ],
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -46,6 +46,7 @@
     "commitizen": "^4.3.0",
     "eslint": "^8.24.0",
     "husky": "^8.0.3",
+    "inquirer": "^8.0.0",
     "jest": "^26.6.3",
     "prettier": "3.0.0",
     "ts-node": "^10.7.0",
@@ -57,10 +58,10 @@
   },
   "scripts": {
     "commit": "cz",
-    "clean": "tsc --build --clean",
+    "clean": "tsc --build --clean ./tsconfig.build.json",
     "change": "beachball change --no-commit",
     "check": "beachball check",
-    "build": "pnpm run clean && tsc",
+    "build": "pnpm run clean && tsc --project ./tsconfig.build.json",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "start": "ts-node src/index.ts",
