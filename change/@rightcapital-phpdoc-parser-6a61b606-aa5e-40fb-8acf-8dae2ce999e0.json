@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "docs: add badges area to README file",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "i@rainx.cc",
+  "dependentChangeType": "patch"
+}
