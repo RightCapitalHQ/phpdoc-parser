@@ -6,7 +6,7 @@ Next-gen PHPDoc parser with support for intersection types and generics(TypeScri
 
 This parser is inspired by the PHPStan's phpdoc-parser library: https://github.com/phpstan/phpdoc-parser
 
-this libraray `@rightcapital/phpdoc-parser` represents PHPDocs with an AST (Abstract Syntax Tree). It supports parsing and modifying PHPDocs by using `TypeScript`/`Javascript`.
+this libraray `@rightcapital/phpdoc-parser` represents PHPDocs with an AST (Abstract Syntax Tree). It supports parsing and modifying PHPDocs by using `TypeScript`/`JavaScript`.
 
 For the complete list of supported PHPDoc features check out PHPStan documentation.
 
