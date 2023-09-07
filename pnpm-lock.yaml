@@ -6,10 +6,10 @@ settings:
 
 dependencies:
   '@types/node':
-    specifier: ^14.18.12
+    specifier: 14.18.12
     version: 14.18.12
   lodash:
-    specifier: ^4.17.21
+    specifier: 4.17.21
     version: 4.17.21
 
 devDependencies:
