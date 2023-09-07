@@ -51,4 +51,4 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
         run: |
           npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
-          pnpm beachball publish --yes -m 'chore(release): applying package updates'
+          pnpm beachball publish --access public --yes -m 'chore(release): applying package updates'
