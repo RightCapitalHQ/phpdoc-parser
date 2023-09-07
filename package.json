@@ -16,15 +16,13 @@
   "repository": "https://github.com/RightCapitalHQ/phpdoc-parser",
   "author": "RightCapital Ecosystem team <npm-publisher@rightcapital.com>",
   "license": "MIT",
-  "packageManager": "pnpm@7.0.0",
+  "packageManager": "pnpm@8.7.4",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
   "engines": {
-    "node": ">=14.0.0",
-    "pnpm": ">=7.0.0",
-    "yarn": ">=999.0.0",
-    "npm": ">=999.0.0"
+    "node": ">=16.x",
+    "pnpm": ">=8.x"
   },
   "files": [
     "dist"

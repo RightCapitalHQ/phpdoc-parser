@@ -1,75 +1,56 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "dependencyDashboard": false,
-  "extends": ["config:base", ":pinAllExceptPeerDependencies"],
-  "platformAutomerge": true,
-  "automergeType": "pr",
-  "prCreation": "immediate",
+  "extends": ["github>RightCapitalHQ/renovate-config"],
   "assignees": ["rainx"],
   "reviewers": ["rainx"],
   "labels": ["Upgrade Dependencies"],
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "prCreation": "immediate",
+  "allowedPostUpgradeCommands": ["^git", "^npx"],
   "postUpgradeTasks": {
     "commands": [
       "git add --all",
       "npx beachball@latest change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
       "git reset"
     ],
-    "fileFilters": ["change/*.json"],
-    "executionMode": "branch"
+    "executionMode": "branch",
+    "fileFilters": ["change/*.json"]
   },
   "lockFileMaintenance": {
+    "automerge": true,
     "enabled": true,
-    "automerge": false,
     "postUpgradeTasks": {
       "commands": [
         "git add --all",
         "npx beachball@latest change --nofetch --no-commit --type none --message '{{{commitMessage}}}'",
         "git reset"
       ],
-      "fileFilters": ["change/*.json"],
-      "executionMode": "branch"
+      "executionMode": "branch",
+      "fileFilters": ["change/*.json"]
     }
   },
   "packageRules": [
     {
-      "description": "Group all Dependencies (non-major) together",
-      "groupName": "Dependencies (non-major)",
-      "groupSlug": "auto-merge-non-major-updates",
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": false
-    },
-    {
+      "automerge": false,
       "description": "Mark rule and plugin updates as breaking changes",
       "matchDepTypes": ["dependencies"],
       "matchPackagePrefixes": [
         "@typescript-eslint/",
         "eslint-config-",
         "eslint-plugin-"
-      ],
-      "postUpgradeTasks": {
-        "commands": [
-          "git add --all",
-          "npx beachball@latest change --nofetch --no-commit --type major --message '{{{commitMessage}}}'",
-          "git reset"
-        ],
-        "fileFilters": ["change/*.json"],
-        "executionMode": "branch"
-      }
+      ]
     },
     {
-      "description": "Mark peerDependencies's major updates as breaking changes",
-      "matchDepTypes": ["peerDependencies"],
-      "matchUpdateTypes": ["major"],
-      "postUpgradeTasks": {
-        "commands": [
-          "git add --all",
-          "npx beachball@latest change --nofetch --no-commit --type major --message '{{{commitMessage}}}'",
-          "git reset"
-        ]
-      }
+      "automerge": false,
+      "description": "Group all RightCapital packages (non-major) together",
+      "groupName": "RightCapital packages (non-major)",
+      "groupSlug": "auto-merge-rightcapital-packages-non-major-updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackagePrefixes": ["@rightcapital"]
     },
     {
+      "automerge": false,
       "description": "Group all DevDependencies together",
       "groupName": "DevDependencies",
       "groupSlug": "auto-merge-dev-dependencies-updates",
@@ -82,16 +63,7 @@
         ],
         "fileFilters": ["change/*.json"],
         "executionMode": "branch"
-      },
-      "automerge": false
-    },
-    {
-      "description": "Group all private packages (non-major) together",
-      "groupName": "Private packages (non-major)",
-      "groupSlug": "auto-merge-private-packages-non-major-updates",
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchPackagePrefixes": ["@rightcapital"],
-      "automerge": false
+      }
     }
   ]
 }
