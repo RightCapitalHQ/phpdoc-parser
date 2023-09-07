@@ -1,575 +1,575 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`test tokenize for a very common doc annotation: commonSource 1`] = `
-Array [
-  Array [
+[
+  [
     "/**",
     "TOKEN_OPEN_PHPDOC",
     1,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     1,
   ],
-  Array [
+  [
     "@property",
     "TOKEN_PHPDOC_TAG",
     2,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     2,
   ],
-  Array [
+  [
     "float",
     "TOKEN_IDENTIFIER",
     2,
   ],
-  Array [
+  [
     "|",
     "TOKEN_UNION",
     2,
   ],
-  Array [
+  [
     "null",
     "TOKEN_IDENTIFIER",
     2,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     2,
   ],
-  Array [
+  [
     "$cash_balance",
     "TOKEN_VARIABLE",
     2,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     2,
   ],
-  Array [
+  [
     "@property-read",
     "TOKEN_PHPDOC_TAG",
     3,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     3,
   ],
-  Array [
+  [
     "string",
     "TOKEN_IDENTIFIER",
     3,
   ],
-  Array [
+  [
     "|",
     "TOKEN_UNION",
     3,
   ],
-  Array [
+  [
     "null",
     "TOKEN_IDENTIFIER",
     3,
   ],
-  Array [
+  [
     "         ",
     "TOKEN_HORIZONTAL_WS",
     3,
   ],
-  Array [
+  [
     "$default_name",
     "TOKEN_VARIABLE",
     3,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     3,
   ],
-  Array [
+  [
     "@property-read",
     "TOKEN_PHPDOC_TAG",
     4,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     4,
   ],
-  Array [
+  [
     "int",
     "TOKEN_IDENTIFIER",
     4,
   ],
-  Array [
+  [
     "|",
     "TOKEN_UNION",
     4,
   ],
-  Array [
+  [
     "null",
     "TOKEN_IDENTIFIER",
     4,
   ],
-  Array [
+  [
     "            ",
     "TOKEN_HORIZONTAL_WS",
     4,
   ],
-  Array [
+  [
     "$refresh_code",
     "TOKEN_VARIABLE",
     4,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     4,
   ],
-  Array [
+  [
     "@property-read",
     "TOKEN_PHPDOC_TAG",
     5,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     5,
   ],
-  Array [
-    "\\\\Carbon\\\\Carbon",
+  [
+    "\\Carbon\\Carbon",
     "TOKEN_IDENTIFIER",
     5,
   ],
-  Array [
+  [
     "|",
     "TOKEN_UNION",
     5,
   ],
-  Array [
+  [
     "null",
     "TOKEN_IDENTIFIER",
     5,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     5,
   ],
-  Array [
+  [
     "$refreshed_at",
     "TOKEN_VARIABLE",
     5,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     5,
   ],
-  Array [
+  [
     "@property-read",
     "TOKEN_PHPDOC_TAG",
     6,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     6,
   ],
-  Array [
+  [
     "string",
     "TOKEN_IDENTIFIER",
     6,
   ],
-  Array [
+  [
     "|",
     "TOKEN_UNION",
     6,
   ],
-  Array [
+  [
     "null",
     "TOKEN_IDENTIFIER",
     6,
   ],
-  Array [
+  [
     "         ",
     "TOKEN_HORIZONTAL_WS",
     6,
   ],
-  Array [
+  [
     "$refreshed_at_friendly",
     "TOKEN_VARIABLE",
     6,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     6,
   ],
-  Array [
+  [
     "@property-read",
     "TOKEN_PHPDOC_TAG",
     7,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     7,
   ],
-  Array [
+  [
     "int",
     "TOKEN_IDENTIFIER",
     7,
   ],
-  Array [
+  [
     "                 ",
     "TOKEN_HORIZONTAL_WS",
     7,
   ],
-  Array [
+  [
     "$signed_balance",
     "TOKEN_VARIABLE",
     7,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     7,
   ],
-  Array [
+  [
     "@property-read",
     "TOKEN_PHPDOC_TAG",
     8,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     8,
   ],
-  Array [
+  [
     "int",
     "TOKEN_IDENTIFIER",
     8,
   ],
-  Array [
+  [
     "|",
     "TOKEN_UNION",
     8,
   ],
-  Array [
+  [
     "null",
     "TOKEN_IDENTIFIER",
     8,
   ],
-  Array [
+  [
     "            ",
     "TOKEN_HORIZONTAL_WS",
     8,
   ],
-  Array [
+  [
     "$tax_advantage_id",
     "TOKEN_VARIABLE",
     8,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     8,
   ],
-  Array [
+  [
     "@property-read",
     "TOKEN_PHPDOC_TAG",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "float",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     "               ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "$total_cost_basis",
     "TOKEN_VARIABLE",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "total",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "cost",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "to",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "buy",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     ",",
     "TOKEN_COMMA",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "both",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "stocks",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "and",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     9,
   ],
-  Array [
+  [
     "funds",
     "TOKEN_IDENTIFIER",
     9,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     9,
   ],
-  Array [
+  [
     "@property-read",
     "TOKEN_PHPDOC_TAG",
     10,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "float",
     "TOKEN_IDENTIFIER",
     10,
   ],
-  Array [
+  [
     "               ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "$total_value",
     "TOKEN_VARIABLE",
     10,
   ],
-  Array [
+  [
     "      ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "total",
     "TOKEN_IDENTIFIER",
     10,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "market",
     "TOKEN_IDENTIFIER",
     10,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "value",
     "TOKEN_IDENTIFIER",
     10,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "+",
     "TOKEN_OTHER",
     10,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "signed",
     "TOKEN_IDENTIFIER",
     10,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "cash",
     "TOKEN_IDENTIFIER",
     10,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     10,
   ],
-  Array [
+  [
     "balance",
     "TOKEN_IDENTIFIER",
     10,
   ],
-  Array [
+  [
     "
  *",
     "TOKEN_PHPDOC_EOL",
     10,
   ],
-  Array [
+  [
     "
  * ",
     "TOKEN_PHPDOC_EOL",
     11,
   ],
-  Array [
+  [
     "@method",
     "TOKEN_PHPDOC_TAG",
     12,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     12,
   ],
-  Array [
+  [
     "static",
     "TOKEN_IDENTIFIER",
     12,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     12,
   ],
-  Array [
-    "\\\\Illuminate\\\\Database\\\\Eloquent\\\\Builder",
+  [
+    "\\Illuminate\\Database\\Eloquent\\Builder",
     "TOKEN_IDENTIFIER",
     12,
   ],
-  Array [
+  [
     " ",
     "TOKEN_HORIZONTAL_WS",
     12,
   ],
-  Array [
+  [
     "included",
     "TOKEN_IDENTIFIER",
     12,
   ],
-  Array [
+  [
     "(",
     "TOKEN_OPEN_PARENTHESES",
     12,
   ],
-  Array [
+  [
     ")",
     "TOKEN_CLOSE_PARENTHESES",
     12,
   ],
-  Array [
+  [
     "
  ",
     "TOKEN_PHPDOC_EOL",
     12,
   ],
-  Array [
+  [
     "*/",
     "TOKEN_CLOSE_PHPDOC",
     13,
   ],
-  Array [
+  [
     "",
     "TOKEN_END",
     13,
