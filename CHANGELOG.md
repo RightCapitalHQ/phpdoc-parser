@@ -1,8 +1,14 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Tue, 05 Sep 2023 06:50:46 GMT and should not be manually modified.
+This log was last generated on Thu, 07 Sep 2023 09:27:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.4](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.4) (2023-9-7)
+
+- fix(deps): update dependency @types/node to v18 ([56589dc](https://github.com/RightCapitalHQ/phpdoc-parser/commit/56589dc8a449605e14cf6cde869b833b88ad3a47))
+- fix(deps): pin dependencies ([56589dc](https://github.com/RightCapitalHQ/phpdoc-parser/commit/56589dc8a449605e14cf6cde869b833b88ad3a47))
+- chore(deps): update actions/checkout action to v4 ([56589dc](https://github.com/RightCapitalHQ/phpdoc-parser/commit/56589dc8a449605e14cf6cde869b833b88ad3a47))
 
 ### [0.3.2](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.2) (2023-9-5)
 
