@@ -14,67 +14,67 @@ dependencies:
 
 devDependencies:
   '@babel/core':
-    specifier: ^7.17.5
+    specifier: 7.22.10
     version: 7.22.10
   '@babel/preset-env':
-    specifier: ^7.16.11
+    specifier: 7.16.11
     version: 7.16.11(@babel/core@7.22.10)
   '@babel/preset-typescript':
-    specifier: ^7.16.7
+    specifier: 7.16.7
     version: 7.16.7(@babel/core@7.22.10)
   '@commitlint/cli':
-    specifier: ^17.6.6
+    specifier: 17.6.6
     version: 17.6.6
   '@commitlint/config-conventional':
-    specifier: ^17.6.6
+    specifier: 17.6.6
     version: 17.6.6
   '@commitlint/cz-commitlint':
-    specifier: ^17.5.0
+    specifier: 17.5.0
     version: 17.5.0(commitizen@4.3.0)(inquirer@8.2.6)
   '@rightcapital/eslint-config-javascript':
-    specifier: ^7.0.0
+    specifier: 7.0.0
     version: 7.0.0(@typescript-eslint/parser@6.2.0)(eslint@8.24.0)
   '@rightcapital/eslint-config-typescript':
-    specifier: ^7.0.0
+    specifier: 7.0.0
     version: 7.0.0(eslint@8.24.0)(typescript@5.1.6)
   '@rightcapital/prettier-config':
-    specifier: ^6.0.0
-    version: 6.0.0(prettier@3.0.0)
+    specifier: 6.0.0
+    version: 6.0.0(prettier@3.0.3)
   '@types/jest':
-    specifier: ^26.0.24
+    specifier: 26.0.24
     version: 26.0.24
   '@types/lodash':
-    specifier: ^4.14.197
+    specifier: 4.14.197
     version: 4.14.197
   babel-jest:
-    specifier: ^26.6.3
+    specifier: 26.6.3
     version: 26.6.3(@babel/core@7.22.10)
   beachball:
-    specifier: ^2.37.0
+    specifier: 2.37.0
     version: 2.37.0
   commitizen:
-    specifier: ^4.3.0
+    specifier: 4.3.0
     version: 4.3.0
   eslint:
-    specifier: ^8.24.0
+    specifier: 8.24.0
     version: 8.24.0
   husky:
-    specifier: ^8.0.3
+    specifier: 8.0.3
     version: 8.0.3
   inquirer:
-    specifier: ^8.0.0
+    specifier: 8.2.6
     version: 8.2.6
   jest:
-    specifier: ^26.6.3
+    specifier: 26.6.3
     version: 26.6.3(ts-node@10.9.1)
   prettier:
-    specifier: 3.0.0
-    version: 3.0.0
+    specifier: 3.0.3
+    version: 3.0.3
   ts-node:
-    specifier: ^10.7.0
+    specifier: 10.9.1
     version: 10.9.1(@types/node@14.18.12)(typescript@5.1.6)
   typescript:
-    specifier: ^5.1.6
+    specifier: 5.1.6
     version: 5.1.6
 
 packages:
@@ -1855,13 +1855,13 @@ packages:
       - supports-color
     dev: true
 
-  /@rightcapital/prettier-config@6.0.0(prettier@3.0.0):
+  /@rightcapital/prettier-config@6.0.0(prettier@3.0.3):
     resolution: {integrity: sha512-AYalufGEOQ6j4xQnNJ5q4WYQYbPkA0IVPbPqNKdyCN1PnpMqURKVY3xZmtkeo6iATarwGPYBnrdF+IzRHMPYTw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       prettier: ^3.0.0
     dependencies:
-      prettier: 3.0.0
+      prettier: 3.0.3
     dev: true
 
   /@rushstack/eslint-patch@1.3.2:
@@ -6010,8 +6010,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier@3.0.0:
-    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
+  /prettier@3.0.3:
+    resolution: {integrity: sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
