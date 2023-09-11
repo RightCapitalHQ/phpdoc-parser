@@ -1,9 +1,9 @@
 ---
 name: Bug Report
 about: Create a report to help PHPDoc Parser to improve
-title: "bug: "
-labels: "bug"
-assignees: ""
+title: 'bug: '
+labels: 'bug'
+assignees: ''
 ---
 
 # Bug Report
