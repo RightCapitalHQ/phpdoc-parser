@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Thu, 07 Sep 2023 09:27:27 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Sep 2023 14:50:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.5](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.5) (2023-9-11)
+
+- docs: add badges area to README file ([ca5c105](https://github.com/RightCapitalHQ/phpdoc-parser/commit/ca5c1052fd35037337579af47c4d3be8b74f51e5))
 
 ### [0.3.4](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.4) (2023-9-7)
 

@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 11 Sep 2023 14:50:36 GMT",
+      "version": "0.3.5",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "ca5c1052fd35037337579af47c4d3be8b74f51e5",
+            "comment": "docs: add badges area to README file"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Sep 2023 13:58:17 GMT",
       "version": "0.3.4",
       "tag": "@rightcapital/phpdoc-parser_v0.3.4",
