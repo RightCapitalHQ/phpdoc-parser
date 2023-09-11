@@ -1,5 +1,14 @@
 # PHPDoc parser TypeScript version
 
+<!-- Badges area start -->
+
+[![made by RightCapital](https://img.shields.io/badge/made_by-RightCapital-5070e6)](https://rightcapital.com)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/RightCapitalHQ/phpdoc-parser/ci.yaml)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+[![RightCapital frontend style guide](https://img.shields.io/badge/code_style-RightCapital-5c4c64?labelColor=f0ede8)](https://github.com/RightCapitalHQ/frontend-style-guide)
+
+<!-- Badges area end -->
+
 Next-gen PHPDoc parser with support for intersection types and generics(TypeScript version)
 
 ## What's that
