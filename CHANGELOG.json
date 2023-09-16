@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Sat, 16 Sep 2023 08:10:46 GMT",
+      "version": "0.3.7",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "29139614+renovate[bot]@users.noreply.github.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "6fc1a596be7eac2d6afa2b71b69376c4a5fb7a33",
+            "comment": "chore(deps): update actions/stale action to v8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 16 Sep 2023 08:05:45 GMT",
       "version": "0.3.6",
       "tag": "@rightcapital/phpdoc-parser_v0.3.6",
