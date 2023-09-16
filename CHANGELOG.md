@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Sat, 16 Sep 2023 09:27:09 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Sep 2023 09:31:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.10](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.10) (2023-9-16)
+
+- chore(deps): update github/codeql-action action to v2 ([2467904](https://github.com/RightCapitalHQ/phpdoc-parser/commit/246790430802f846a48faf53194cdb4145aaf40c))
 
 ### [0.3.9](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.9) (2023-9-16)
 

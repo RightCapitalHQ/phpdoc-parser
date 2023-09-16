@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Sat, 16 Sep 2023 09:31:18 GMT",
+      "version": "0.3.10",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "246790430802f846a48faf53194cdb4145aaf40c",
+            "comment": "chore(deps): update github/codeql-action action to v2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 16 Sep 2023 09:27:09 GMT",
       "version": "0.3.9",
       "tag": "@rightcapital/phpdoc-parser_v0.3.9",
