@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "docs: update CI passing badge URL",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "i@rainx.cc",
+  "dependentChangeType": "patch"
+}
