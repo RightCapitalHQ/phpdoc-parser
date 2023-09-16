@@ -3,7 +3,7 @@
   "extends": ["github>RightCapitalHQ/renovate-config"],
   "assignees": ["rainx"],
   "reviewers": ["rainx"],
-  "labels": ["Upgrade Dependencies"],
+  "labels": ["dependencies"],
   "automergeType": "pr",
   "platformAutomerge": true,
   "prCreation": "immediate",
