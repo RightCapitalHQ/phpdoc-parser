@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Sat, 16 Sep 2023 08:14:14 GMT",
+      "version": "0.3.8",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "0499d56da8f2e56eb79ce0c0de480bf631f09586",
+            "comment": "docs: update CI passing badge URL"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 16 Sep 2023 08:10:46 GMT",
       "version": "0.3.7",
       "tag": "@rightcapital/phpdoc-parser_v0.3.7",

@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Sat, 16 Sep 2023 08:10:46 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Sep 2023 08:14:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.8](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.8) (2023-9-16)
+
+- docs: update CI passing badge URL ([0499d56](https://github.com/RightCapitalHQ/phpdoc-parser/commit/0499d56da8f2e56eb79ce0c0de480bf631f09586))
 
 ### [0.3.7](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.7) (2023-9-16)
 
