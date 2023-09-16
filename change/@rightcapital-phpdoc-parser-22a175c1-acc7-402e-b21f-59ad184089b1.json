@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(deps): update actions/checkout action to v4",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
