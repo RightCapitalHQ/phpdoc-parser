@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "ci: rename CI file extension to `yml` for consistency",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "i@rainx.cc",
+  "dependentChangeType": "none"
+}
