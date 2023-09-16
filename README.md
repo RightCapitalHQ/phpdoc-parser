@@ -129,6 +129,8 @@ We are stilling waiting for someones to contribute, especially for the following
 - More docs
 - A script to monitor [upstream](https://github.com/phpstan/phpdoc-parser) updates and notify the author to catch up.
 
+Please check out our [Contribution guide](docs/CONTRIBUTING.md)
+
 ## How did we create the initial version of this project.
 
 We created most of our code by using ChatGPT as a tool to transform most code from https://github.com/phpstan/phpdoc-parser to TypeScript version.
