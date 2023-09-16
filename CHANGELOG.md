@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Mon, 11 Sep 2023 14:50:36 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Sep 2023 08:05:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.6](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.6) (2023-9-16)
+
+- chore(deps): update actions/checkout action to v4 ([58896d4](https://github.com/RightCapitalHQ/phpdoc-parser/commit/58896d41a16b88bfda83412cac59432e259aee06))
 
 ### [0.3.5](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.5) (2023-9-11)
 
