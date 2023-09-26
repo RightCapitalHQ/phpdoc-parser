@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Tue, 26 Sep 2023 13:04:24 GMT",
+      "version": "0.3.10",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.10",
+      "comments": {
+        "none": [
+          {
+            "author": "29139614+renovate[bot]@users.noreply.github.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "1a19380041e8ac455eca0b582980095424a2b756",
+            "comment": "chore(deps): update devdependency @rightcapital/prettier-config to v6.0.2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Sep 2023 13:01:46 GMT",
       "version": "0.3.10",
       "tag": "@rightcapital/phpdoc-parser_v0.3.10",
