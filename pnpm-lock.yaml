@@ -38,8 +38,8 @@ devDependencies:
     specifier: 8.0.0
     version: 8.0.0(eslint@8.50.0)(typescript@5.2.2)
   '@rightcapital/prettier-config':
-    specifier: 6.0.1
-    version: 6.0.1(prettier@3.0.3)
+    specifier: 6.0.2
+    version: 6.0.2(prettier@3.0.3)
   '@types/jest':
     specifier: 29.5.5
     version: 29.5.5
@@ -1906,8 +1906,8 @@ packages:
       - supports-color
     dev: true
 
-  /@rightcapital/prettier-config@6.0.1(prettier@3.0.3):
-    resolution: {integrity: sha512-W1v9MJWMj7cBSeIvyAc2k3WPkNCNGHbS3smu5cqSkZwezLzKjlj9ekhf/LL4GyIpNBxnWqzKlwCpw/pM+o6IXA==}
+  /@rightcapital/prettier-config@6.0.2(prettier@3.0.3):
+    resolution: {integrity: sha512-UAHpzMkq0/FGqcbrJbzX0oW7XPH0/lV+wBaX/B/2n5q+2vYo8FpLKuzLb3JzfzY9e3zC4WgbyigNYOD+SjyJaw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       prettier: ^3.0.0
