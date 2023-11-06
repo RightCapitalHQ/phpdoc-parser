@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 06 Nov 2023 10:52:33 GMT",
+      "version": "0.3.12",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.12",
+      "comments": {
+        "none": [
+          {
+            "author": "29139614+renovate[bot]@users.noreply.github.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "f0d77c2ddc289bf23425714872cb546bdab1531b",
+            "comment": "chore(deps): lock file maintenance non-major updates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Nov 2023 03:48:18 GMT",
       "version": "0.3.12",
       "tag": "@rightcapital/phpdoc-parser_v0.3.12",

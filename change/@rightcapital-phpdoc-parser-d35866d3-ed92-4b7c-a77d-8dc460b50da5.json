@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore(deps): lock file maintenance non-major updates",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "29139614+renovate[bot]@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
