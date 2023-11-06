@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 06 Nov 2023 03:48:18 GMT",
+      "version": "0.3.12",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.12",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "b38298ea15eff7b3d758244a10f2918b2b32c0a2",
+            "comment": "chore(deps): update devdependencies to v13"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Nov 2023 00:50:58 GMT",
       "version": "0.3.12",
       "tag": "@rightcapital/phpdoc-parser_v0.3.12",
