@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>RightCapitalHQ/renovate-config"],
+  "extends": ["github>RightCapitalHQ/renovate-config:library"],
   "assignees": ["rainx"],
   "reviewers": ["rainx"],
   "labels": ["dependencies"],
@@ -30,16 +30,6 @@
     }
   },
   "packageRules": [
-    {
-      "automerge": false,
-      "description": "Mark rule and plugin updates as breaking changes",
-      "matchDepTypes": ["dependencies"],
-      "matchPackagePrefixes": [
-        "@typescript-eslint/",
-        "eslint-config-",
-        "eslint-plugin-"
-      ]
-    },
     {
       "automerge": false,
       "description": "Group all RightCapital packages (non-major) together",
