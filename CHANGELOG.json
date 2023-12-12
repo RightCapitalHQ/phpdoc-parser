@@ -2,6 +2,29 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Tue, 12 Dec 2023 14:37:49 GMT",
+      "version": "0.3.14",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "0da9759df1a62b9a9028d368cb4558d3f83d60e1",
+            "comment": "chore(deps): update dessant/lock-threads action to v5"
+          }
+        ],
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "0da9759df1a62b9a9028d368cb4558d3f83d60e1",
+            "comment": "chore(deps): update devdependencies to v16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Dec 2023 14:32:38 GMT",
       "version": "0.3.13",
       "tag": "@rightcapital/phpdoc-parser_v0.3.13",

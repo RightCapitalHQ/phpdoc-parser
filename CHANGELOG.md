@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Tue, 12 Dec 2023 14:32:38 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Dec 2023 14:37:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.14](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.14) (2023-12-12)
+
+- chore(deps): update dessant/lock-threads action to v5 ([0da9759](https://github.com/RightCapitalHQ/phpdoc-parser/commit/0da9759df1a62b9a9028d368cb4558d3f83d60e1))
 
 ### [0.3.13](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.13) (2023-12-12)
 
