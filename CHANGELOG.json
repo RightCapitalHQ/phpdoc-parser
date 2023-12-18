@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 18 Dec 2023 06:41:55 GMT",
+      "version": "0.3.14",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.14",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "1b1f1c0b3618cdbec29fcceb5359acf2e27df5ec",
+            "comment": "chore(deps): update devdependency eslint to v8.56.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Dec 2023 14:45:30 GMT",
       "version": "0.3.14",
       "tag": "@rightcapital/phpdoc-parser_v0.3.14",
