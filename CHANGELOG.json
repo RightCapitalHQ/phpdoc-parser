@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 18 Dec 2023 16:25:38 GMT",
+      "version": "0.3.17",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "5297d3b899cb6b7da71c4d3a0e8a71b27deff904",
+            "comment": "chore(deps): update actions/setup-node action to v4.0.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Dec 2023 06:55:12 GMT",
       "version": "0.3.16",
       "tag": "@rightcapital/phpdoc-parser_v0.3.16",
