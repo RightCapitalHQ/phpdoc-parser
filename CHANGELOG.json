@@ -2,6 +2,29 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 18 Dec 2023 06:42:11 GMT",
+      "version": "0.3.15",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.15",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "not available",
+            "comment": "chore(deps): update devdependency eslint to v8.56.0"
+          }
+        ],
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "43bc61c925d0cc4fad15e59df30570be0fbd1025",
+            "comment": "chore(deps): update github/codeql-action action to v3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Dec 2023 06:41:55 GMT",
       "version": "0.3.14",
       "tag": "@rightcapital/phpdoc-parser_v0.3.14",
