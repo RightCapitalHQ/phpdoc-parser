@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Wed, 03 Jan 2024 04:03:22 GMT",
+      "version": "0.3.20",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "05d9c6ebea6ade90703e6e606d94ebc8e0b3df2c",
+            "comment": "chore(deps): update pnpm to v8.14.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 30 Dec 2023 03:52:36 GMT",
       "version": "0.3.19",
       "tag": "@rightcapital/phpdoc-parser_v0.3.19",
