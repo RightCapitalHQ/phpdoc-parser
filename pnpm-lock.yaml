@@ -32,11 +32,11 @@ devDependencies:
     specifier: 18.4.3
     version: 18.4.3(commitizen@4.3.0)(inquirer@9.2.12)(typescript@5.3.3)
   '@rightcapital/eslint-config-javascript':
-    specifier: 16.0.1
-    version: 16.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0)
+    specifier: 17.0.1
+    version: 17.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0)
   '@rightcapital/eslint-config-typescript':
-    specifier: 16.0.1
-    version: 16.0.1(eslint@8.56.0)(typescript@5.3.3)
+    specifier: 17.0.1
+    version: 17.0.1(eslint@8.56.0)(typescript@5.3.3)
   '@rightcapital/prettier-config':
     specifier: 6.0.8
     version: 6.0.8(prettier@3.1.1)
@@ -1860,8 +1860,8 @@ packages:
       fastq: 1.16.0
     dev: true
 
-  /@rightcapital/eslint-config-base@16.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0):
-    resolution: {integrity: sha512-OBGqHxc8614xw/s8t2dIYTV7D9YowsRQjTqDtMBtV1ohjhTv6qnotSuz/RI6iap95o0BjNjBBKG9fBGEIa+t8Q==}
+  /@rightcapital/eslint-config-base@17.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0):
+    resolution: {integrity: sha512-KSVsTeoLxK+lYtGWdfE7g+0XmGJQE9n0eDMIyQsn2LeDj1G9m0O7yNORslDe0VjRua5evjXinA5Vi8tdZb9HaQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       eslint: ^8.23.1
@@ -1878,13 +1878,13 @@ packages:
       - supports-color
     dev: true
 
-  /@rightcapital/eslint-config-javascript@16.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0):
-    resolution: {integrity: sha512-euk9fMWsoPLuCySvBQPkBn7vH9/Ta8QdKr0WAOt+dYNWHbUas1k+q9PKD96zH8m8wTUTV+few2bWFmqRCNDgfg==}
+  /@rightcapital/eslint-config-javascript@17.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0):
+    resolution: {integrity: sha512-t3bPjl5tCriwW6SC+aUxjQF2e+YwSRPFrL2vwrvzni67sPe6Itt9HavJUG+yrjdAWKSrT+lsznLQw+avy6RA/g==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       eslint: ^8.23.1
     dependencies:
-      '@rightcapital/eslint-config-base': 16.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0)
+      '@rightcapital/eslint-config-base': 17.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0)
       '@rushstack/eslint-patch': 1.6.0
       eslint: 8.56.0
       eslint-config-prettier: 9.0.0(eslint@8.56.0)
@@ -1895,14 +1895,14 @@ packages:
       - supports-color
     dev: true
 
-  /@rightcapital/eslint-config-typescript@16.0.1(eslint@8.56.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-O1DW+EQfoCjHjrM6t/IfWOSFmOS2a3UCtbS9JE9ZwNMv18iwToYAKbqoto26Kbh5xxHuYlrFiRZDvymqvA/aqQ==}
+  /@rightcapital/eslint-config-typescript@17.0.1(eslint@8.56.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-S7IhSz8BunGb/OiMMOpdvaTEj/bi1TG1lgNoLzHaNY7eNCKckfGCJfSEWIMxKjyXHzU1nbDRcBW3BGLrUpSo8g==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       eslint: ^8.23.1
       typescript: ^5.0.0
     dependencies:
-      '@rightcapital/eslint-config-base': 16.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0)
+      '@rightcapital/eslint-config-base': 17.0.1(@typescript-eslint/parser@6.12.0)(eslint@8.56.0)
       '@rushstack/eslint-patch': 1.6.0
       '@typescript-eslint/eslint-plugin': 6.12.0(@typescript-eslint/parser@6.12.0)(eslint@8.56.0)(typescript@5.3.3)
       '@typescript-eslint/parser': 6.12.0(eslint@8.56.0)(typescript@5.3.3)
