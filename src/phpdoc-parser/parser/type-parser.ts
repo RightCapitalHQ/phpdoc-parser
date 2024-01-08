@@ -751,16 +751,14 @@ export class TypeParser {
   ): ConstExprIntegerNode | ConstExprStringNode | IdentifierTypeNode {
     const startLine = tokens.currentTokenLine();
     const startIndex = tokens.currentTokenIndex();
+    let key: ConstExprIntegerNode | IdentifierTypeNode | ConstExprStringNode;
 
     if (tokens.isCurrentTokenType(Lexer.TOKEN_INTEGER)) {
-      const key = new ConstExprIntegerNode(
+      key = new ConstExprIntegerNode(
         tokens.currentTokenValue().replaceAll('_', ''),
       );
       tokens.next();
-      return this.enrichWithAttributes(tokens, key, startLine, startIndex);
-    }
-    let key: ConstExprIntegerNode | IdentifierTypeNode | ConstExprStringNode;
-    if (tokens.isCurrentTokenType(Lexer.TOKEN_SINGLE_QUOTED_STRING)) {
+    } else if (tokens.isCurrentTokenType(Lexer.TOKEN_SINGLE_QUOTED_STRING)) {
       if (this.quoteAwareConstExprString) {
         key = new QuoteAwareConstExprStringNode(
           StringUnescaper.unescapeString(tokens.currentTokenValue()),
@@ -772,8 +770,7 @@ export class TypeParser {
         );
       }
       tokens.next();
-    }
-    if (tokens.isCurrentTokenType(Lexer.TOKEN_DOUBLE_QUOTED_STRING)) {
+    } else if (tokens.isCurrentTokenType(Lexer.TOKEN_DOUBLE_QUOTED_STRING)) {
       if (this.quoteAwareConstExprString) {
         key = new QuoteAwareConstExprStringNode(
           StringUnescaper.unescapeString(tokens.currentTokenValue()),
@@ -784,10 +781,12 @@ export class TypeParser {
           tokens.currentTokenValue().replace(/(^"|"$)/g, ''),
         );
       }
+      tokens.next();
     } else {
       key = new IdentifierTypeNode(tokens.currentTokenValue());
       tokens.consumeTokenType(Lexer.TOKEN_IDENTIFIER);
     }
+
     return this.enrichWithAttributes<
       ConstExprIntegerNode | IdentifierTypeNode | ConstExprStringNode
     >(tokens, key, startLine, startIndex);
@@ -839,8 +838,8 @@ export class TypeParser {
   ): ConstExprStringNode | IdentifierTypeNode {
     const startLine = tokens.currentTokenLine();
     const startIndex = tokens.currentTokenIndex();
-
     let key: ConstExprStringNode | IdentifierTypeNode;
+
     if (tokens.isCurrentTokenType(Lexer.TOKEN_SINGLE_QUOTED_STRING)) {
       if (this.quoteAwareConstExprString) {
         key = new QuoteAwareConstExprStringNode(
@@ -849,12 +848,11 @@ export class TypeParser {
         );
       } else {
         key = new ConstExprStringNode(
-          tokens.currentTokenValue().replace(/(^"|"$)/g, ''),
+          tokens.currentTokenValue().replace(/(^'|'$)/g, ''),
         );
       }
       tokens.next();
-    }
-    if (tokens.isCurrentTokenType(Lexer.TOKEN_DOUBLE_QUOTED_STRING)) {
+    } else if (tokens.isCurrentTokenType(Lexer.TOKEN_DOUBLE_QUOTED_STRING)) {
       if (this.quoteAwareConstExprString) {
         key = new QuoteAwareConstExprStringNode(
           StringUnescaper.unescapeString(tokens.currentTokenValue()),
@@ -865,12 +863,12 @@ export class TypeParser {
           tokens.currentTokenValue().replace(/(^"|"$)/g, ''),
         );
       }
-
       tokens.next();
     } else {
       key = new IdentifierTypeNode(tokens.currentTokenValue());
       tokens.consumeTokenType(Lexer.TOKEN_IDENTIFIER);
     }
+
     return this.enrichWithAttributes(tokens, key, startLine, startIndex);
   }
 }

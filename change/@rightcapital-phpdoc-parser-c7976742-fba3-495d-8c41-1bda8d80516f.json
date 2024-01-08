@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix(parser): not able to correctly parse key in array shape and object shape node",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "yilunsun11@yeah.net",
+  "dependentChangeType": "patch"
+}
