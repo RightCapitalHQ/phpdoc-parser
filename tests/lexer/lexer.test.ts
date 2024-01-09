@@ -1,3 +1,4 @@
+import { it, expect } from 'vitest';
 import { Lexer } from '../../src';
 
 // Comes from Laravel https://github.com/laravel/framework/blob/10.x/src/Illuminate/Collections/Collection.php
