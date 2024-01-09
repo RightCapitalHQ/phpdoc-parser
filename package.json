@@ -62,7 +62,6 @@
     "build": "pnpm run clean && tsc --project ./tsconfig.build.json",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
-    "start": "ts-node src/index.ts",
     "eslint": "eslint --report-unused-disable-directives 'src/**/*.ts*'",
     "eslint:fix": "eslint --report-unused-disable-directives --fix 'src/**/*.ts*'",
     "test": "jest"
