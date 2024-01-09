@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Sun, 07 Jan 2024 18:40:04 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Jan 2024 01:36:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.22](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.22) (2024-1-9)
+
+- fix(parser): not able to correctly parse key in array shape and object shape node ([0c9453c](https://github.com/RightCapitalHQ/phpdoc-parser/commit/0c9453c66b53b3c633f660b9ef9e563020ac0ff0))
 
 ### [0.3.21](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.21) (2024-1-7)
 

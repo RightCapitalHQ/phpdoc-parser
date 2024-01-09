@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Tue, 09 Jan 2024 01:36:49 GMT",
+      "version": "0.3.22",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "yilunsun11@yeah.net",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "0c9453c66b53b3c633f660b9ef9e563020ac0ff0",
+            "comment": "fix(parser): not able to correctly parse key in array shape and object shape node"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 07 Jan 2024 18:40:04 GMT",
       "version": "0.3.21",
       "tag": "@rightcapital/phpdoc-parser_v0.3.21",
