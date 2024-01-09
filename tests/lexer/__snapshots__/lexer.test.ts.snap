@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`test tokenize for a very common doc annotation: commonSource 1`] = `
+exports[`test tokenize for a very common doc annotation > commonSource 1`] = `
 [
   [
     "/**",
