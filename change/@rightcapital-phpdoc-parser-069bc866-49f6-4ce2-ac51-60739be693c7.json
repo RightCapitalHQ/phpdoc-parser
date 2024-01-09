@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "test: replace jest with vitest",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "i@rainx.cc",
-  "dependentChangeType": "none"
-}

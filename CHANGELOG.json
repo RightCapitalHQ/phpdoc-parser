@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Tue, 09 Jan 2024 07:42:07 GMT",
+      "version": "0.3.22",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.22",
+      "comments": {
+        "none": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "434980c9d391c9f7e085abede791bbe101c7dca9",
+            "comment": "test: replace jest with vitest"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Jan 2024 01:36:49 GMT",
       "version": "0.3.22",
       "tag": "@rightcapital/phpdoc-parser_v0.3.22",
