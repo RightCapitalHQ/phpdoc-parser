@@ -16,7 +16,7 @@
   "repository": "https://github.com/RightCapitalHQ/phpdoc-parser",
   "author": "RightCapital Ecosystem team <npm-publisher@rightcapital.com>",
   "license": "MIT",
-  "packageManager": "pnpm@8.14.0",
+  "packageManager": "pnpm@8.14.1",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
