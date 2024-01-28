@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Sun, 28 Jan 2024 14:05:14 GMT",
+      "version": "0.3.34",
+      "tag": "@rightcapital/phpdoc-parser_v0.3.34",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "e4e03a9e74ef04e8c8bb9717cd3fcf8b893d4926",
+            "comment": "fix(deps): update non-major updates(auto merge)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jan 2024 12:09:04 GMT",
       "version": "0.3.33",
       "tag": "@rightcapital/phpdoc-parser_v0.3.33",

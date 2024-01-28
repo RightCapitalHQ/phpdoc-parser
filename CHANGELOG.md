@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Fri, 26 Jan 2024 12:09:04 GMT and should not be manually modified.
+This log was last generated on Sun, 28 Jan 2024 14:05:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.3.34](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.34) (2024-1-28)
+
+- fix(deps): update non-major updates(auto merge) ([e4e03a9](https://github.com/RightCapitalHQ/phpdoc-parser/commit/e4e03a9e74ef04e8c8bb9717cd3fcf8b893d4926))
 
 ### [0.3.33](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.33) (2024-1-26)
 
