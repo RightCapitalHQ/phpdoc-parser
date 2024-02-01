@@ -5,8 +5,8 @@
  * All rights reserved.
  */
 
-import { Node } from './node';
-import { NodeTraverserState } from './types';
+import type { Node } from './node';
+import type { NodeTraverserState } from './types';
 
 export type NodeTraverserEnterReturn =
   | Node

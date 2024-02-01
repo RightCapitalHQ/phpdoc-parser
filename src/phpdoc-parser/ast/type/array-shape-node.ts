@@ -1,4 +1,4 @@
-import { ArrayShapeItemNode } from './array-shape-item-node';
+import type { ArrayShapeItemNode } from './array-shape-item-node';
 import { TypeNode } from './type-node';
 
 export enum ArrayShapeNodeKind {

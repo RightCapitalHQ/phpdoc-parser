@@ -1,4 +1,4 @@
-import { ObjectShapeItemNode } from './object-shape-item-node';
+import type { ObjectShapeItemNode } from './object-shape-item-node';
 import { TypeNode } from './type-node';
 
 export class ObjectShapeNode extends TypeNode {

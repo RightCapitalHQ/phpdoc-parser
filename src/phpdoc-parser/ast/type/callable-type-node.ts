@@ -1,5 +1,5 @@
-import { CallableTypeParameterNode } from './callable-type-parameter-node';
-import { IdentifierTypeNode } from './identifier-type-node';
+import type { CallableTypeParameterNode } from './callable-type-parameter-node';
+import type { IdentifierTypeNode } from './identifier-type-node';
 import { TypeNode } from './type-node';
 
 export class CallableTypeNode extends TypeNode {

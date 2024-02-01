@@ -1,9 +1,9 @@
-import { ConstExprParser } from './const-expr-parser';
-import { ParserException } from './parser-exception';
-import { TokenIterator } from './token-iterator';
-import { TypeParser } from './type-parser';
-import { BaseNode } from '../ast/base-node';
-import { ConstExprNode } from '../ast/const-expr/const-expr-node';
+import type { ConstExprParser } from './const-expr-parser';
+import type { ParserException } from './parser-exception';
+import type { TokenIterator } from './token-iterator';
+import type { TypeParser } from './type-parser';
+import type { BaseNode } from '../ast/base-node';
+import type { ConstExprNode } from '../ast/const-expr/const-expr-node';
 import { AssertTagMethodValueNode } from '../ast/php-doc/assert-tag-method-value-node';
 import { AssertTagPropertyValueNode } from '../ast/php-doc/assert-tag-property-value-node';
 import { AssertTagValueNode } from '../ast/php-doc/assert-tag-value-node';
@@ -17,10 +17,10 @@ import { MethodTagValueParameterNode } from '../ast/php-doc/method-tag-value-par
 import { MixinTagValueNode } from '../ast/php-doc/mixin-tag-value-node';
 import { ParamOutTagValueNode } from '../ast/php-doc/param-out-tag-value-node';
 import { ParamTagValueNode } from '../ast/php-doc/param-tag-value-node';
-import { PhpDocChildNode } from '../ast/php-doc/php-doc-child-node';
+import type { PhpDocChildNode } from '../ast/php-doc/php-doc-child-node';
 import { PhpDocNode } from '../ast/php-doc/php-doc-node';
 import { PhpDocTagNode } from '../ast/php-doc/php-doc-tag-node';
-import { PhpDocTagValueNode } from '../ast/php-doc/php-doc-tag-value-node';
+import type { PhpDocTagValueNode } from '../ast/php-doc/php-doc-tag-value-node';
 import { PhpDocTextNode } from '../ast/php-doc/php-doc-text-node';
 import { PropertyTagValueNode } from '../ast/php-doc/property-tag-value-node';
 import { ReturnTagValueNode } from '../ast/php-doc/return-tag-value-node';
@@ -34,7 +34,7 @@ import { UsesTagValueNode } from '../ast/php-doc/uses-tag-value-node';
 import { VarTagValueNode } from '../ast/php-doc/var-tag-value-node';
 import { IdentifierTypeNode } from '../ast/type/identifier-type-node';
 import { InvalidTypeNode } from '../ast/type/invalid-type-node';
-import { TypeNode } from '../ast/type/type-node';
+import type { TypeNode } from '../ast/type/type-node';
 import { Attribute } from '../ast/types';
 import { Lexer } from '../lexer/lexer';
 

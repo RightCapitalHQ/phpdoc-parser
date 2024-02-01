@@ -3,7 +3,7 @@ import { Differ } from './differ';
 import { BaseNode } from '../ast/base-node';
 import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
 import { ConstExprNode } from '../ast/const-expr/const-expr-node';
-import { Node } from '../ast/node';
+import type { Node } from '../ast/node';
 import { AssertTagMethodValueNode } from '../ast/php-doc/assert-tag-method-value-node';
 import { AssertTagPropertyValueNode } from '../ast/php-doc/assert-tag-property-value-node';
 import { AssertTagValueNode } from '../ast/php-doc/assert-tag-value-node';
@@ -48,7 +48,7 @@ import { TypeNode } from '../ast/type/type-node';
 import { UnionTypeNode } from '../ast/type/union-type-node';
 import { Attribute } from '../ast/types';
 import { Lexer } from '../lexer/lexer';
-import { TokenIterator } from '../parser/token-iterator';
+import type { TokenIterator } from '../parser/token-iterator';
 
 export class Printer {
   private differ: Differ<Node>;

@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { AbstractNodeVisitor } from '../abstract-node-visitor';
-import { Node } from '../node';
+import type { Node } from '../node';
 import { Attribute } from '../types';
 
 export class CloningVisitor extends AbstractNodeVisitor {

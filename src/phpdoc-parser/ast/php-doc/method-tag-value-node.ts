@@ -1,7 +1,7 @@
-import { MethodTagValueParameterNode } from './method-tag-value-parameter-node';
+import type { MethodTagValueParameterNode } from './method-tag-value-parameter-node';
 import { PhpDocTagValueNode } from './php-doc-tag-value-node';
-import { TemplateTagValueNode } from './template-tag-value-node';
-import { TypeNode } from '../type/type-node';
+import type { TemplateTagValueNode } from './template-tag-value-node';
+import type { TypeNode } from '../type/type-node';
 
 export class MethodTagValueNode extends PhpDocTagValueNode {
   constructor(

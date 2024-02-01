@@ -1,4 +1,4 @@
-import { ConstExprArrayItemNode } from './const-expr-array-item-node';
+import type { ConstExprArrayItemNode } from './const-expr-array-item-node';
 import { ConstExprNode } from './const-expr-node';
 
 export class ConstExprArrayNode extends ConstExprNode {

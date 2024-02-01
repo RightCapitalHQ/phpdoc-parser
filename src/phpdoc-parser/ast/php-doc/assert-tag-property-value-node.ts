@@ -1,5 +1,5 @@
 import { PhpDocTagValueNode } from './php-doc-tag-value-node';
-import { TypeNode } from '../type/type-node';
+import type { TypeNode } from '../type/type-node';
 
 export class AssertTagPropertyValueNode extends PhpDocTagValueNode {
   constructor(

@@ -1,5 +1,5 @@
-import { Node } from './node';
-import {
+import type { Node } from './node';
+import type {
   NodeTraverserBeforeAfterReturn,
   NodeTraverserEnterReturn,
   NodeTraverserLeaveReturn,
