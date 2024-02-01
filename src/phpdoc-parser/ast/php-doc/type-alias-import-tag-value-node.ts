@@ -1,5 +1,5 @@
 import { PhpDocTagValueNode } from './php-doc-tag-value-node';
-import { IdentifierTypeNode } from '../type/identifier-type-node';
+import type { IdentifierTypeNode } from '../type/identifier-type-node';
 
 export class TypeAliasImportTagValueNode extends PhpDocTagValueNode {
   constructor(

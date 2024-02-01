@@ -1,8 +1,8 @@
-import { ConstExprParser } from './const-expr-parser';
+import type { ConstExprParser } from './const-expr-parser';
 import { ParserException } from './parser-exception';
 import { StringUnescaper } from './string-unescaper';
-import { TokenIterator } from './token-iterator';
-import { BaseNode } from '../ast/base-node';
+import type { TokenIterator } from './token-iterator';
+import type { BaseNode } from '../ast/base-node';
 import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
 import { ConstExprIntegerNode } from '../ast/const-expr/const-expr-integer-node';
 import { ConstExprStringNode } from '../ast/const-expr/const-expr-string-node';
@@ -10,7 +10,7 @@ import { QuoteAwareConstExprStringNode } from '../ast/const-expr/quote-aware-con
 import { ArrayShapeItemNode } from '../ast/type/array-shape-item-node';
 import {
   ArrayShapeNode,
-  ArrayShapeNodeKind,
+  type ArrayShapeNodeKind,
 } from '../ast/type/array-shape-node';
 import { ArrayTypeNode } from '../ast/type/array-type-node';
 import { CallableTypeNode } from '../ast/type/callable-type-node';
@@ -20,7 +20,7 @@ import { ConditionalTypeNode } from '../ast/type/conditional-type-node';
 import { ConstTypeNode } from '../ast/type/const-type-node';
 import {
   GenericTypeNode,
-  GenericTypeNodeVariance,
+  type GenericTypeNodeVariance,
 } from '../ast/type/generic-type-node';
 import { IdentifierTypeNode } from '../ast/type/identifier-type-node';
 import { IntersectionTypeNode } from '../ast/type/intersection-type-node';
@@ -29,7 +29,7 @@ import { ObjectShapeItemNode } from '../ast/type/object-shape-item-node';
 import { ObjectShapeNode } from '../ast/type/object-shape-node';
 import { OffsetAccessTypeNode } from '../ast/type/offset-access-type-node';
 import { ThisTypeNode } from '../ast/type/this-type-node';
-import { TypeNode } from '../ast/type/type-node';
+import type { TypeNode } from '../ast/type/type-node';
 import { UnionTypeNode } from '../ast/type/union-type-node';
 import { Attribute } from '../ast/types';
 import { Lexer } from '../lexer/lexer';

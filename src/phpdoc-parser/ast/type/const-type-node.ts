@@ -1,5 +1,5 @@
 import { TypeNode } from './type-node';
-import { ConstExprNode } from '../const-expr/const-expr-node';
+import type { ConstExprNode } from '../const-expr/const-expr-node';
 
 export class ConstTypeNode extends TypeNode {
   constructor(public constExpr: ConstExprNode) {

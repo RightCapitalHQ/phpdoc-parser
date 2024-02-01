@@ -1,12 +1,12 @@
 import { ParserException } from './parser-exception';
 import { StringUnescaper } from './string-unescaper';
-import { TokenIterator } from './token-iterator';
+import type { TokenIterator } from './token-iterator';
 import { ConstExprArrayItemNode } from '../ast/const-expr/const-expr-array-item-node';
 import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
 import { ConstExprFalseNode } from '../ast/const-expr/const-expr-false-node';
 import { ConstExprFloatNode } from '../ast/const-expr/const-expr-float-node';
 import { ConstExprIntegerNode } from '../ast/const-expr/const-expr-integer-node';
-import { ConstExprNode } from '../ast/const-expr/const-expr-node';
+import type { ConstExprNode } from '../ast/const-expr/const-expr-node';
 import { ConstExprNullNode } from '../ast/const-expr/const-expr-null-node';
 import { ConstExprStringNode } from '../ast/const-expr/const-expr-string-node';
 import { ConstExprTrueNode } from '../ast/const-expr/const-expr-true-node';

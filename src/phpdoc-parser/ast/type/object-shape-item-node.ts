@@ -1,6 +1,6 @@
-import { IdentifierTypeNode } from './identifier-type-node';
+import type { IdentifierTypeNode } from './identifier-type-node';
 import { TypeNode } from './type-node';
-import { ConstExprStringNode } from '../const-expr/const-expr-string-node';
+import type { ConstExprStringNode } from '../const-expr/const-expr-string-node';
 
 export class ObjectShapeItemNode extends TypeNode {
   constructor(

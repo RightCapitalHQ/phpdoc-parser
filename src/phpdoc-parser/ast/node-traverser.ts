@@ -2,8 +2,8 @@
 /* eslint-disable no-plusplus */
 import { BaseNode } from './base-node';
 import { ConstExprNode } from './const-expr/const-expr-node';
-import { Node } from './node';
-import { NodeVisitor } from './node-visitor';
+import type { Node } from './node';
+import type { NodeVisitor } from './node-visitor';
 import { PhpDocChildNode } from './php-doc/php-doc-child-node';
 import { PhpDocTagValueNode } from './php-doc/php-doc-tag-value-node';
 import { TypeNode } from './type/type-node';

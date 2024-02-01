@@ -1,4 +1,4 @@
-import { IdentifierTypeNode } from './identifier-type-node';
+import type { IdentifierTypeNode } from './identifier-type-node';
 import { TypeNode } from './type-node';
 
 export type GenericTypeNodeVariance =

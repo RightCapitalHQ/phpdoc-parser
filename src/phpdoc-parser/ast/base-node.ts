@@ -1,4 +1,4 @@
-import { Node } from './node';
+import type { Node } from './node';
 
 export abstract class BaseNode implements Node {
   private attributes: { [key: string]: unknown } = {};

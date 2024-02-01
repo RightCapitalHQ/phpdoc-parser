@@ -1,5 +1,5 @@
 import { PhpDocTagValueNode } from './php-doc-tag-value-node';
-import { GenericTypeNode } from '../type/generic-type-node';
+import type { GenericTypeNode } from '../type/generic-type-node';
 
 export class ExtendsTagValueNode extends PhpDocTagValueNode {
   constructor(
