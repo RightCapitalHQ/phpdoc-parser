@@ -6,6 +6,7 @@ import { ParamTagValueNode } from './param-tag-value-node';
 import type { PhpDocChildNode } from './php-doc-child-node';
 import { PhpDocTagNode } from './php-doc-tag-node';
 import type { PhpDocTagValueNode } from './php-doc-tag-value-node';
+import { PropertyTagValueNode } from './property-tag-value-node';
 import { ReturnTagValueNode } from './return-tag-value-node';
 import { TemplateTagValueNode } from './template-tag-value-node';
 import { ThrowsTagValueNode } from './throws-tag-value-node';
@@ -31,6 +32,14 @@ export class PhpDocNode extends BaseNode {
     return this.getTags().filter((tag: PhpDocTagNode): boolean => {
       return tag.name === tagName;
     });
+  }
+
+  public getPropertyTagValues(tagName = '@property'): PropertyTagValueNode[] {
+    return this.getTagsByName(tagName)
+      .map((tag) => tag.value)
+      .filter((value: PhpDocTagValueNode): value is PropertyTagValueNode => {
+        return value instanceof PropertyTagValueNode;
+      });
   }
 
   public getVarTagValues(tagName = '@var'): VarTagValueNode[] {

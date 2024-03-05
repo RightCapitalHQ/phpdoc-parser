@@ -239,7 +239,7 @@ export class PhpDocParser {
     const startLine = tokens.currentTokenLine();
     const startIndex = tokens.currentTokenIndex();
 
-    let tagValue: BaseNode;
+    let tagValue: PhpDocTagValueNode;
     try {
       tokens.pushSavePoint();
 
