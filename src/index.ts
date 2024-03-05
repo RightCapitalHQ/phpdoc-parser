@@ -71,3 +71,5 @@ export { PhpDocTagNode } from './phpdoc-parser/ast/php-doc/php-doc-tag-node';
 export { PhpDocTagValueNode } from './phpdoc-parser/ast/php-doc/php-doc-tag-value-node';
 export { ReturnTagValueNode } from './phpdoc-parser/ast/php-doc/return-tag-value-node';
 export { Printer } from './phpdoc-parser/printer/printer';
+export { PhpDocTypeNodeToTypescriptTypeNodeTranspiler } from './phpdoc-parser/transpiler/php-doc-to-typescript-type-transpiler';
+export * from './phpdoc-parser/ast/php-doc/helpers';

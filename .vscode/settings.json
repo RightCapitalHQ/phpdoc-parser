@@ -16,5 +16,7 @@
     "typescriptreact"
   ],
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "cSpell.words": ["chatgpt"]
+  "cSpell.words": [
+    "chatgpt"
+  ]
 }

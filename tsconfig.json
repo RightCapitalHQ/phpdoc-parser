@@ -2,7 +2,9 @@
   "compilerOptions": {
     "declaration": true,
     "target": "es6",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "module": "commonjs",
     "noResolve": false,
     "noImplicitAny": false,
@@ -11,5 +13,8 @@
     "sourceMap": true,
     "outDir": "./dist"
   },
-  "include": ["src/**/*", "tests/**/*"]
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ]
 }
