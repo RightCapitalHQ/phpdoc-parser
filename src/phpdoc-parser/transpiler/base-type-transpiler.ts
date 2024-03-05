@@ -1,4 +1,4 @@
-import { ImportDeclaration, TypeNode } from 'typescript';
+import type { ImportDeclaration, TypeNode } from 'typescript';
 
 export abstract class BaseTypeTranspiler<SourceTypeNode> {
   constructor(

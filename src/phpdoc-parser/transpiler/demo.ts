@@ -1,11 +1,11 @@
 import { renderTsNodeToString } from './helpers';
 import {
-  NameNodePathResolver,
+  type NameNodePathResolver,
   PhpDocTypeNodeToTypescriptTypeNodeTranspiler,
 } from './php-doc-to-typescript-type-transpiler';
-import { ParamTagValueNode } from '../ast/php-doc/param-tag-value-node';
-import { PropertyTagValueNode } from '../ast/php-doc/property-tag-value-node';
-import { ReturnTagValueNode } from '../ast/php-doc/return-tag-value-node';
+import type { ParamTagValueNode } from '../ast/php-doc/param-tag-value-node';
+import type { PropertyTagValueNode } from '../ast/php-doc/property-tag-value-node';
+import type { ReturnTagValueNode } from '../ast/php-doc/return-tag-value-node';
 import { Lexer } from '../lexer/lexer';
 import { ConstExprParser } from '../parser/const-expr-parser';
 import { PhpDocParser } from '../parser/php-doc-parser';

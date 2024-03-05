@@ -1,10 +1,10 @@
-import { ImportDeclaration, SyntaxKind, TypeNode, factory } from 'typescript';
-import { ArrayShapeItemNode } from '../ast/type/array-shape-item-node';
+import { type ImportDeclaration, SyntaxKind, type TypeNode, factory } from 'typescript';
+import type { ArrayShapeItemNode } from '../ast/type/array-shape-item-node';
 import { ArrayShapeNode } from '../ast/type/array-shape-node';
 import { ArrayTypeNode } from '../ast/type/array-type-node';
-import { ObjectShapeItemNode } from '../ast/type/object-shape-item-node';
+import type { ObjectShapeItemNode } from '../ast/type/object-shape-item-node';
 import { ObjectShapeNode } from '../ast/type/object-shape-node';
-import { TypeNode as PhpDocTypeNode } from '../ast/type/type-node';
+import type { TypeNode as PhpDocTypeNode } from '../ast/type/type-node';
 import { UnionTypeNode } from '../ast/type/union-type-node';
 
 export type NameNodePathResolver<T> = (
