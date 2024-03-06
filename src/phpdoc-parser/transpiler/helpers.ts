@@ -1,5 +1,25 @@
-import _ = require('lodash');
-import * as ts from 'typescript';
+import {
+  type ImportDeclaration,
+  factory,
+  type ExportDeclaration,
+  type TypeElement,
+  type TypeParameterDeclaration,
+  type HeritageClause,
+  type InterfaceDeclaration,
+  SyntaxKind,
+  ScriptTarget,
+  type SourceFile,
+  createSourceFile,
+  ScriptKind,
+  type Statement,
+  addSyntheticLeadingComment,
+  type EnumDeclaration,
+  type ModifierSyntaxKind,
+  type Node,
+  createPrinter,
+  NewLineKind,
+  EmitHint,
+} from 'typescript';
 
 /**
  * Creates and returns an AST 'SourceFile' root node.
@@ -13,10 +33,10 @@ import * as ts from 'typescript';
 export function createSourceFileRoot(
   fileName: string,
   sourceText = '',
-  scriptTarget: ts.ScriptTarget = ts.ScriptTarget.Latest,
-  scriptKind: ts.ScriptKind = ts.ScriptKind.TS,
-): ts.SourceFile {
-  const sourceFile: ts.SourceFile = ts.createSourceFile(
+  scriptTarget: ScriptTarget = ScriptTarget.Latest,
+  scriptKind: ScriptKind = ScriptKind.TS,
+): SourceFile {
+  const sourceFile: SourceFile = createSourceFile(
     fileName,
     sourceText,
     scriptTarget,
@@ -29,57 +49,50 @@ export function createSourceFileRoot(
 
 /**
  * Adds one or more new nodes to the 'statements' of a given 'SourceFile' node.
- *
  * @param sourceFile The 'SourceFile' node to which new statements are to be added
  * @param newStatements An array of new statement nodes to be added
  * @return Returns the 'SourceFile' node with the new array of statements added
  */
 export function addStatementsToNode(
-  sourceFile: ts.SourceFile,
-  newStatements: ts.Statement[],
-): ts.SourceFile {
-  const updatedStatements = ts.factory.createNodeArray([
+  sourceFile: SourceFile,
+  newStatements: Statement[],
+): SourceFile {
+  const updatedStatements = factory.createNodeArray([
     ...sourceFile.statements,
     ...newStatements,
   ]);
 
-  return ts.factory.updateSourceFile(sourceFile, updatedStatements);
+  return factory.updateSourceFile(sourceFile, updatedStatements);
 }
 
-export function renderTsNodeToString(
-  tsNode: ts.TypeNode | ts.ImportDeclaration,
-): string {
-  const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
-
-  const resultFile = createSourceFileRoot('example.ts');
-
-  return printer.printNode(ts.EmitHint.Unspecified, tsNode, resultFile);
-}
-
+/**
+ * Creates an ImportDeclaration node for TypeScript code generation.
+ * @param symbols An array of string representing the names of the symbols to be imported.
+ * @param fileName The module path string from which symbols are to be imported.
+ * @returns A TypeScript ImportDeclaration node that represents the import statement.
+ */
 export function createImportDeclarationNode(
   symbols: string[],
-  fileName: string,
-): ts.ImportDeclaration {
-  const importClause = ts.factory.createImportClause(
-    false, // no default import
+  filePath: string,
+): ImportDeclaration {
+  const importClause = factory.createImportClause(
+    true,
     undefined,
-    ts.factory.createNamedImports(
+    factory.createNamedImports(
       symbols.map((symbol) =>
-        ts.factory.createImportSpecifier(
+        factory.createImportSpecifier(
           false,
           undefined,
-          ts.factory.createIdentifier(symbol),
+          factory.createIdentifier(symbol),
         ),
       ),
     ),
   );
 
-  // Create a string literal for the module specifier
-  const moduleSpecifier = ts.factory.createStringLiteral(fileName);
+  const moduleSpecifier = factory.createStringLiteral(filePath);
 
-  // Create the import declaration (e.g., "import { TypeName } from 'fileName';")
-  const importDeclaration = ts.factory.createImportDeclaration(
-    undefined, // no modifiers
+  const importDeclaration = factory.createImportDeclaration(
+    undefined,
     importClause,
     moduleSpecifier,
   );
@@ -94,53 +107,52 @@ export function createImportDeclarationNode(
  * @returns A TypeScript export declaration node.
  */
 export function createExportDeclarationNode(
-  symbols: string[], // An array of the symbols that should be exported
-  moduleSpecifierString?: string, // Optional module specifier (e.g., './module')
-): ts.ExportDeclaration {
+  symbols: string[],
+  moduleSpecifierString?: string,
+): ExportDeclaration {
   const exportSpecifiers = symbols.map((symbol) =>
-    ts.factory.createExportSpecifier(
+    factory.createExportSpecifier(
       false,
-      undefined, // Use 'undefined' if the local name and exported name are the same
-      ts.factory.createIdentifier(symbol),
+      undefined, // Intentionally left as 'undefined' to indicate that there is no alias. This export specifier is directly exporting the identifier without renaming.
+      factory.createIdentifier(symbol),
     ),
   );
 
-  const namedExports = ts.factory.createNamedExports(exportSpecifiers);
+  const namedExports = factory.createNamedExports(exportSpecifiers);
 
   const moduleSpecifier = moduleSpecifierString
-    ? ts.factory.createStringLiteral(moduleSpecifierString)
+    ? factory.createStringLiteral(moduleSpecifierString)
     : undefined;
 
-  // Create the export declaration (e.g., "export { SymbolName } from './module';")
-  const exportDeclaration = ts.factory.createExportDeclaration(
-    undefined, // modifiers
-    false, // isTypeOnly (e.g., export type)
-    namedExports, // NamedExports
-    moduleSpecifier, // moduleSpecifier (can be 'undefined' for local exports)
+  const exportDeclaration = factory.createExportDeclaration(
+    undefined,
+    false,
+    namedExports,
+    moduleSpecifier,
   );
 
   return exportDeclaration;
 }
 
 /**
- * Create a TypeScript interface node (ts.InterfaceDeclaration) with given name and members.
- *
+ * Create a TypeScript interface node (InterfaceDeclaration) with given name and members.
  * @param interfaceName The name of the interface.
- * @param members An array of ts.TypeElement representing the interface members (properties, methods, etc.).
- * @param typeParameters An array of ts.TypeParameterDeclaration for any generic type parameters.
- * @returns ts.InterfaceDeclaration The interface declaration node.
+ * @param members An array of TypeElement representing the interface members (properties, methods, etc.).
+ * @param typeParameters An array of TypeParameterDeclaration for any generic type parameters.
+ * @returns InterfaceDeclaration The interface declaration node.
  */
 export function createInterfaceNode(
   interfaceName: string,
-  members: ts.TypeElement[] = [],
-  typeParameters: ts.TypeParameterDeclaration[] = [],
-): ts.InterfaceDeclaration {
-  const interfaceDeclaration = ts.factory.createInterfaceDeclaration(
-    [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)], // Interface will be exportable
-    ts.factory.createIdentifier(interfaceName), // Interface name
-    typeParameters, // Type parameters (for generics), if any
-    undefined, // No heritage clauses (e.g., no extends or implements)
-    members, // Members of the interface
+  members: TypeElement[] = [],
+  typeParameters: TypeParameterDeclaration[] = [],
+  heritageClauses: HeritageClause[] = [],
+): InterfaceDeclaration {
+  const interfaceDeclaration = factory.createInterfaceDeclaration(
+    [factory.createModifier(SyntaxKind.ExportKeyword)],
+    factory.createIdentifier(interfaceName),
+    typeParameters,
+    heritageClauses,
+    members,
   );
 
   return interfaceDeclaration;
@@ -157,8 +169,8 @@ export function createCommentNode(
   commentText: string,
   isMultiLine: boolean = true,
   hasTrailingNewLine: boolean = true,
-): ts.Statement {
-  const emptyStatement = ts.factory.createEmptyStatement();
+): Statement {
+  const emptyStatement = factory.createEmptyStatement();
 
   let formattedCommentText: string;
   if (isMultiLine) {
@@ -167,11 +179,11 @@ export function createCommentNode(
     formattedCommentText = commentText;
   }
 
-  const emptyStatementWithComment = ts.addSyntheticLeadingComment(
+  const emptyStatementWithComment = addSyntheticLeadingComment(
     emptyStatement,
     isMultiLine
-      ? ts.SyntaxKind.MultiLineCommentTrivia
-      : ts.SyntaxKind.SingleLineCommentTrivia,
+      ? SyntaxKind.MultiLineCommentTrivia
+      : SyntaxKind.SingleLineCommentTrivia,
     formattedCommentText,
     hasTrailingNewLine,
   );
@@ -180,163 +192,47 @@ export function createCommentNode(
 }
 
 /**
- * Create and return an AST node for a TypeScript enum declaration.
- *
+ * Creates an enumeration (enum) node in TypeScript's syntax tree.
  * @param enumName The name of the enum.
- * @param members A list of key-value pairs for the enum members, each member is in the format [key, value].
- * @param isConst Whether to create a constant enum (`const enum`), default is not to create.
- * @returns ts.EnumDeclaration The enum declaration node.
+ * @param members An array of members for the enum. Each member is a tuple consisting of the member's name (string) and its value (number or string).
+ * @param modifiers An array of TypeScript syntax kind modifiers (e.g., export, const) to apply to the enum declaration.
+ * @returns A TypeScript enum declaration node representing the defined enum.
  */
 export function createEnumNode(
   enumName: string,
   members: [string, number | string][],
-  isConst = false,
-): ts.EnumDeclaration {
+  modifiers: ModifierSyntaxKind[],
+): EnumDeclaration {
   const memberNodes = members.map(([key, value]) =>
-    ts.factory.createEnumMember(
+    factory.createEnumMember(
       key,
       typeof value === 'number'
-        ? ts.factory.createNumericLiteral(value)
-        : ts.factory.createStringLiteral(value),
+        ? factory.createNumericLiteral(value)
+        : factory.createStringLiteral(value),
     ),
   );
 
-  const enumDeclaration = ts.factory.createEnumDeclaration(
-    isConst
-      ? [
-          ts.factory.createModifier(ts.SyntaxKind.ExportKeyword),
-          ts.factory.createModifier(ts.SyntaxKind.ConstKeyword),
-        ]
-      : [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-    ts.factory.createIdentifier(enumName),
+  const enumDeclaration = factory.createEnumDeclaration(
+    modifiers.map((modifier) => factory.createToken(modifier)),
+    factory.createIdentifier(enumName),
     memberNodes,
   );
 
   return enumDeclaration;
 }
 
-// TS interfaces corresponding to the provided PhpDocNode structure
-type PhpDocNode = {
-  nodeType: string;
-  children: PhpDocTagNode[];
-};
+export function renderTsNodeToString(tsNode: Node): string {
+  const printer = createPrinter({ newLine: NewLineKind.LineFeed });
 
-type PhpDocTagNode = {
-  nodeType: string;
-  name: string;
-  value: PropertyTagValueNode;
-};
+  const resultFile = createSourceFileRoot('temp.ts');
 
-type PropertyTagValueNode = {
-  nodeType: string;
-  type: UnionTypeNode | ArrayShapeNode;
-  propertyName: string;
-  description: string;
-};
-
-type UnionTypeNode = {
-  nodeType: string;
-  types: IdentifierTypeNode[];
-};
-
-type IdentifierTypeNode = {
-  nodeType: string;
-  name: string;
-};
-
-type ArrayShapeNode = {
-  nodeType: string;
-  items: ArrayShapeItemNode[];
-  sealed: boolean;
-  kind: string;
-};
-
-type ArrayShapeItemNode = {
-  nodeType: string;
-  keyName: IdentifierTypeNode;
-  optional: boolean;
-  valueType: IdentifierTypeNode;
-};
-
-// TypeScript property representation
-type TsProperty = {
-  propertyName: string;
-  type: string;
-};
-
-// Function to transform the PhpDocNode structure to an array of TsProperty
-export function transformPhpDocToTypeScriptObject(
-  phpDocNode: PhpDocNode,
-): TsProperty[] {
-  return phpDocNode.children
-    .filter((tag) => tag.name === '@property-read' || tag.name === '@property')
-    .map((tag) => {
-      const propertyName = _.camelCase(
-        tag.value.propertyName.replace(/^\$/, ''),
-      ); // remove PHP variable '$' prefix
-      const type = transformTypeNodeToTypeScript(tag.value.type);
-      return { propertyName, type };
-    });
+  return printer.printNode(EmitHint.Unspecified, tsNode, resultFile);
 }
 
-// Helper function to transform different PhpDoc type nodes to TypeScript type
-function transformTypeNodeToTypeScript(
-  typeNode: UnionTypeNode | ArrayShapeNode,
-): string {
-  if (typeNode.nodeType === 'UnionTypeNode') {
-    return (typeNode as UnionTypeNode).types
-      .map((t) => transformIdentifierTypeNodeToTypeScript(t))
-      .join(' | ');
-  }
-  if (typeNode.nodeType === 'ArrayShapeNode') {
-    // In TypeScript, the most corresponding type would be an object type or a record type
-    const entries = (typeNode as ArrayShapeNode).items
-      .map(
-        (item) =>
-          `${_.camelCase(item.keyName.name)}${
-            item.optional ? '?' : ''
-          }: ${transformIdentifierTypeNodeToTypeScript(item.valueType)}`,
-      )
-      .join('; ');
-    return `{ ${entries} }`;
-  }
+export function renderTsSourceFileToString(sourceFile: SourceFile) {
+  const printer = createPrinter({ newLine: NewLineKind.LineFeed });
 
-  return 'any'; // Fallback for unknown node types
-}
+  const sourceFileContent: string = printer.printFile(sourceFile);
 
-// Helper function to convert IdentifierTypeNode to TypeScript type string
-function transformIdentifierTypeNodeToTypeScript(
-  identifierTypeNode: IdentifierTypeNode,
-): string {
-  switch (identifierTypeNode.name) {
-    case 'string':
-    case 'int':
-    case 'null':
-      // Directly use the type as it is
-      return identifierTypeNode.name;
-    // TODO: Add cases for other common PHP types that have direct TypeScript equivalents (e.g., 'float' -> 'number')
-    case 'float':
-      return 'number';
-    case 'boolean':
-    case 'bool':
-      return 'boolean';
-    case 'date':
-    case 'datetime':
-    case 'immutable_date':
-    case 'immutable_datetime':
-    case 'CarbonInterface':
-    case '\\Carbon\\CarbonInterface':
-    case '\\Carbon\\Carbon':
-    case '\\Carbon\\CarbonImmutable':
-      // Date will convert to string as output format in API
-      return 'string';
-    case 'array':
-      return 'any';
-    case 'Collection':
-      return 'any[]';
-    case 'mixed':
-      return 'any';
-    default:
-      return 'any';
-  }
+  return sourceFileContent;
 }

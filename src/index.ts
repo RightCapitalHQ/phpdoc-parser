@@ -73,3 +73,4 @@ export { ReturnTagValueNode } from './phpdoc-parser/ast/php-doc/return-tag-value
 export { Printer } from './phpdoc-parser/printer/printer';
 export { PhpDocTypeNodeToTypescriptTypeNodeTranspiler } from './phpdoc-parser/transpiler/php-doc-to-typescript-type-transpiler';
 export * from './phpdoc-parser/ast/php-doc/helpers';
+export * from './phpdoc-parser/transpiler/helpers';
