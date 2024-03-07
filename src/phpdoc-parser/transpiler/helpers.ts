@@ -49,6 +49,7 @@ export function createSourceFileRoot(
 
 /**
  * Adds one or more new nodes to the 'statements' of a given 'SourceFile' node.
+ *
  * @param sourceFile The 'SourceFile' node to which new statements are to be added
  * @param newStatements An array of new statement nodes to be added
  * @return Returns the 'SourceFile' node with the new array of statements added
@@ -67,6 +68,7 @@ export function addStatementsToNode(
 
 /**
  * Creates an ImportDeclaration node for TypeScript code generation.
+ *
  * @param symbols An array of string representing the names of the symbols to be imported.
  * @param fileName The module path string from which symbols are to be imported.
  * @returns A TypeScript ImportDeclaration node that represents the import statement.
@@ -102,6 +104,7 @@ export function createImportDeclarationNode(
 
 /**
  * Creates an export declaration node.
+ *
  * @param symbols An array of the symbols that should be exported.
  * @param moduleSpecifierString Optional. A string indicating the module from which the symbols are exported, e.g., './module'.
  * @returns A TypeScript export declaration node.
@@ -136,6 +139,7 @@ export function createExportDeclarationNode(
 
 /**
  * Create a TypeScript interface node (InterfaceDeclaration) with given name and members.
+ *
  * @param interfaceName The name of the interface.
  * @param members An array of TypeElement representing the interface members (properties, methods, etc.).
  * @param typeParameters An array of TypeParameterDeclaration for any generic type parameters.
@@ -160,6 +164,7 @@ export function createInterfaceNode(
 
 /**
  * Creates a comment node in TypeScript's syntax tree.
+ *
  * @param commentText The text of the comment.
  * @param isMultiLine Optional. Indicates if the comment should be a multi-line comment. Defaults to `true`.
  * @param hasTrailingNewLine Optional. Indicates if the comment should have a trailing newline. Defaults to `true`.
@@ -193,6 +198,7 @@ export function createCommentNode(
 
 /**
  * Creates an enumeration (enum) node in TypeScript's syntax tree.
+ *
  * @param enumName The name of the enum.
  * @param members An array of members for the enum. Each member is a tuple consisting of the member's name (string) and its value (number or string).
  * @param modifiers An array of TypeScript syntax kind modifiers (e.g., export, const) to apply to the enum declaration.
