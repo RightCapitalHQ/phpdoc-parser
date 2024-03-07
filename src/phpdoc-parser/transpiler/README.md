@@ -45,7 +45,7 @@ By extending the `PhpDocTypeNodeToTypescriptTypeNodeTranspiler` class to create 
 ## Step 3: Parse the PHPDoc Comment
 
 ```TypeScript
-const transpileCommentText = (commentText: string) => {
+const getPropertyTagValueNodesFromComment = (commentText: string) => {
   // Initialize the parser objects.
   const lexer = new Lexer();
   const constExprParser = new ConstExprParser();
@@ -73,7 +73,7 @@ const commentText = `/**
 */`;
 
 // Parse the PHPDoc comment text to get node structures.
-const tsTypeNode = transpileCommentText(commentText);
+const transpiledCommentNodes = getPropertyTagValueNodesFromComment(commentText);
 
 // Define a resolver function for path resolving in the transpiler.
 const nameNodePathResolver: NameNodePathResolver<ExtendedTranspiler> =
@@ -88,7 +88,7 @@ const nameNodePathResolver: NameNodePathResolver<ExtendedTranspiler> =
   };
 
 // Map through the nodes, transpile each, and render to TypeScript type strings.
-tsTypeNode.map((node) => {
+transpiledCommentNodes.map((node) => {
   const transpiler = new ExtendedTranspiler(nameNodePathResolver);
   transpiler.customProperty = 'this is a custom property'; // Set your configurations
   transpiler.beforeTranspile(); // Initialize transpilation state(reset the state of importDeclarations)
