@@ -1,13 +1,13 @@
 import { describe, it, beforeEach, expect } from 'vitest';
 import {
   Attribute,
-  BaseNode,
+  type BaseNode,
   ConstExprArrayItemNode,
   ConstExprArrayNode,
   ConstExprFalseNode,
   ConstExprFloatNode,
   ConstExprIntegerNode,
-  ConstExprNode,
+  type ConstExprNode,
   ConstExprNullNode,
   ConstExprParser,
   ConstExprStringNode,
