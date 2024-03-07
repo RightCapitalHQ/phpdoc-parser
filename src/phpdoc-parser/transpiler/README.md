@@ -22,6 +22,7 @@ import { renderTsNodeToString } from './helpers';
 import { PhpDocTypeNodeToTypescriptTypeNodeTranspiler } from './php-doc-to-typescript-type-transpiler';
 import type { ParamTagValueNode, PropertyTagValueNode, ReturnTagValueNode } from '../ast/php-doc';
 import { Lexer, ConstExprParser, PhpDocParser, TokenIterator, TypeParser } from '../lexer/parser';
+import { isPropertyTagValueNode } from '../ast/php-doc/helpers'
 ```
 
 ## Step 2: Define a Custom Transpiler Class
@@ -60,6 +61,7 @@ const getPropertyTagValueNodesFromComment = (commentText: string) => {
   const propertyTagValueNodes = astRootNode
     .getTags()
     .map((node) => node.value)
+    .filter(isPropertyTagValueNode);
 
   return propertyTagValueNodes;
 };

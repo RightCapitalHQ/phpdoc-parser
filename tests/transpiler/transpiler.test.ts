@@ -9,7 +9,7 @@ import {
   TypeParser,
   PhpDocParser,
   renderTsNodeToString,
-  type PropertyTagValueNode,
+  isPropertyTagValueNode,
 } from '../../src';
 
 class ExtendedTranspiler extends PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
@@ -41,7 +41,8 @@ const getPropertyTagValueNodesFromComment = (commentText: string) => {
   // Extract property, return, or parameter nodes from the AST.
   const propertyTagValueNodes = astRootNode
     .getTags()
-    .map((node) => node.value) as PropertyTagValueNode[];
+    .map((node) => node.value)
+    .filter(isPropertyTagValueNode);
 
   return propertyTagValueNodes;
 };
