@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import {
-  DiffElem,
+  type DiffElem,
   DiffElemType,
 } from '../../src/phpdoc-parser/printer/diff-elem';
 import { Differ } from '../../src/phpdoc-parser/printer/differ';
