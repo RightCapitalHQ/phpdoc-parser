@@ -75,7 +75,7 @@ const commentText = `/**
 */`;
 
 // Parse the PHPDoc comment text to get node structures.
-const transpiledCommentNodes = getPropertyTagValueNodesFromComment(commentText);
+const propertyTagValueNodes = getPropertyTagValueNodesFromComment(commentText);
 
 // Define a resolver function for path resolving in the transpiler.
 const nameNodePathResolver: NameNodePathResolver<ExtendedTranspiler> =
@@ -90,7 +90,7 @@ const nameNodePathResolver: NameNodePathResolver<ExtendedTranspiler> =
   };
 
 // Map through the nodes, transpile each, and render to TypeScript type strings.
-transpiledCommentNodes.map((node) => {
+propertyTagValueNodes.map((node) => {
   const transpiler = new ExtendedTranspiler(nameNodePathResolver);
   transpiler.customProperty = 'this is a custom property'; // Set your configurations
   transpiler.beforeTranspile(); // Initialize transpilation state(reset the state of importDeclarations)
