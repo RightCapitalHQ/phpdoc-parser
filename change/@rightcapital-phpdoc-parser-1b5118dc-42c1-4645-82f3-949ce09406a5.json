@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "feat: add PHP doc type node to TypeScript type node transpiler",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "i@rainx.cc",
+  "dependentChangeType": "patch"
+}
