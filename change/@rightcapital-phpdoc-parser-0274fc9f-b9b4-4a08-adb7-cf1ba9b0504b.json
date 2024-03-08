@@ -1,0 +1,7 @@
+{
+  "comment": "ci: add beachball changefile check",
+  "type": "none",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "im@pyonpyon.today",
+  "dependentChangeType": "none"
+}
