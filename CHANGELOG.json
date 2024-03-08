@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Fri, 08 Mar 2024 06:37:10 GMT",
+      "version": "0.4.0",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "342ce385166ce759baa8fed7d81e82e0191a8c4d",
+            "comment": "feat: add PHP doc type node to TypeScript type node transpiler"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Mar 2024 22:28:42 GMT",
       "version": "0.3.52",
       "tag": "@rightcapital/phpdoc-parser_v0.3.52",

@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Wed, 06 Mar 2024 22:28:42 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Mar 2024 06:37:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [0.4.0](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.0) (2024-3-8)
+
+- feat: add PHP doc type node to TypeScript type node transpiler ([342ce38](https://github.com/RightCapitalHQ/phpdoc-parser/commit/342ce385166ce759baa8fed7d81e82e0191a8c4d))
 
 ### [0.3.52](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.3.52) (2024-3-6)
 
