@@ -7,7 +7,7 @@ Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in
 
 To set up a development environment, please follow these steps:
 
-1. Before cloning the repo, ensure you have the following softwares installed.
+1. Before cloning the repo, ensure you have the following software installed.
 
    - `Node.js` (You should install a [version manager](https://github.com/shadowspawn/node-version-usage) that could handle .node-version file)
    - `pnpm` (You might have already installed it if you enabled the [Corepack](https://nodejs.org/api/corepack.html) feature)
