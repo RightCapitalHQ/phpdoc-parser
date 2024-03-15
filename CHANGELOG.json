@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Fri, 15 Mar 2024 05:40:04 GMT",
+      "version": "0.4.3",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.3",
+      "comments": {
+        "none": [
+          {
+            "author": "im@pyonpyon.today",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "f82a85416f54a4ee725ef18d4ebd2fdd4e4c366b",
+            "comment": "ci: add beachball changefile check"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Mar 2024 16:56:05 GMT",
       "version": "0.4.3",
       "tag": "@rightcapital/phpdoc-parser_v0.4.3",
