@@ -6,22 +6,44 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  install:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Prepare pnpm
-        uses: pnpm/action-setup@v2
-
-      - name: Prepare Node.js
-        uses: actions/setup-node@v4.0.2
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4.0.2
         with:
           node-version-file: .node-version
           cache: pnpm
+      - run: pnpm install
 
-      - name: Install deps
-        run: pnpm install
+  check-beachball-changefile:
+    if: github.base_ref == github.event.repository.default_branch
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4.0.2
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install
+
+      - name: Check
+        run: pnpm exec beachball check
+
+  test:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4.0.2
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install
 
       - name: ESLint
         run: pnpm run eslint
@@ -31,6 +53,19 @@ jobs:
 
       - name: Test
         run: pnpm run test
+
+  build:
+    if: ${{ always() && !failure() && !cancelled() }}
+    needs: [test, check-beachball-changefile]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4.0.2
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install
 
       - name: Build
         run: pnpm run build
