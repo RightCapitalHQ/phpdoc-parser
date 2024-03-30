@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Sat, 30 Mar 2024 09:40:23 GMT",
+      "version": "0.4.10",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "2859be74f6c93da49838a15f46136ee3f38925c0",
+            "comment": "fix(deps): update dependency @types/node to v20.12.2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Mar 2024 22:05:43 GMT",
       "version": "0.4.9",
       "tag": "@rightcapital/phpdoc-parser_v0.4.9",
