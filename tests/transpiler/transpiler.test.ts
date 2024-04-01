@@ -62,6 +62,7 @@ describe('TranspilerTest', () => {
   const commentText = `/**
     * @property-read  array|null  $person
     * @property       int         $id
+    * @property-read  \\Illuminate\\Database\\Eloquent\\Collection<int, int>  $ids
     */`;
 
   // Parse the PHPDoc comment text to get node structures.
@@ -71,6 +72,7 @@ describe('TranspilerTest', () => {
   const transpiledTypeDefinitionTestCases = [
     'person: any | null;',
     'id: number;',
+    'ids: number[];',
   ];
 
   transpiledCommentNodes.forEach((transpiledCommentNode, index) => {

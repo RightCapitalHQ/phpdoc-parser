@@ -95,8 +95,22 @@ export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
             this.transpile(sourceTypeNode.genericTypes[0]),
           );
         }
+
         if (sourceTypeNode.genericTypes.length === 2) {
           // Record<KeyType, ValueType>
+
+          if (
+            sourceTypeNode.genericTypes[0].isIdentifierTypeNode() &&
+            ['int', 'integer', 'float', 'double'].includes(
+              sourceTypeNode.genericTypes[0].name,
+            )
+          ) {
+            // turn into regular Array like Type[]
+            return factory.createArrayTypeNode(
+              this.transpile(sourceTypeNode.genericTypes[1]),
+            );
+          }
+
           return factory.createTypeReferenceNode(
             factory.createIdentifier('Record'),
             [
