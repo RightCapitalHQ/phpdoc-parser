@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 01 Apr 2024 09:53:38 GMT",
+      "version": "0.4.11",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "yilunsun11@yeah.net",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "814d010236b31cb58e894432d19717f53aac2ce3",
+            "comment": "fix: modify generic type parsing"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 30 Mar 2024 09:40:23 GMT",
       "version": "0.4.10",
       "tag": "@rightcapital/phpdoc-parser_v0.4.10",

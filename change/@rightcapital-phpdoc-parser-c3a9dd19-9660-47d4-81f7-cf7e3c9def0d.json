@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: modify generic type parsing",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "yilunsun11@yeah.net",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Sat, 30 Mar 2024 09:40:23 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Apr 2024 09:53:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.4.11](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.11) (2024-4-1)
+
+- fix: modify generic type parsing ([814d010](https://github.com/RightCapitalHQ/phpdoc-parser/commit/814d010236b31cb58e894432d19717f53aac2ce3))
 
 ### [0.4.10](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.10) (2024-3-30)
 
