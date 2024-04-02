@@ -13,8 +13,6 @@ import {
 } from '../../src';
 
 class ExtendedTranspiler extends PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
-  public customProperty: string = '';
-
   constructor(public resolver: NameNodePathResolver<ExtendedTranspiler>) {
     super(
       (nodeParts: string[]) =>
@@ -47,39 +45,28 @@ const getPropertyTagValueNodesFromComment = (commentText: string) => {
   return propertyTagValueNodes;
 };
 
-describe('TranspilerTest', () => {
-  // Define a resolver function for path resolving in the transpiler.
-  const nameNodePathResolver: NameNodePathResolver<ExtendedTranspiler> =
-    // eslint-disable-next-line func-names
-    function (this: ExtendedTranspiler, nodeParts: string[]) {
-      return {
-        name: nodeParts.at(-1),
-        path: '',
-        isTypeOnly: false,
-      };
+// Define a resolver function for path resolving in the transpiler.
+const nameNodePathResolver: NameNodePathResolver<ExtendedTranspiler> =
+  // eslint-disable-next-line func-names
+  function (this: ExtendedTranspiler, nodeParts: string[]) {
+    return {
+      name: nodeParts.at(-1),
+      path: '',
+      isTypeOnly: false,
     };
+  };
 
-  const commentText = `/**
-    * @property-read  array|null  $person
-    * @property       int         $id
-    * @property-read  \\Illuminate\\Database\\Eloquent\\Collection<int, int>  $ids
-    */`;
-
-  // Parse the PHPDoc comment text to get node structures.
+const testCommentTextTranspile = (
+  commentText: string,
+  transpiledTypeDefinitionTestCases: string[],
+) => {
   const transpiledCommentNodes =
     getPropertyTagValueNodesFromComment(commentText);
 
-  const transpiledTypeDefinitionTestCases = [
-    'person: any | null;',
-    'id: number;',
-    'ids: number[];',
-  ];
-
   transpiledCommentNodes.forEach((transpiledCommentNode, index) => {
     const transpiler = new ExtendedTranspiler(nameNodePathResolver);
-    transpiler.customProperty = 'this is a custom property'; // Set your configurations
-    transpiler.beforeTranspile(); // Initialize transpilation state(reset the state of importDeclarations)
-    const transpiledTypeNode = transpiler.transpile(transpiledCommentNode.type); // Transpile the node
+    transpiler.beforeTranspile();
+    const transpiledTypeNode = transpiler.transpile(transpiledCommentNode.type);
 
     const typescriptNode = factory.createPropertySignature(
       undefined,
@@ -88,7 +75,6 @@ describe('TranspilerTest', () => {
       transpiledTypeNode,
     );
 
-    // Render the TypeScript node to a string
     const propertyDefinitionText = renderTsNodeToString(typescriptNode);
 
     it(propertyDefinitionText, () => {
@@ -96,5 +82,135 @@ describe('TranspilerTest', () => {
         transpiledTypeDefinitionTestCases[index],
       );
     });
+  });
+};
+
+describe('Transpiler', () => {
+  describe('UnionTypeNode', () => {
+    const commentText = `/**
+    * @property   string | int | bool       $three_types
+    * @property   int|null                  $id
+    */`;
+
+    const transpiledTypeDefinitionTestCases = [
+      'three_types: string | number | boolean;',
+      'id: number | null;',
+    ];
+
+    testCommentTextTranspile(commentText, transpiledTypeDefinitionTestCases);
+  });
+
+  describe('ArrayTypeNode', () => {
+    const commentText = `/**
+    * @property   string[]    $names
+    */`;
+
+    const transpiledTypeDefinitionTestCases = ['names: string[];'];
+
+    testCommentTextTranspile(commentText, transpiledTypeDefinitionTestCases);
+  });
+
+  describe('ObjectShapeNode and ArrayShapeNode', () => {
+    const commentText = `/**
+    * @property   object{'foo': int}    $object_shape
+    * @property   array{'foo': int, "bar"?: string, 0: boolean}    $array_shape
+    */`;
+
+    const transpiledTypeDefinitionTestCases = [
+      `object_shape: {
+    foo: number;
+};`,
+      `array_shape: {
+    foo: number;
+    bar?: string;
+    0: boolean;
+};`,
+    ];
+
+    testCommentTextTranspile(commentText, transpiledTypeDefinitionTestCases);
+  });
+
+  describe('GenericTypeNode', () => {
+    const commentText = `/**
+    * @property   array<Type>   $type_1
+    * @property   non-empty-array<Type>   $type_2
+    * @property   list<Type>   $type_3
+    * @property   non-empty-list<Type>   $type_4
+    * @property   \\Illuminate\\Database\\Eloquent\\Collection<Type>   $type_5
+    * @property   array<int, Type>   $type_6
+    * @property   non-empty-array<integer, Type>   $type_7
+    * @property   list<float, Type>   $type_8
+    * @property   non-empty-list<double, Type>   $type_9
+    * @property   \\Illuminate\\Database\\Eloquent\\Collection<int, Type>   $type_10
+    * @property   array<string, Type>   $type_11
+    * @property   non-empty-array<string, Type>   $type_12
+    * @property   list<string, Type>   $type_13
+    * @property   non-empty-list<string, Type>   $type_14
+    * @property   \\Illuminate\\Database\\Eloquent\\Collection<string, Type>   $type_15
+    */`;
+
+    const transpiledTypeDefinitionTestCases = [
+      `type_1: Type[];`,
+      `type_2: Type[];`,
+      `type_3: Type[];`,
+      `type_4: Type[];`,
+      `type_5: Type[];`,
+      `type_6: Type[];`,
+      `type_7: Type[];`,
+      `type_8: Type[];`,
+      `type_9: Type[];`,
+      `type_10: Type[];`,
+      `type_11: Record<string, Type>;`,
+      `type_12: Record<string, Type>;`,
+      `type_13: Record<string, Type>;`,
+      `type_14: Record<string, Type>;`,
+      `type_15: Record<string, Type>;`,
+    ];
+
+    testCommentTextTranspile(commentText, transpiledTypeDefinitionTestCases);
+  });
+
+  describe('IdentifierTypeNode', () => {
+    const commentText = `/**
+    * @property   bool      $boolean_type_1
+    * @property   boolean   $boolean_type_2
+    * @property   true      $boolean_type_3
+    * @property   false     $boolean_type_4
+    * @property   int       $number_type_1
+    * @property   integer   $number_type_2
+    * @property   float      $number_type_3
+    * @property   double    $number_type_4
+    * @property   string    $string_type
+    * @property   array-key $array_key_type
+    * @property   scalar    $scalar_type
+    * @property   mixed     $mixed_type
+    * @property   void      $void_type
+    * @property   null      $null_type
+    * @property   Expr      $expr_type
+    * @property   Node\\Arg $arg_type_1
+    * @property   \\Ast\\Node\\Arg  $arg_type_2
+    */`;
+
+    const transpiledTypeDefinitionTestCases = [
+      'boolean_type_1: boolean;',
+      'boolean_type_2: boolean;',
+      'boolean_type_3: boolean;',
+      'boolean_type_4: boolean;',
+      'number_type_1: number;',
+      'number_type_2: number;',
+      'number_type_3: number;',
+      'number_type_4: number;',
+      'string_type: string;',
+      'array_key_type: string | number;',
+      'scalar_type: string | number | boolean;',
+      'mixed_type: any;',
+      'void_type: void;',
+      'null_type: null;',
+      'expr_type: Expr;',
+      'arg_type_1: Arg;',
+      'arg_type_2: Arg;',
+    ];
+
+    testCommentTextTranspile(commentText, transpiledTypeDefinitionTestCases);
   });
 });
