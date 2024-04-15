@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix: add more test cases for transpiler",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "yilunsun11@yeah.net",
-  "dependentChangeType": "none"
-}
