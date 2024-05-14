@@ -42,7 +42,7 @@
     "commitizen": "4.3.0",
     "eslint": "8.57.0",
     "husky": "9.0.11",
-    "inquirer": "9.2.20",
+    "inquirer": "9.2.21",
     "prettier": "3.2.5",
     "vitest": "1.6.0"
   },
