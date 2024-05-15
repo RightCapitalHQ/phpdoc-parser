@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore(deps): update devdependency inquirer to v9.2.21",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "29139614+renovate[bot]@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
