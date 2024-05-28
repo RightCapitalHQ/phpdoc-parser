@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore(deps): update dependency node to v20.14.0",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
