@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Tue, 02 Jul 2024 02:15:13 GMT",
+      "version": "0.4.45",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.45",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "75b42822485ace55e9e14b696e6ba9115a631168",
+            "comment": "fix(deps): update dependency typescript to v5.5.3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Jun 2024 01:24:51 GMT",
       "version": "0.4.44",
       "tag": "@rightcapital/phpdoc-parser_v0.4.44",
