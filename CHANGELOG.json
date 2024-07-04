@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Thu, 04 Jul 2024 06:15:21 GMT",
+      "version": "0.4.45",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.45",
+      "comments": {
+        "none": [
+          {
+            "author": "im@pyonpyon.today",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "e72257364160fab9492ab331d8607c0c0e6a8bce",
+            "comment": "chore: upgrade pnpm/action-setup to v4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Jul 2024 02:15:13 GMT",
       "version": "0.4.45",
       "tag": "@rightcapital/phpdoc-parser_v0.4.45",

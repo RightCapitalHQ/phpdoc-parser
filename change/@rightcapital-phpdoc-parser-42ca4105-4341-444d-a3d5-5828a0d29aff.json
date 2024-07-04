@@ -1,7 +1,0 @@
-{
-  "comment": "chore: upgrade pnpm/action-setup to v4",
-  "type": "none",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "im@pyonpyon.today",
-  "dependentChangeType": "none"
-}
