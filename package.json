@@ -47,7 +47,7 @@
     "vitest": "1.6.0"
   },
   "dependencies": {
-    "@types/node": "20.14.10",
+    "@types/node": "20.14.11",
     "lodash": "4.17.21",
     "typescript": "5.5.3"
   },
