@@ -49,7 +49,7 @@
   "dependencies": {
     "@types/node": "20.14.11",
     "lodash": "4.17.21",
-    "typescript": "5.5.3"
+    "typescript": "5.5.4"
   },
   "scripts": {
     "commit": "cz",
