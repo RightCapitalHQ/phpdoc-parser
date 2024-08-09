@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix(deps): update dependency @types/node to v20.14.15",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
