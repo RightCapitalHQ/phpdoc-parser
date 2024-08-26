@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(deps): update pnpm to v9.9.0",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
