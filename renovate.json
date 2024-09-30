@@ -7,27 +7,11 @@
   "automergeType": "pr",
   "platformAutomerge": true,
   "prCreation": "immediate",
-  "postUpgradeTasks": {
-    "commands": [
-      "git add --all",
-      "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
-      "git reset"
-    ],
-    "executionMode": "branch",
-    "fileFilters": ["change/*.json"]
-  },
+  "commitBody": "Beachball-bump-type: patch",
   "lockFileMaintenance": {
     "automerge": true,
     "enabled": true,
-    "postUpgradeTasks": {
-      "commands": [
-        "git add --all",
-        "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-        "git reset"
-      ],
-      "executionMode": "branch",
-      "fileFilters": ["change/*.json"]
-    }
+    "commitBody": "Beachball-bump-type: none"
   },
   "packageRules": [
     {
@@ -44,15 +28,7 @@
       "groupName": "DevDependencies",
       "groupSlug": "auto-merge-dev-dependencies-updates",
       "matchDepTypes": ["devDependencies"],
-      "postUpgradeTasks": {
-        "commands": [
-          "git add --all",
-          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-          "git reset"
-        ],
-        "fileFilters": ["change/*.json"],
-        "executionMode": "branch"
-      }
+      "commitBody": "Beachball-bump-type: none"
     }
   ]
 }

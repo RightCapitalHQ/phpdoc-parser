@@ -1,0 +1,7 @@
+{
+  "comment": "ci: workaround Renvoate `postUpgradeTasks` restriction for generating changefiles",
+  "type": "none",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "im@pyonpyon.today",
+  "dependentChangeType": "none"
+}
