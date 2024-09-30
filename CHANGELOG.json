@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Mon, 30 Sep 2024 01:10:06 GMT",
+      "version": "0.4.66",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.66",
+      "comments": {
+        "none": [
+          {
+            "author": "im@pyonpyon.today",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "1e7abcaf761ddcd1e52ad198e9435aeb4854dcd6",
+            "comment": "ci: workaround Renvoate `postUpgradeTasks` restriction for generating changefiles"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 28 Aug 2024 03:59:23 GMT",
       "version": "0.4.66",
       "tag": "@rightcapital/phpdoc-parser_v0.4.66",
