@@ -1,8 +1,12 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-This log was last generated on Wed, 02 Oct 2024 15:34:14 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Oct 2024 21:09:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+### [0.4.69](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.69) (2024-10-3)
+
+- chore(deps): update dependency node to v20.18.0 ([2367967](https://github.com/RightCapitalHQ/phpdoc-parser/commit/2367967eb900439f5ca0e19fe265feab2320b661))
 
 ### [0.4.68](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.68) (2024-10-2)
 
