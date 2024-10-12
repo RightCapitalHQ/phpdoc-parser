@@ -1,7 +1,3 @@
-import type { ConstExprParser } from './const-expr-parser';
-import { ParserException } from './parser-exception';
-import { StringUnescaper } from './string-unescaper';
-import type { TokenIterator } from './token-iterator';
 import type { BaseNode } from '../ast/base-node';
 import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
 import { ConstExprIntegerNode } from '../ast/const-expr/const-expr-integer-node';
@@ -33,6 +29,10 @@ import type { TypeNode } from '../ast/type/type-node';
 import { UnionTypeNode } from '../ast/type/union-type-node';
 import { Attribute } from '../ast/types';
 import { Lexer } from '../lexer/lexer';
+import type { ConstExprParser } from './const-expr-parser';
+import { ParserException } from './parser-exception';
+import { StringUnescaper } from './string-unescaper';
+import type { TokenIterator } from './token-iterator';
 
 export class TypeParser {
   private useLinesAttributes: boolean;
@@ -212,6 +212,7 @@ export class TypeParser {
         startIndex,
       );
     } catch (error) {
+      exception.cause = error;
       throw exception;
     }
   }

@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+
 import { AbstractNodeVisitor } from '../abstract-node-visitor';
 import type { Node } from '../node';
 import { Attribute } from '../types';

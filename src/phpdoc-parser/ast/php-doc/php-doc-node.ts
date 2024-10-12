@@ -1,3 +1,4 @@
+import { BaseNode } from '../base-node';
 import { DeprecatedTagValueNode } from './deprecated-tag-value-node';
 import { ExtendsTagValueNode } from './extends-tag-value-node';
 import { ImplementsTagValueNode } from './implements-tag-value-node';
@@ -13,7 +14,6 @@ import { ThrowsTagValueNode } from './throws-tag-value-node';
 import { TypelessParamTagValueNode } from './typeless-param-tag-value-node';
 import { UsesTagValueNode } from './uses-tag-value-node';
 import { VarTagValueNode } from './var-tag-value-node';
-import { BaseNode } from '../base-node';
 
 export class PhpDocNode extends BaseNode {
   constructor(public children: PhpDocChildNode[]) {

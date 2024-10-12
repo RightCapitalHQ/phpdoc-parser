@@ -1,6 +1,3 @@
-import { ParserException } from './parser-exception';
-import { StringUnescaper } from './string-unescaper';
-import type { TokenIterator } from './token-iterator';
 import { ConstExprArrayItemNode } from '../ast/const-expr/const-expr-array-item-node';
 import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
 import { ConstExprFalseNode } from '../ast/const-expr/const-expr-false-node';
@@ -14,6 +11,9 @@ import { ConstFetchNode } from '../ast/const-expr/const-fetch-node';
 import { QuoteAwareConstExprStringNode } from '../ast/const-expr/quote-aware-const-expr-string-node';
 import { Attribute } from '../ast/types';
 import { Lexer } from '../lexer/lexer';
+import { ParserException } from './parser-exception';
+import { StringUnescaper } from './string-unescaper';
+import type { TokenIterator } from './token-iterator';
 
 export class ConstExprParser {
   private useLinesAttributes: boolean;

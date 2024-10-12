@@ -1,3 +1,4 @@
+import { BaseNode } from '../base-node';
 import type { ArrayShapeItemNode } from './array-shape-item-node';
 import type { ArrayShapeNode } from './array-shape-node';
 import type { ArrayTypeNode } from './array-type-node';
@@ -16,7 +17,6 @@ import type { ObjectShapeNode } from './object-shape-node';
 import type { OffsetAccessTypeNode } from './offset-access-type-node';
 import type { ThisTypeNode } from './this-type-node';
 import type { UnionTypeNode } from './union-type-node';
-import { BaseNode } from '../base-node';
 
 /**
  * TypeNode is a abstract Node for containing other nodes

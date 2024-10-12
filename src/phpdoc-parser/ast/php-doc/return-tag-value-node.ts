@@ -1,5 +1,5 @@
-import { PhpDocTagValueNode } from './php-doc-tag-value-node';
 import type { TypeNode } from '../type/type-node';
+import { PhpDocTagValueNode } from './php-doc-tag-value-node';
 
 export class ReturnTagValueNode extends PhpDocTagValueNode {
   constructor(

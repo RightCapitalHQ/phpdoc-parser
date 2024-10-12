@@ -1,6 +1,6 @@
-import { PhpDocTagValueNode } from './php-doc-tag-value-node';
 import type { ConstExprNode } from '../const-expr/const-expr-node';
 import type { TypeNode } from '../type/type-node';
+import { PhpDocTagValueNode } from './php-doc-tag-value-node';
 
 export class MethodTagValueParameterNode extends PhpDocTagValueNode {
   constructor(

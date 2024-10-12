@@ -1,5 +1,5 @@
-import { TypeNode } from './type-node';
 import { ParserException } from '../../parser/parser-exception';
+import { TypeNode } from './type-node';
 
 export class InvalidTypeNode extends TypeNode {
   public exceptionArgs: ConstructorParameters<typeof ParserException>;
