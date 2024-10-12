@@ -1,5 +1,5 @@
-import { ParserException } from './parser-exception';
 import { Lexer } from '../lexer/lexer';
+import { ParserException } from './parser-exception';
 
 export class TokenIterator {
   private tokens: Array<[string, string, number]>;

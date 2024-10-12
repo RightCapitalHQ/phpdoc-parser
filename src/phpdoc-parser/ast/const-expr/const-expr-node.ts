@@ -1,3 +1,4 @@
+import { BaseNode } from '../base-node';
 import type { ConstExprArrayItemNode } from './const-expr-array-item-node';
 import type { ConstExprArrayNode } from './const-expr-array-node';
 import type { ConstExprFalseNode } from './const-expr-false-node';
@@ -8,7 +9,6 @@ import type { ConstExprStringNode } from './const-expr-string-node';
 import type { ConstExprTrueNode } from './const-expr-true-node';
 import type { ConstFetchNode } from './const-fetch-node';
 import type { QuoteAwareConstExprStringNode } from './quote-aware-const-expr-string-node';
-import { BaseNode } from '../base-node';
 
 export class ConstExprNode extends BaseNode {
   public getNodeType(): string {

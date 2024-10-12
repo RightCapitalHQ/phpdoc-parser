@@ -1,6 +1,6 @@
 // Import statements, adjusted as per your TypeScript project setup
-import { PhpDocTagValueNode } from './php-doc-tag-value-node';
 import type { GenericTypeNode } from '../type/generic-type-node';
+import { PhpDocTagValueNode } from './php-doc-tag-value-node';
 
 export class UsesTagValueNode extends PhpDocTagValueNode {
   constructor(

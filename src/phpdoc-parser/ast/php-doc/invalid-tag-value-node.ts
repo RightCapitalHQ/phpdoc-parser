@@ -1,5 +1,5 @@
-import { PhpDocTagValueNode } from './php-doc-tag-value-node';
 import { ParserException } from '../../parser/parser-exception';
+import { PhpDocTagValueNode } from './php-doc-tag-value-node';
 
 export class InvalidTagValueNode extends PhpDocTagValueNode {
   private exceptionArgs: ConstructorParameters<typeof ParserException>;

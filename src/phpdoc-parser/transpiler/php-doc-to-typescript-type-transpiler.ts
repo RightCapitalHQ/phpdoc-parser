@@ -1,9 +1,10 @@
 import {
+  factory,
   type ImportDeclaration,
   SyntaxKind,
   type TypeNode,
-  factory,
 } from 'typescript';
+
 import type { ArrayShapeItemNode } from '../ast/type/array-shape-item-node';
 import { ArrayShapeNode } from '../ast/type/array-shape-node';
 import { ArrayTypeNode } from '../ast/type/array-type-node';

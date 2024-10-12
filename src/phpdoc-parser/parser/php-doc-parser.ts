@@ -1,7 +1,3 @@
-import type { ConstExprParser } from './const-expr-parser';
-import type { ParserException } from './parser-exception';
-import type { TokenIterator } from './token-iterator';
-import type { TypeParser } from './type-parser';
 import type { BaseNode } from '../ast/base-node';
 import type { ConstExprNode } from '../ast/const-expr/const-expr-node';
 import { AssertTagMethodValueNode } from '../ast/php-doc/assert-tag-method-value-node';
@@ -37,6 +33,10 @@ import { InvalidTypeNode } from '../ast/type/invalid-type-node';
 import type { TypeNode } from '../ast/type/type-node';
 import { Attribute } from '../ast/types';
 import { Lexer } from '../lexer/lexer';
+import type { ConstExprParser } from './const-expr-parser';
+import type { ParserException } from './parser-exception';
+import type { TokenIterator } from './token-iterator';
+import type { TypeParser } from './type-parser';
 
 const DISALLOWED_DESCRIPTION_START_TOKENS = [
   Lexer.TOKEN_UNION,

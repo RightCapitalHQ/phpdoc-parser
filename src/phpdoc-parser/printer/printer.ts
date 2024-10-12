@@ -1,5 +1,3 @@
-import { DiffElemType } from './diff-elem';
-import { Differ } from './differ';
 import { BaseNode } from '../ast/base-node';
 import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
 import { ConstExprNode } from '../ast/const-expr/const-expr-node';
@@ -49,6 +47,8 @@ import { UnionTypeNode } from '../ast/type/union-type-node';
 import { Attribute } from '../ast/types';
 import { Lexer } from '../lexer/lexer';
 import type { TokenIterator } from '../parser/token-iterator';
+import { DiffElemType } from './diff-elem';
+import { Differ } from './differ';
 
 export class Printer {
   private differ: Differ<Node>;
