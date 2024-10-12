@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Sat, 12 Oct 2024 03:52:30 GMT",
+      "version": "0.4.72",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.72",
+      "comments": {
+        "none": [
+          {
+            "author": "29139614+renovate[bot]@users.noreply.github.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "10a772dfc401357cf147a5b1f6d1fb99f874fe49",
+            "comment": "chore(deps): update devdependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Oct 2024 03:28:57 GMT",
       "version": "0.4.72",
       "tag": "@rightcapital/phpdoc-parser_v0.4.72",
