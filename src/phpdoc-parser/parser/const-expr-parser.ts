@@ -136,7 +136,7 @@ export class ConstExprParser {
       if (tokens.tryConsumeTokenType(Lexer.TOKEN_DOUBLE_COLON)) {
         let classConstantName = '';
         let lastType = null;
-        // eslint-disable-next-line no-constant-condition
+
         while (true) {
           if (
             lastType !== Lexer.TOKEN_IDENTIFIER &&
