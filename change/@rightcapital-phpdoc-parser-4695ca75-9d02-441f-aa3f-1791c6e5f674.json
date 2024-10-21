@@ -1,0 +1,7 @@
+{
+  "comment": "chore: bump ESLint to v9",
+  "type": "none",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "im@pyonpyon.today",
+  "dependentChangeType": "none"
+}
