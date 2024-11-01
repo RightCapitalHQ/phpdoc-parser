@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Fri, 01 Nov 2024 07:55:50 GMT",
+      "version": "0.4.73",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.73",
+      "comments": {
+        "none": [
+          {
+            "author": "im@pyonpyon.today",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "4451dd7a9e2c59e04960600e7d77c9d30491193f",
+            "comment": "chore: bump ESLint to v9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Oct 2024 19:33:59 GMT",
       "version": "0.4.73",
       "tag": "@rightcapital/phpdoc-parser_v0.4.73",
