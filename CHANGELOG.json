@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Wed, 20 Nov 2024 19:32:48 GMT",
+      "version": "0.4.80",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.80",
+      "comments": {
+        "patch": [
+          {
+            "author": "29139614+renovate[bot]@users.noreply.github.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "6d8d88c6863f8b9d596304ddd8745e58b7e5ad79",
+            "comment": "chore(deps): update automerge non-major updates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Nov 2024 03:09:48 GMT",
       "version": "0.4.79",
       "tag": "@rightcapital/phpdoc-parser_v0.4.79",
