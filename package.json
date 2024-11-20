@@ -1,6 +1,6 @@
 {
   "name": "@rightcapital/phpdoc-parser",
-  "version": "0.4.78",
+  "version": "0.4.79",
   "description": "TypeScript version of PHPDoc parser with support for intersection types and generics",
   "keywords": [
     "PHP",
