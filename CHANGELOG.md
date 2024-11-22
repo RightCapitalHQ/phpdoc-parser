@@ -1,10 +1,14 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-<!-- This log was last generated on Wed, 20 Nov 2024 19:32:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 22 Nov 2024 22:54:05 GMT and should not be manually modified. -->
 
 <!-- Start content -->
 
 
+
+### [0.4.81](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.81) (2024-11-22)
+
+- fix(deps): update dependency typescript to v5.7.2 ([04e356c](https://github.com/RightCapitalHQ/phpdoc-parser/commit/04e356c9fe17b8becb9d5e5a357bb5f591657a20))
 
 ### [0.4.80](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.80) (2024-11-20)
 
