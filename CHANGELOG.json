@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Fri, 29 Nov 2024 15:37:01 GMT",
+      "version": "0.4.86",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.86",
+      "comments": {
+        "patch": [
+          {
+            "author": "29139614+renovate[bot]@users.noreply.github.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "de83e63ce708a91907b0ebd6492237766a5d4ce4",
+            "comment": "chore(deps): update pnpm to v9.14.4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Nov 2024 20:03:52 GMT",
       "version": "0.4.85",
       "tag": "@rightcapital/phpdoc-parser_v0.4.85",
