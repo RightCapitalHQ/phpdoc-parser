@@ -47,7 +47,7 @@
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
     "@commitlint/cz-commitlint": "19.5.0",
-    "@rightcapital/eslint-config": "38.0.0",
+    "@rightcapital/eslint-config": "40.0.0",
     "@rightcapital/prettier-config": "7.1.7",
     "@types/lodash": "4.17.10",
     "beachball": "2.47.1",
