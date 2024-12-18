@@ -1,10 +1,14 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-<!-- This log was last generated on Wed, 11 Dec 2024 11:49:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 18 Dec 2024 13:39:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
 
 
+
+### [0.4.89](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.89) (2024-12-18)
+
+- fix(deps): update node.js to v22 ([2c0745b](https://github.com/RightCapitalHQ/phpdoc-parser/commit/2c0745be8b6fb767d4fb40da693861ac748b73ee))
 
 ### [0.4.88](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.88) (2024-12-11)
 
