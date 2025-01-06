@@ -1,10 +1,14 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-<!-- This log was last generated on Fri, 03 Jan 2025 13:10:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 06 Jan 2025 03:16:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
 
 
+
+### [0.4.95](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.95) (2025-1-6)
+
+- chore(deps): update pnpm to v9.15.3 ([7119a8b](https://github.com/RightCapitalHQ/phpdoc-parser/commit/7119a8be2a84d539d2e463fe95e8cb7462bded51))
 
 ### [0.4.94](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.94) (2025-1-3)
 
