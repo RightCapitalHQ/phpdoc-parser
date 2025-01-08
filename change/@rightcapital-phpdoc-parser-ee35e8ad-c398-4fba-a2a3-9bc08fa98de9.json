@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "chore(deps): update node.js to v22.13.0",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "29139614+renovate[bot]@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
