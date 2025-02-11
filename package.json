@@ -47,7 +47,7 @@
     "@commitlint/cli": "19.7.1",
     "@commitlint/config-conventional": "19.7.1",
     "@commitlint/cz-commitlint": "19.6.1",
-    "@rightcapital/eslint-config": "40.0.1",
+    "@rightcapital/eslint-config": "42.0.0",
     "@rightcapital/prettier-config": "7.2.1",
     "@types/lodash": "4.17.15",
     "beachball": "2.51.0",
@@ -56,7 +56,7 @@
     "husky": "9.1.7",
     "inquirer": "12.4.1",
     "prettier": "3.5.0",
-    "vitest": "2.1.9"
+    "vitest": "3.0.5"
   },
   "packageManager": "pnpm@10.3.0",
   "engines": {
