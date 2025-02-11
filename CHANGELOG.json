@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Tue, 11 Feb 2025 14:51:12 GMT",
+      "version": "0.4.99",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.99",
+      "comments": {
+        "none": [
+          {
+            "author": "i@rainx.cc",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "c9cb71983c52a422bff46ef212f312b6bd539249",
+            "comment": "chore(release): applying package updates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Feb 2025 14:22:44 GMT",
       "version": "0.4.99",
       "tag": "@rightcapital/phpdoc-parser_v0.4.99",
