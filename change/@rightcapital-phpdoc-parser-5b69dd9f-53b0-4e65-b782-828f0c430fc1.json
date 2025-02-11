@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore(deps): update devdependency vitest to v2.1.9 [security]",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "29139614+renovate[bot]@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
