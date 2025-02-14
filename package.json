@@ -36,7 +36,7 @@
     }
   },
   "dependencies": {
-    "@types/node": "22.13.2",
+    "@types/node": "22.13.4",
     "lodash": "4.17.21",
     "typescript": "5.7.3"
   },
@@ -58,7 +58,7 @@
     "prettier": "3.5.0",
     "vitest": "3.0.5"
   },
-  "packageManager": "pnpm@10.3.0",
+  "packageManager": "pnpm@10.4.0",
   "engines": {
     "node": ">=16.x",
     "pnpm": ">=8.x"
