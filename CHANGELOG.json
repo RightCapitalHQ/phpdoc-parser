@@ -2,6 +2,21 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Sat, 01 Mar 2025 15:22:15 GMT",
+      "version": "0.4.108",
+      "tag": "@rightcapital/phpdoc-parser_v0.4.108",
+      "comments": {
+        "patch": [
+          {
+            "author": "29139614+renovate[bot]@users.noreply.github.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "d7f92d097d9a859f158198a69159245105325faa",
+            "comment": "fix(deps): update dependency @types/node to v22.13.8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Mar 2025 05:13:21 GMT",
       "version": "0.4.107",
       "tag": "@rightcapital/phpdoc-parser_v0.4.107",
