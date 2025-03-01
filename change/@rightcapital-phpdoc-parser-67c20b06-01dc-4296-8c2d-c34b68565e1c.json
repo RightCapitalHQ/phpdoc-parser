@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix(deps): update automerge non-major updates",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "29139614+renovate[bot]@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
