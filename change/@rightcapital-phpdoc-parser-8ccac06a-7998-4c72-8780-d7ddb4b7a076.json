@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "chore(deps): update devdependency prettier to v3.5.3",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "29139614+renovate[bot]@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
