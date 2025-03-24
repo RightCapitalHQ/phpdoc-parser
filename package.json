@@ -36,7 +36,7 @@
     }
   },
   "dependencies": {
-    "@types/node": "22.13.11",
+    "@types/node": "22.13.13",
     "lodash": "4.17.21",
     "typescript": "5.8.2"
   },
