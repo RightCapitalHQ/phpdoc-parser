@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix(deps): update dependency @types/node to v22.14.0",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "29139614+renovate[bot]@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
