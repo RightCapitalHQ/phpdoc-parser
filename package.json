@@ -38,7 +38,7 @@
   "dependencies": {
     "@types/node": "22.14.0",
     "lodash": "4.17.21",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "devDependencies": {
     "@babel/core": "7.26.9",
