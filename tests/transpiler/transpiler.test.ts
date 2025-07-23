@@ -18,7 +18,8 @@ class ExtendedTranspiler extends PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
       (nodeParts: string[]) =>
         resolver.call(this, nodeParts) as {
           path: string;
-          name: string;
+          importName: string;
+          typeIdentifiers: string[];
           isTypeOnly: boolean;
         },
     );
@@ -49,10 +50,13 @@ const getPropertyTagValueNodesFromComment = (commentText: string) => {
 const nameNodePathResolver: NameNodePathResolver<ExtendedTranspiler> =
   // eslint-disable-next-line func-names
   function (this: ExtendedTranspiler, nodeParts: string[]) {
+    const lastPart = nodeParts.at(-1);
+
     return {
-      name: nodeParts.at(-1),
       path: '',
       isTypeOnly: false,
+      importName: lastPart,
+      typeIdentifiers: [lastPart],
     };
   };
 
