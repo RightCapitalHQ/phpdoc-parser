@@ -1,6 +1,8 @@
 import {
   factory,
+  type Identifier,
   type ImportDeclaration,
+  type QualifiedName,
   SyntaxKind,
   type TypeNode,
 } from 'typescript';
@@ -18,16 +20,18 @@ export type NameNodePathResolver<T> = (
   nodeParts: string[],
 ) => {
   path: string;
-  name: string;
+  importName: string;
   isTypeOnly: boolean;
+  typeIdentifiers: string[];
 };
 
 export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
   constructor(
     public nameNodePathResolver: (nodeParts: string[]) => {
       path: string;
-      name: string;
+      importName: string;
       isTypeOnly: boolean;
+      typeIdentifiers: string[];
     },
   ) {}
 
@@ -87,6 +91,7 @@ export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
           'non-empty-array',
           'list',
           'non-empty-list',
+          '\\Illuminate\\Support\\Collection',
           '\\Illuminate\\Database\\Eloquent\\Collection',
         ].includes(sourceTypeNode.type.name)
       ) {
@@ -167,7 +172,11 @@ export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
         return factory.createToken(SyntaxKind.VoidKeyword);
       }
 
-      if (sourceTypeNode.name === 'null') {
+      if (
+        ['\\Illuminate\\Http\\Resources\\MissingValue', 'null'].includes(
+          sourceTypeNode.name,
+        )
+      ) {
         return factory.createLiteralTypeNode(factory.createNull());
       }
 
@@ -179,10 +188,11 @@ export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
       if (/^[A-Z\\]/.test(sourceTypeNode.name)) {
         const nameNodeParts = sourceTypeNode.name.split('\\');
 
-        const { name, path, isTypeOnly } =
+        const { path, isTypeOnly, importName, typeIdentifiers } =
           this.nameNodePathResolver(nameNodeParts);
 
-        if (name !== 'string' && path !== '') {
+        // For external types, generate import statement
+        if (importName !== 'string' && path !== '') {
           this.importDeclarations.push(
             factory.createImportDeclaration(
               undefined,
@@ -193,7 +203,7 @@ export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
                   factory.createImportSpecifier(
                     false,
                     undefined,
-                    factory.createIdentifier(name),
+                    factory.createIdentifier(importName),
                   ),
                 ]),
               ),
@@ -203,10 +213,30 @@ export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
           );
         }
 
-        return factory.createTypeReferenceNode(
-          factory.createIdentifier(name),
-          undefined,
+        // Build qualified name recursively for multiple identifiers
+        let typeNameNode: QualifiedName | Identifier = factory.createIdentifier(
+          typeIdentifiers[0],
         );
+
+        // typeIdentifiers = ['RestaurantNamespace', 'IPizza']
+        // factory.createQualifiedName(
+        //   factory.createIdentifier("RestaurantNamespace"),
+        //   factory.createIdentifier("IPizza")
+        // )
+        // ⬇️
+        // export interface IMyOrder {
+        // ...
+        // pizza: RestaurantNamespace.IPizza;
+        // ...
+        // }
+        for (let i = 1; i < typeIdentifiers.length; i += 1) {
+          typeNameNode = factory.createQualifiedName(
+            typeNameNode,
+            factory.createIdentifier(typeIdentifiers[i]),
+          );
+        }
+
+        return factory.createTypeReferenceNode(typeNameNode, undefined);
       }
     }
 
