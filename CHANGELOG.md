@@ -1,10 +1,14 @@
 # Change Log - @rightcapital/phpdoc-parser
 
-<!-- This log was last generated on Tue, 06 May 2025 10:21:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 25 Jul 2025 03:17:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
 
 
+
+## [0.5.0](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.5.0) (2025-7-25)
+
+- feat: enhance PhpDocTypeNodeToTypescriptTypeNodeTranspiler with importName and typeIdentifiers ([071e5ed](https://github.com/RightCapitalHQ/phpdoc-parser/commit/071e5ed251e97b8a905542047a815553377d3411))
 
 ### [0.4.133](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.4.133) (2025-5-6)
 

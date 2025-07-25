@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "feat: enhance PhpDocTypeNodeToTypescriptTypeNodeTranspiler with importName and typeIdentifiers",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "yilunsun11@yeah.net",
-  "dependentChangeType": "patch"
-}
