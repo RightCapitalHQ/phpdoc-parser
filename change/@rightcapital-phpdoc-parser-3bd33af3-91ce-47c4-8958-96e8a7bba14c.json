@@ -1,0 +1,7 @@
+{
+  "comment": "ci: migrate to trusted publishing",
+  "type": "none",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "im@pyonpyon.today",
+  "dependentChangeType": "none"
+}
