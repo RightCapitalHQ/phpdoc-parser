@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ### Development
+
 - `pnpm test` - Run tests using Vitest
 - `pnpm run build` - Build the TypeScript project
 - `pnpm run clean` - Clean build artifacts
@@ -12,6 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `pnpm run eslint:fix` - Run ESLint with auto-fix
 
 ### Package Management
+
 - Uses pnpm as package manager (required, enforced by preinstall hook)
 - `pnpm install` - Install dependencies
 
@@ -22,10 +24,12 @@ This is a TypeScript implementation of PHPDoc parser inspired by PHPStan's phpdo
 ### Core Components
 
 **Lexical Analysis (`src/phpdoc-parser/lexer/`)**
+
 - `lexer.ts` - Tokenizes PHPDoc strings using regex patterns
 - Handles 20+ token types (identifiers, types, operators, brackets, etc.)
 
 **Parsing (`src/phpdoc-parser/parser/`)**
+
 - `php-doc-parser.ts` - Main parser that converts tokens to AST nodes
 - `type-parser.ts` - Handles type parsing (generics, unions, intersections)
 - `const-expr-parser.ts` - Parses constant expressions
@@ -33,17 +37,20 @@ This is a TypeScript implementation of PHPDoc parser inspired by PHPStan's phpdo
 - `string-unescaper.ts` - String literal processing
 
 **AST Nodes (`src/phpdoc-parser/ast/`)**
+
 - Base interfaces: `node.ts`, `base-node.ts`
 - **php-doc/**: PHPDoc-specific nodes (tags, text, parameters, etc.)
 - **type/**: Type system nodes (unions, intersections, generics, arrays)
 - **const-expr/**: Constant expression nodes (strings, numbers, arrays)
 
 **Printing (`src/phpdoc-parser/printer/`)**
+
 - `printer.ts` - Converts AST back to formatted PHPDoc
 - `differ.ts` - Format-preserving printing with diff tracking
 - Supports both clean formatting and original format preservation
 
 **Transpilation (`src/phpdoc-parser/transpiler/`)**
+
 - `php-doc-to-typescript-type-transpiler.ts` - Converts PHPDoc types to TypeScript
 
 ### Key Patterns
