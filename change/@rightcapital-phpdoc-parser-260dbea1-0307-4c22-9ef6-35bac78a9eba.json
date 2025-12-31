@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "chore(deps): update dessant/lock-threads action to v6",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "29139614+renovate[bot]@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
