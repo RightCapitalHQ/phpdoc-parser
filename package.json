@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@types/node": "22.19.6",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "typescript": "5.9.3"
   },
   "devDependencies": {
