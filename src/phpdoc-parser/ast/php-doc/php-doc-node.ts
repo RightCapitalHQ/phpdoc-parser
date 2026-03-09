@@ -136,9 +136,7 @@ export class PhpDocNode extends BaseNode {
       );
   }
 
-  public getSealedTagValues(
-    tagName = '@phpstan-sealed',
-  ): SealedTagValueNode[] {
+  public getSealedTagValues(tagName = '@phpstan-sealed'): SealedTagValueNode[] {
     return this.getTagsByName(tagName)
       .map((tag) => tag.value)
       .filter(

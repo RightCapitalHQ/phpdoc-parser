@@ -87,9 +87,15 @@ const floatNodeParseData = [
 const stringNodeParseData = [
   // String - values are always unescaped in v2.0
   ['"foo"', new ConstExprStringNode('foo', ConstExprStringNode.DOUBLE_QUOTED)],
-  ['"Foo \\n\\"\\r Bar"', new ConstExprStringNode('Foo \n"\r Bar', ConstExprStringNode.DOUBLE_QUOTED)],
+  [
+    '"Foo \\n\\"\\r Bar"',
+    new ConstExprStringNode('Foo \n"\r Bar', ConstExprStringNode.DOUBLE_QUOTED),
+  ],
   ["'bar'", new ConstExprStringNode('bar', ConstExprStringNode.SINGLE_QUOTED)],
-  ["'Foo \\' Bar'", new ConstExprStringNode("Foo ' Bar", ConstExprStringNode.SINGLE_QUOTED)],
+  [
+    "'Foo \\' Bar'",
+    new ConstExprStringNode("Foo ' Bar", ConstExprStringNode.SINGLE_QUOTED),
+  ],
 ] as TestFixtureDataItem[];
 
 const arrayNodeParseData = [
@@ -166,10 +172,19 @@ const fetchNodeParseData = [
 
 const withTrimStringsStringParseData = [
   ['"foo"', new ConstExprStringNode('foo', ConstExprStringNode.DOUBLE_QUOTED)],
-  ['"Foo \\n\\"\\r Bar"', new ConstExprStringNode('Foo \n"\r Bar', ConstExprStringNode.DOUBLE_QUOTED)],
+  [
+    '"Foo \\n\\"\\r Bar"',
+    new ConstExprStringNode('Foo \n"\r Bar', ConstExprStringNode.DOUBLE_QUOTED),
+  ],
   ["'bar'", new ConstExprStringNode('bar', ConstExprStringNode.SINGLE_QUOTED)],
-  ["'Foo \\' Bar'", new ConstExprStringNode("Foo ' Bar", ConstExprStringNode.SINGLE_QUOTED)],
-  ['"\u{1f601}"', new ConstExprStringNode('\u{1f601}', ConstExprStringNode.DOUBLE_QUOTED)],
+  [
+    "'Foo \\' Bar'",
+    new ConstExprStringNode("Foo ' Bar", ConstExprStringNode.SINGLE_QUOTED),
+  ],
+  [
+    '"\u{1f601}"',
+    new ConstExprStringNode('\u{1f601}', ConstExprStringNode.DOUBLE_QUOTED),
+  ],
   // ['"\u{ffffffff}"', new ConstExprStringNode('\u{fffd}', ConstExprStringNode.DOUBLE_QUOTED)],
 ];
 

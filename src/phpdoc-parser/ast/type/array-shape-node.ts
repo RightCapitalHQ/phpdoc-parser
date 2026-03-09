@@ -42,7 +42,9 @@ export class ArrayShapeNode extends TypeNode {
     const items: (ArrayShapeItemNode | string)[] = [...this.items];
 
     if (!this.sealed) {
-      items.push(`...${  this.unsealedType !== null ? this.unsealedType.toString() : ''}`);
+      items.push(
+        `...${this.unsealedType !== null ? this.unsealedType.toString() : ''}`,
+      );
     }
 
     return `${this.kind}{${items.join(', ')}}`;

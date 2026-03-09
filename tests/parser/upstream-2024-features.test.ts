@@ -267,18 +267,14 @@ describe('Upstream 2024 Features', () => {
       const phpDocParser = new PhpDocParser(typeParser, constExprParser);
 
       const tokens = new TokenIterator(
-        lexer.tokenize(
-          '/** @param-immediately-invoked-callable $callback */',
-        ),
+        lexer.tokenize('/** @param-immediately-invoked-callable $callback */'),
       );
 
       const phpDoc = phpDocParser.parse(tokens);
       const tag = phpDoc.children[0];
       // @ts-expect-error - accessing value property
       const value = tag.value as ParamImmediatelyInvokedCallableTagValueNode;
-      expect(value).toBeInstanceOf(
-        ParamImmediatelyInvokedCallableTagValueNode,
-      );
+      expect(value).toBeInstanceOf(ParamImmediatelyInvokedCallableTagValueNode);
       expect(value.parameterName).toBe('$callback');
     });
 
@@ -298,9 +294,7 @@ describe('Upstream 2024 Features', () => {
       const tag = phpDoc.children[0];
       // @ts-expect-error - accessing value property
       const value = tag.value as ParamImmediatelyInvokedCallableTagValueNode;
-      expect(value).toBeInstanceOf(
-        ParamImmediatelyInvokedCallableTagValueNode,
-      );
+      expect(value).toBeInstanceOf(ParamImmediatelyInvokedCallableTagValueNode);
       expect(value.parameterName).toBe('$fn');
       expect(value.description).toBe('some desc');
     });
@@ -356,8 +350,7 @@ describe('Upstream 2024 Features', () => {
       const phpDocParser = new PhpDocParser(typeParser, constExprParser);
 
       const tokens = new TokenIterator(
-        lexer.tokenize(
-          '/** @pure-unless-callable-is-impure $callback */'),
+        lexer.tokenize('/** @pure-unless-callable-is-impure $callback */'),
       );
 
       const phpDoc = phpDocParser.parse(tokens);
@@ -616,9 +609,9 @@ describe('Upstream 2024 Features', () => {
       expect(callable.templateTypes[0].bound).toBeInstanceOf(
         IdentifierTypeNode,
       );
-      expect(
-        (callable.templateTypes[0].bound as IdentifierTypeNode).name,
-      ).toBe('Foo');
+      expect((callable.templateTypes[0].bound as IdentifierTypeNode).name).toBe(
+        'Foo',
+      );
     });
 
     it('should preserve toString for callable with templates', () => {
@@ -655,9 +648,7 @@ describe('Upstream 2024 Features', () => {
 
       expect(value.name).toBe('T');
       expect(value.defaultTypeNode).toBeInstanceOf(IdentifierTypeNode);
-      expect((value.defaultTypeNode as IdentifierTypeNode).name).toBe(
-        'string',
-      );
+      expect((value.defaultTypeNode as IdentifierTypeNode).name).toBe('string');
     });
 
     it('should parse template with bound, lower bound, and default', () => {
@@ -667,9 +658,7 @@ describe('Upstream 2024 Features', () => {
       const phpDocParser = new PhpDocParser(typeParser, constExprParser);
 
       const tokens = new TokenIterator(
-        lexer.tokenize(
-          '/** @template T of Upper super Lower = Default */',
-        ),
+        lexer.tokenize('/** @template T of Upper super Lower = Default */'),
       );
 
       const phpDoc = phpDocParser.parse(tokens);
@@ -692,9 +681,7 @@ describe('Upstream 2024 Features', () => {
       const phpDocParser = new PhpDocParser(typeParser, constExprParser);
 
       const tokens = new TokenIterator(
-        lexer.tokenize(
-          '/** @template T of Upper super Lower = Default */',
-        ),
+        lexer.tokenize('/** @template T of Upper super Lower = Default */'),
       );
 
       const phpDoc = phpDocParser.parse(tokens);
