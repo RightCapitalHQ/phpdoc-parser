@@ -1,3 +1,4 @@
+import { Comment } from '../ast/comment';
 import { Lexer } from '../lexer/lexer';
 import { ParserException } from './parser-exception';
 
@@ -6,7 +7,9 @@ export class TokenIterator {
 
   private index: number;
 
-  private savePoints: number[] = [];
+  private comments: Comment[] = [];
+
+  private savePoints: Array<[number, Comment[]]> = [];
 
   private skippedTokenTypes: string[] = [Lexer.TOKEN_HORIZONTAL_WS];
 
@@ -158,6 +161,47 @@ export class TokenIterator {
     return true;
   }
 
+  public flushComments(): Comment[] {
+    const res = this.comments;
+    this.comments = [];
+    return res;
+  }
+
+  public skipNewLineTokensAndConsumeComments(): void {
+    if (this.currentTokenType() === Lexer.TOKEN_COMMENT) {
+      this.comments.push(
+        new Comment(
+          this.currentTokenValue(),
+          this.currentTokenLine(),
+          this.currentTokenIndex(),
+        ),
+      );
+      this.next();
+    }
+
+    if (!this.isCurrentTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
+      return;
+    }
+
+    let foundNewLine: boolean;
+    do {
+      foundNewLine = this.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      if (this.currentTokenType() !== Lexer.TOKEN_COMMENT) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      this.comments.push(
+        new Comment(
+          this.currentTokenValue(),
+          this.currentTokenLine(),
+          this.currentTokenIndex(),
+        ),
+      );
+      this.next();
+    } while (foundNewLine);
+  }
+
   private detectNewline(): void {
     const value = this.currentTokenValue();
     if (value.substring(0, 2) === '\r\n') {
@@ -228,7 +272,7 @@ export class TokenIterator {
   }
 
   public pushSavePoint(): void {
-    this.savePoints.push(this.index);
+    this.savePoints.push([this.index, [...this.comments]]);
   }
 
   public dropSavePoint(): void {
@@ -236,9 +280,11 @@ export class TokenIterator {
   }
 
   public rollback(): void {
-    const index = this.savePoints.pop();
-    // assert(index !== null);
-    this.index = index;
+    const savepoint = this.savePoints.pop();
+    if (savepoint === undefined) {
+      throw new Error('No save point to rollback to');
+    }
+    [this.index, this.comments] = savepoint;
   }
 
   throwError(

@@ -8,7 +8,6 @@ import type { ConstExprNullNode } from './const-expr-null-node';
 import type { ConstExprStringNode } from './const-expr-string-node';
 import type { ConstExprTrueNode } from './const-expr-true-node';
 import type { ConstFetchNode } from './const-fetch-node';
-import type { QuoteAwareConstExprStringNode } from './quote-aware-const-expr-string-node';
 
 export class ConstExprNode extends BaseNode {
   public getNodeType(): string {
@@ -29,10 +28,6 @@ export class ConstExprNode extends BaseNode {
 
   public isConstExprFalseNode(): this is ConstExprFalseNode {
     return this.getNodeType() === 'ConstExprFalseNode';
-  }
-
-  public isQuoteAwareConstExprStringNode(): this is QuoteAwareConstExprStringNode {
-    return this.getNodeType() === 'QuoteAwareConstExprStringNode';
   }
 
   public isConstExprNullNode(): this is ConstExprNullNode {

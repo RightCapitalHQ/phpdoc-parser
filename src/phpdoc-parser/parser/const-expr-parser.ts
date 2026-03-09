@@ -8,7 +8,6 @@ import { ConstExprNullNode } from '../ast/const-expr/const-expr-null-node';
 import { ConstExprStringNode } from '../ast/const-expr/const-expr-string-node';
 import { ConstExprTrueNode } from '../ast/const-expr/const-expr-true-node';
 import { ConstFetchNode } from '../ast/const-expr/const-fetch-node';
-import { QuoteAwareConstExprStringNode } from '../ast/const-expr/quote-aware-const-expr-string-node';
 import { Attribute } from '../ast/types';
 import { Lexer } from '../lexer/lexer';
 import { ParserException } from './parser-exception';
@@ -25,7 +24,6 @@ export class ConstExprParser {
    */
   constructor(
     private unescapeStrings: boolean = false,
-    private quoteAwareConstExprString: boolean = false,
     usedAttributes: { lines?: boolean; indexes?: boolean } = {},
   ) {
     this.useLinesAttributes = usedAttributes.lines ?? false;
@@ -76,23 +74,14 @@ export class ConstExprParser {
       }
       tokens.next();
 
-      if (this.quoteAwareConstExprString) {
-        return this.enrichWithAttributes(
-          tokens,
-          new QuoteAwareConstExprStringNode(
-            value,
-            type === Lexer.TOKEN_SINGLE_QUOTED_STRING
-              ? QuoteAwareConstExprStringNode.SINGLE_QUOTED
-              : QuoteAwareConstExprStringNode.DOUBLE_QUOTED,
-          ),
-          startLine,
-          startIndex,
-        );
-      }
-
       return this.enrichWithAttributes(
         tokens,
-        new ConstExprStringNode(value),
+        new ConstExprStringNode(
+          value,
+          type === Lexer.TOKEN_SINGLE_QUOTED_STRING
+            ? ConstExprStringNode.SINGLE_QUOTED
+            : ConstExprStringNode.DOUBLE_QUOTED,
+        ),
         startLine,
         startIndex,
       );

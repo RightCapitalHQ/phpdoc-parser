@@ -45,4 +45,6 @@ export enum Attribute {
   END_INDEX = 'endIndex',
 
   ORIGINAL_NODE = 'originalNode',
+
+  COMMENTS = 'comments',
 }
