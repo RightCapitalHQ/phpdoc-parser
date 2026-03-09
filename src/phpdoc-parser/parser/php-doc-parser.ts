@@ -11,6 +11,9 @@ import { InvalidTagValueNode } from '../ast/php-doc/invalid-tag-value-node';
 import { MethodTagValueNode } from '../ast/php-doc/method-tag-value-node';
 import { MethodTagValueParameterNode } from '../ast/php-doc/method-tag-value-parameter-node';
 import { MixinTagValueNode } from '../ast/php-doc/mixin-tag-value-node';
+import { ParamClosureThisTagValueNode } from '../ast/php-doc/param-closure-this-tag-value-node';
+import { ParamImmediatelyInvokedCallableTagValueNode } from '../ast/php-doc/param-immediately-invoked-callable-tag-value-node';
+import { ParamLaterInvokedCallableTagValueNode } from '../ast/php-doc/param-later-invoked-callable-tag-value-node';
 import { ParamOutTagValueNode } from '../ast/php-doc/param-out-tag-value-node';
 import { ParamTagValueNode } from '../ast/php-doc/param-tag-value-node';
 import type { PhpDocChildNode } from '../ast/php-doc/php-doc-child-node';
@@ -19,9 +22,13 @@ import { PhpDocTagNode } from '../ast/php-doc/php-doc-tag-node';
 import type { PhpDocTagValueNode } from '../ast/php-doc/php-doc-tag-value-node';
 import { PhpDocTextNode } from '../ast/php-doc/php-doc-text-node';
 import { PropertyTagValueNode } from '../ast/php-doc/property-tag-value-node';
+import { PureUnlessCallableIsImpureTagValueNode } from '../ast/php-doc/pure-unless-callable-is-impure-tag-value-node';
+import { RequireExtendsTagValueNode } from '../ast/php-doc/require-extends-tag-value-node';
+import { RequireImplementsTagValueNode } from '../ast/php-doc/require-implements-tag-value-node';
 import { ReturnTagValueNode } from '../ast/php-doc/return-tag-value-node';
+import { SealedTagValueNode } from '../ast/php-doc/sealed-tag-value-node';
 import { SelfOutTagValueNode } from '../ast/php-doc/self-out-tag-value-node';
-import { TemplateTagValueNode } from '../ast/php-doc/template-tag-value-node';
+import type { TemplateTagValueNode } from '../ast/php-doc/template-tag-value-node';
 import { ThrowsTagValueNode } from '../ast/php-doc/throws-tag-value-node';
 import { TypeAliasImportTagValueNode } from '../ast/php-doc/type-alias-import-tag-value-node';
 import { TypeAliasTagValueNode } from '../ast/php-doc/type-alias-tag-value-node';
@@ -247,16 +254,42 @@ export class PhpDocParser {
         case '@param':
         case '@phpstan-param':
         case '@psalm-param':
+        case '@phan-param':
           tagValue = this.parseParamTagValue(tokens);
           break;
+
+        case '@param-immediately-invoked-callable':
+        case '@phpstan-param-immediately-invoked-callable':
+          tagValue = this.parseParamImmediatelyInvokedCallableTagValue(tokens);
+          break;
+
+        case '@param-later-invoked-callable':
+        case '@phpstan-param-later-invoked-callable':
+          tagValue = this.parseParamLaterInvokedCallableTagValue(tokens);
+          break;
+
+        case '@param-closure-this':
+        case '@phpstan-param-closure-this':
+          tagValue = this.parseParamClosureThisTagValue(tokens);
+          break;
+
+        case '@pure-unless-callable-is-impure':
+        case '@phpstan-pure-unless-callable-is-impure':
+          tagValue = this.parsePureUnlessCallableIsImpureTagValue(tokens);
+          break;
+
         case '@var':
         case '@phpstan-var':
         case '@psalm-var':
+        case '@phan-var':
           tagValue = this.parseVarTagValue(tokens);
           break;
+
         case '@return':
         case '@phpstan-return':
         case '@psalm-return':
+        case '@phan-return':
+        case '@phan-real-return':
           tagValue = this.parseReturnTagValue(tokens);
           break;
 
@@ -266,7 +299,23 @@ export class PhpDocParser {
           break;
 
         case '@mixin':
+        case '@phan-mixin':
           tagValue = this.parseMixinTagValue(tokens);
+          break;
+
+        case '@psalm-require-extends':
+        case '@phpstan-require-extends':
+          tagValue = this.parseRequireExtendsTagValue(tokens);
+          break;
+
+        case '@psalm-require-implements':
+        case '@phpstan-require-implements':
+          tagValue = this.parseRequireImplementsTagValue(tokens);
+          break;
+
+        case '@psalm-inheritors':
+        case '@phpstan-sealed':
+          tagValue = this.parseSealedTagValue(tokens);
           break;
 
         case '@deprecated':
@@ -282,29 +331,39 @@ export class PhpDocParser {
         case '@psalm-property':
         case '@psalm-property-read':
         case '@psalm-property-write':
+        case '@phan-property':
+        case '@phan-property-read':
+        case '@phan-property-write':
           tagValue = this.parsePropertyTagValue(tokens);
           break;
 
         case '@method':
         case '@phpstan-method':
         case '@psalm-method':
+        case '@phan-method':
           tagValue = this.parseMethodTagValue(tokens);
           break;
 
         case '@template':
         case '@phpstan-template':
         case '@psalm-template':
+        case '@phan-template':
         case '@template-covariant':
         case '@phpstan-template-covariant':
         case '@psalm-template-covariant':
         case '@template-contravariant':
         case '@phpstan-template-contravariant':
         case '@psalm-template-contravariant':
-          tagValue = this.parseTemplateTagValue(tokens, true);
+          tagValue = this.typeParser.parseTemplateTagValue(
+            tokens,
+            (t: TokenIterator) => this.parseOptionalDescription(t, true),
+          );
           break;
 
         case '@extends':
         case '@phpstan-extends':
+        case '@phan-extends':
+        case '@phan-inherits':
         case '@template-extends':
           tagValue = this.parseExtendsTagValue('@extends', tokens);
           break;
@@ -323,6 +382,7 @@ export class PhpDocParser {
 
         case '@phpstan-type':
         case '@psalm-type':
+        case '@phan-type':
           tagValue = this.parseTypeAliasTagValue(tokens);
           break;
 
@@ -337,6 +397,9 @@ export class PhpDocParser {
         case '@psalm-assert':
         case '@psalm-assert-if-true':
         case '@psalm-assert-if-false':
+        case '@phan-assert':
+        case '@phan-assert-if-true':
+        case '@phan-assert-if-false':
           tagValue = this.parseAssertTagValue(tokens);
           break;
 
@@ -445,6 +508,77 @@ export class PhpDocParser {
     return new DeprecatedTagValueNode(description);
   }
 
+  private parseParamImmediatelyInvokedCallableTagValue(
+    tokens: TokenIterator,
+  ): ParamImmediatelyInvokedCallableTagValueNode {
+    const parameterName = this.parseRequiredVariableName(tokens);
+    const description = this.parseOptionalDescription(tokens);
+
+    return new ParamImmediatelyInvokedCallableTagValueNode(
+      parameterName,
+      description,
+    );
+  }
+
+  private parseParamLaterInvokedCallableTagValue(
+    tokens: TokenIterator,
+  ): ParamLaterInvokedCallableTagValueNode {
+    const parameterName = this.parseRequiredVariableName(tokens);
+    const description = this.parseOptionalDescription(tokens);
+
+    return new ParamLaterInvokedCallableTagValueNode(
+      parameterName,
+      description,
+    );
+  }
+
+  private parseParamClosureThisTagValue(
+    tokens: TokenIterator,
+  ): ParamClosureThisTagValueNode {
+    const type = this.typeParser.parse(tokens);
+    const parameterName = this.parseRequiredVariableName(tokens);
+    const description = this.parseOptionalDescription(tokens);
+
+    return new ParamClosureThisTagValueNode(type, parameterName, description);
+  }
+
+  private parsePureUnlessCallableIsImpureTagValue(
+    tokens: TokenIterator,
+  ): PureUnlessCallableIsImpureTagValueNode {
+    const parameterName = this.parseRequiredVariableName(tokens);
+    const description = this.parseOptionalDescription(tokens);
+
+    return new PureUnlessCallableIsImpureTagValueNode(
+      parameterName,
+      description,
+    );
+  }
+
+  private parseRequireExtendsTagValue(
+    tokens: TokenIterator,
+  ): RequireExtendsTagValueNode {
+    const type = this.typeParser.parse(tokens);
+    const description = this.parseOptionalDescription(tokens, true);
+
+    return new RequireExtendsTagValueNode(type, description);
+  }
+
+  private parseRequireImplementsTagValue(
+    tokens: TokenIterator,
+  ): RequireImplementsTagValueNode {
+    const type = this.typeParser.parse(tokens);
+    const description = this.parseOptionalDescription(tokens, true);
+
+    return new RequireImplementsTagValueNode(type, description);
+  }
+
+  private parseSealedTagValue(tokens: TokenIterator): SealedTagValueNode {
+    const type = this.typeParser.parse(tokens);
+    const description = this.parseOptionalDescription(tokens, true);
+
+    return new SealedTagValueNode(type, description);
+  }
+
   private parsePropertyTagValue(tokens: TokenIterator): PropertyTagValueNode {
     const type = this.typeParser.parse(tokens);
     const name = this.parseRequiredVariableName(tokens);
@@ -488,7 +622,7 @@ export class PhpDocParser {
       do {
         startLine = tokens.currentTokenLine();
         startIndex = tokens.currentTokenIndex();
-        const templateType = this.parseTemplateTagValue(tokens, false);
+        const templateType = this.typeParser.parseTemplateTagValue(tokens);
         templateTypes.push(
           this.enrichWithAttributes(
             tokens,
@@ -570,34 +704,6 @@ export class PhpDocParser {
       startLine,
       startIndex,
     );
-  }
-
-  private parseTemplateTagValue(
-    tokens: TokenIterator,
-    parseDescription: boolean,
-  ): TemplateTagValueNode {
-    const name = tokens.currentTokenValue();
-    tokens.consumeTokenType(Lexer.TOKEN_IDENTIFIER);
-
-    let bound: TypeNode | null = null;
-    if (
-      tokens.tryConsumeTokenValue('of') ||
-      tokens.tryConsumeTokenValue('as')
-    ) {
-      bound = this.typeParser.parse(tokens);
-    }
-
-    let defaultValue: TypeNode | null = null;
-    if (tokens.tryConsumeTokenValue('=')) {
-      defaultValue = this.typeParser.parse(tokens);
-    }
-
-    let description = '';
-    if (parseDescription) {
-      description = this.parseOptionalDescription(tokens);
-    }
-
-    return new TemplateTagValueNode(name, bound, description, defaultValue);
   }
 
   private parseExtendsTagValue(
