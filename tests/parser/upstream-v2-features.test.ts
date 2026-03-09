@@ -232,9 +232,7 @@ describe('Upstream v2.0+ Features', () => {
 
       // Test parsing a type directly
       const tokens = new TokenIterator(
-        lexer.tokenize(
-          '/** @return Foo<int, // key type\nstring> */',
-        ),
+        lexer.tokenize('/** @return Foo<int, // key type\nstring> */'),
       );
       const phpDocParser = new PhpDocParser(typeParser, constExprParser);
       const result = phpDocParser.parse(tokens);

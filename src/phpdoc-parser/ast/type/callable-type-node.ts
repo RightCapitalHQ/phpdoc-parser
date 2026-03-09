@@ -18,7 +18,8 @@ export class CallableTypeNode extends TypeNode {
     if (returnType instanceof CallableTypeNode) {
       returnType = `(${returnType.toString()})`;
     }
-    const template = this.templateTypes.length > 0 ? `<${this.templateTypes.join(', ')}>` : '';
+    const template =
+      this.templateTypes.length > 0 ? `<${this.templateTypes.join(', ')}>` : '';
     const parameters = this.parameters.join(', ');
     return `${this.identifier.toString()}${template}(${parameters}): ${returnType.toString()}`;
   }

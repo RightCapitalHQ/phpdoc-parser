@@ -22,9 +22,7 @@ export class ConstExprParser {
   /**
    * @param usedAttributes is an object that may have 'lines' and 'indexes' properties
    */
-  constructor(
-    usedAttributes: { lines?: boolean; indexes?: boolean } = {},
-  ) {
+  constructor(usedAttributes: { lines?: boolean; indexes?: boolean } = {}) {
     this.useLinesAttributes = usedAttributes.lines ?? false;
     this.useIndexAttributes = usedAttributes.indexes ?? false;
   }

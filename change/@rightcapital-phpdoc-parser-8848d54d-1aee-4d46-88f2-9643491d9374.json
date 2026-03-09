@@ -1,0 +1,7 @@
+{
+  "comment": "feat: sync with upstream phpdoc-parser v1.25-v2.3.2",
+  "type": "minor",
+  "packageName": "@rightcapital/phpdoc-parser",
+  "email": "nichenqin@gmail.com",
+  "dependentChangeType": "patch"
+}

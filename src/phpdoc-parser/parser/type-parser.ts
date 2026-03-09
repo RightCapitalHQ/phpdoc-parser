@@ -252,9 +252,7 @@ export class TypeParser {
               type = this.tryParseArrayOrOffsetAccess(tokens, type);
             }
           }
-        } else if (
-          tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_PARENTHESES)
-        ) {
+        } else if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_PARENTHESES)) {
           type = this.tryParseCallable(tokens, identifierTypeNode, false);
         } else if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_SQUARE_BRACKET)) {
           type = this.tryParseArrayOrOffsetAccess(tokens, type);
@@ -578,9 +576,7 @@ export class TypeParser {
     identifier: IdentifierTypeNode,
     hasTemplate: boolean,
   ): CallableTypeNode {
-    const templates = hasTemplate
-      ? this.parseCallableTemplates(tokens)
-      : [];
+    const templates = hasTemplate ? this.parseCallableTemplates(tokens) : [];
 
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_PARENTHESES);
     tokens.skipNewLineTokensAndConsumeComments();
@@ -618,7 +614,9 @@ export class TypeParser {
     return new CallableTypeNode(identifier, parameters, returnType, templates);
   }
 
-  private parseCallableTemplates(tokens: TokenIterator): TemplateTagValueNode[] {
+  private parseCallableTemplates(
+    tokens: TokenIterator,
+  ): TemplateTagValueNode[] {
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET);
 
     const templates: TemplateTagValueNode[] = [];
