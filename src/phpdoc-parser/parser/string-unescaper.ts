@@ -13,8 +13,7 @@ export class StringUnescaper {
     const quote = input[0];
 
     if (quote === "'") {
-      // eslint-disable-next-line no-useless-escape
-      return input.slice(1, input.length - 1).replaceAll(/\\([\\\.])/g, '$1');
+      return input.slice(1, input.length - 1).replaceAll(/\\([\\'])/g, '$1');
     }
 
     return this.parseEscapeSequences(input.slice(1, input.length - 1), '"');
@@ -23,7 +22,7 @@ export class StringUnescaper {
   // Implementation based on https://github.com/nikic/PHP-Parser/blob/b0edd4c41111042d43bb45c6c657b2e0db367d9e/lib/PhpParser/Node/Scalar/String_.php#L90-L130
   private static parseEscapeSequences(input: string, quote: string): string {
     // eslint-disable-next-line no-param-reassign
-    input = input.replaceAll(new RegExp(`\\${quote}`, 'g'), quote);
+    input = input.replaceAll(new RegExp(`\\\\${quote}`, 'g'), quote);
 
     return input.replaceAll(
       /\\([\\nrtfve]|[xX][0-9a-fA-F]{1,2}|[0-7]{1,3}|u\{([0-9a-fA-F]+)\})/g,

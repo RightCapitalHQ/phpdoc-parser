@@ -63,14 +63,7 @@ export class PhpDocParser {
   constructor(
     public typeParser: TypeParser,
     public constantExprParser: ConstExprParser,
-    public requireWhitespaceBeforeDescription: boolean = false,
-    public preserveTypeAliasesWithInvalidTypes: boolean = false,
-    usedAttributes: { lines: boolean; indexes: boolean } = {
-      lines: false,
-      indexes: false,
-    },
-    public parseDoctrineAnnotations: boolean = false,
-    private textBetweenTagsBelongsToDescription: boolean = false,
+    usedAttributes: { lines?: boolean; indexes?: boolean } = {},
   ) {
     this.useLinesAttributes = usedAttributes.lines ?? false;
     this.useIndexAttributes = usedAttributes.indexes ?? false;
@@ -177,21 +170,11 @@ export class PhpDocParser {
   private parseText(tokens: TokenIterator): PhpDocTextNode {
     let text = '';
 
-    let endTokens = [
-      Lexer.TOKEN_PHPDOC_EOL,
-      Lexer.TOKEN_CLOSE_PHPDOC,
-      Lexer.TOKEN_END,
-    ];
-    if (this.textBetweenTagsBelongsToDescription) {
-      endTokens = [Lexer.TOKEN_CLOSE_PHPDOC, Lexer.TOKEN_END];
-    }
+    const endTokens = [Lexer.TOKEN_CLOSE_PHPDOC, Lexer.TOKEN_END];
 
     let savepoint = false;
 
-    while (
-      this.textBetweenTagsBelongsToDescription ||
-      !tokens.isCurrentTokenType(Lexer.TOKEN_PHPDOC_EOL)
-    ) {
+    while (true) {
       const tmpText =
         tokens.getSkippedHorizontalWhiteSpaceIfAny() +
         tokens.joinUntil(Lexer.TOKEN_PHPDOC_EOL, ...endTokens);
@@ -201,14 +184,12 @@ export class PhpDocParser {
         break;
       }
 
-      if (this.textBetweenTagsBelongsToDescription) {
-        if (!savepoint) {
-          tokens.pushSavePoint();
-          savepoint = true;
-        } else if (tmpText !== '') {
-          tokens.dropSavePoint();
-          tokens.pushSavePoint();
-        }
+      if (!savepoint) {
+        tokens.pushSavePoint();
+        savepoint = true;
+      } else if (tmpText !== '') {
+        tokens.dropSavePoint();
+        tokens.pushSavePoint();
       }
 
       tokens.pushSavePoint();
@@ -742,34 +723,29 @@ export class PhpDocParser {
     // support psalm-type syntax
     tokens.tryConsumeTokenType(Lexer.TOKEN_EQUAL);
 
-    if (this.preserveTypeAliasesWithInvalidTypes) {
-      const startLine = tokens.currentTokenLine();
-      const startIndex = tokens.currentTokenIndex();
+    const startLine = tokens.currentTokenLine();
+    const startIndex = tokens.currentTokenIndex();
 
-      try {
-        const type = this.typeParser.parse(tokens);
-        if (!tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PHPDOC)) {
-          if (!tokens.isCurrentTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-            throw new Error('Expected end of line');
-          }
+    try {
+      const type = this.typeParser.parse(tokens);
+      if (!tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PHPDOC)) {
+        if (!tokens.isCurrentTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
+          throw new Error('Expected end of line');
         }
-        return new TypeAliasTagValueNode(alias, type);
-      } catch (e) {
-        this.parseOptionalDescription(tokens);
-        return new TypeAliasTagValueNode(
-          alias,
-          this.enrichWithAttributes(
-            tokens,
-            new InvalidTypeNode(e as ParserException),
-            startLine,
-            startIndex,
-          ),
-        );
       }
+      return new TypeAliasTagValueNode(alias, type);
+    } catch (e) {
+      this.parseOptionalDescription(tokens);
+      return new TypeAliasTagValueNode(
+        alias,
+        this.enrichWithAttributes(
+          tokens,
+          new InvalidTypeNode(e as ParserException),
+          startLine,
+          startIndex,
+        ),
+      );
     }
-
-    const type = this.typeParser.parse(tokens);
-    return new TypeAliasTagValueNode(alias, type);
   }
 
   private parseTypeAliasImportTagValue(
@@ -941,7 +917,6 @@ export class PhpDocParser {
       }
 
       if (
-        this.requireWhitespaceBeforeDescription &&
         !tokens.isCurrentTokenType(
           Lexer.TOKEN_PHPDOC_EOL,
           Lexer.TOKEN_CLOSE_PHPDOC,

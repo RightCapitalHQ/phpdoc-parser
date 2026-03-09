@@ -85,11 +85,11 @@ const floatNodeParseData = [
 ] as TestFixtureDataItem[];
 
 const stringNodeParseData = [
-  // String
-  ['"foo"', new ConstExprStringNode('"foo"', ConstExprStringNode.DOUBLE_QUOTED)],
-  ['"Foo \\n\\"\\r Bar"', new ConstExprStringNode('"Foo \\n\\"\\r Bar"', ConstExprStringNode.DOUBLE_QUOTED)],
-  ["'bar'", new ConstExprStringNode("'bar'", ConstExprStringNode.SINGLE_QUOTED)],
-  ["'Foo \\' Bar'", new ConstExprStringNode("'Foo \\' Bar'", ConstExprStringNode.SINGLE_QUOTED)],
+  // String - values are always unescaped in v2.0
+  ['"foo"', new ConstExprStringNode('foo', ConstExprStringNode.DOUBLE_QUOTED)],
+  ['"Foo \\n\\"\\r Bar"', new ConstExprStringNode('Foo \n"\r Bar', ConstExprStringNode.DOUBLE_QUOTED)],
+  ["'bar'", new ConstExprStringNode('bar', ConstExprStringNode.SINGLE_QUOTED)],
+  ["'Foo \\' Bar'", new ConstExprStringNode("Foo ' Bar", ConstExprStringNode.SINGLE_QUOTED)],
 ] as TestFixtureDataItem[];
 
 const arrayNodeParseData = [
@@ -224,7 +224,7 @@ describe('ConstExprParser', () => {
         const visitor = new NodeCollectingVisitor();
         const traverser = new NodeTraverser([visitor]);
 
-        parser = new ConstExprParser(true, {
+        parser = new ConstExprParser({
           lines: true,
           indexes: true,
         });

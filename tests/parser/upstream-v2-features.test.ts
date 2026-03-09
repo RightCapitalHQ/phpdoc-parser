@@ -114,9 +114,9 @@ describe('Upstream v2.0+ Features', () => {
 
     it('should parse single-quoted string in const expr', () => {
       const lexer = new Lexer();
-      const parser = new ConstExprParser(true);
+      const parser = new ConstExprParser();
       const tokens = new TokenIterator(lexer.tokenize("'hello'"));
-      const node = parser.parse(tokens, true);
+      const node = parser.parse(tokens);
       expect(node).toBeInstanceOf(ConstExprStringNode);
       const strNode = node as ConstExprStringNode;
       expect(strNode.value).toBe('hello');
@@ -125,9 +125,9 @@ describe('Upstream v2.0+ Features', () => {
 
     it('should parse double-quoted string in const expr', () => {
       const lexer = new Lexer();
-      const parser = new ConstExprParser(true);
+      const parser = new ConstExprParser();
       const tokens = new TokenIterator(lexer.tokenize('"world"'));
-      const node = parser.parse(tokens, true);
+      const node = parser.parse(tokens);
       expect(node).toBeInstanceOf(ConstExprStringNode);
       const strNode = node as ConstExprStringNode;
       expect(strNode.value).toBe('world');

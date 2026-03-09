@@ -23,14 +23,13 @@ export class ConstExprParser {
    * @param usedAttributes is an object that may have 'lines' and 'indexes' properties
    */
   constructor(
-    private unescapeStrings: boolean = false,
     usedAttributes: { lines?: boolean; indexes?: boolean } = {},
   ) {
     this.useLinesAttributes = usedAttributes.lines ?? false;
     this.useIndexAttributes = usedAttributes.indexes ?? false;
   }
 
-  public parse(tokens: TokenIterator, trimStrings = false): ConstExprNode {
+  public parse(tokens: TokenIterator): ConstExprNode {
     const startLine = tokens.currentTokenLine();
     const startIndex = tokens.currentTokenIndex();
     if (tokens.isCurrentTokenType(Lexer.TOKEN_FLOAT)) {
@@ -63,15 +62,8 @@ export class ConstExprParser {
         Lexer.TOKEN_DOUBLE_QUOTED_STRING,
       )
     ) {
-      let value = tokens.currentTokenValue();
+      const value = StringUnescaper.unescapeString(tokens.currentTokenValue());
       const type = tokens.currentTokenType();
-      if (trimStrings) {
-        if (this.unescapeStrings) {
-          value = StringUnescaper.unescapeString(value);
-        } else {
-          value = value.substring(1, value.length - 1);
-        }
-      }
       tokens.next();
 
       return this.enrichWithAttributes(
