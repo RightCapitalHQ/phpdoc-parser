@@ -7,6 +7,7 @@ import {
   type TypeNode,
 } from 'typescript';
 
+import { ConstExprStringNode } from '../ast/const-expr/const-expr-string-node';
 import type { ArrayShapeItemNode } from '../ast/type/array-shape-item-node';
 import { ArrayShapeNode } from '../ast/type/array-shape-node';
 import { ArrayTypeNode } from '../ast/type/array-type-node';
@@ -53,9 +54,13 @@ export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
     if (sourceTypeNode instanceof ArrayShapeNode) {
       return factory.createTypeLiteralNode(
         sourceTypeNode.items.map((item: ArrayShapeItemNode) => {
+          const keyName =
+            item.keyName instanceof ConstExprStringNode
+              ? item.keyName.value
+              : item.keyName.toString();
           return factory.createPropertySignature(
             undefined,
-            item.keyName.toString(),
+            keyName,
             item.optional
               ? factory.createToken(SyntaxKind.QuestionToken)
               : undefined,
@@ -69,9 +74,13 @@ export class PhpDocTypeNodeToTypescriptTypeNodeTranspiler {
     if (sourceTypeNode instanceof ObjectShapeNode) {
       return factory.createTypeLiteralNode(
         sourceTypeNode.items.map((item: ObjectShapeItemNode) => {
+          const keyName =
+            item.keyName instanceof ConstExprStringNode
+              ? item.keyName.value
+              : item.keyName.toString();
           return factory.createPropertySignature(
             undefined,
-            item.keyName.toString(),
+            keyName,
             item.optional
               ? factory.createToken(SyntaxKind.QuestionToken)
               : undefined,

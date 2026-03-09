@@ -1,5 +1,6 @@
 export { AbstractNodeVisitor } from './phpdoc-parser/ast/abstract-node-visitor';
 export { BaseNode } from './phpdoc-parser/ast/base-node';
+export { Comment } from './phpdoc-parser/ast/comment';
 export { ConstExprArrayItemNode } from './phpdoc-parser/ast/const-expr/const-expr-array-item-node';
 export { ConstExprArrayNode } from './phpdoc-parser/ast/const-expr/const-expr-array-node';
 export { ConstExprFalseNode } from './phpdoc-parser/ast/const-expr/const-expr-false-node';
@@ -10,7 +11,6 @@ export { ConstExprNullNode } from './phpdoc-parser/ast/const-expr/const-expr-nul
 export { ConstExprStringNode } from './phpdoc-parser/ast/const-expr/const-expr-string-node';
 export { ConstExprTrueNode } from './phpdoc-parser/ast/const-expr/const-expr-true-node';
 export { ConstFetchNode } from './phpdoc-parser/ast/const-expr/const-fetch-node';
-export { QuoteAwareConstExprStringNode } from './phpdoc-parser/ast/const-expr/quote-aware-const-expr-string-node';
 export type { Node } from './phpdoc-parser/ast/node';
 export { NodeTraverser } from './phpdoc-parser/ast/node-traverser';
 export type { NodeVisitor } from './phpdoc-parser/ast/node-visitor';
@@ -79,6 +79,7 @@ export { PhpDocParser } from './phpdoc-parser/parser/php-doc-parser';
 export { StringUnescaper } from './phpdoc-parser/parser/string-unescaper';
 export { TokenIterator } from './phpdoc-parser/parser/token-iterator';
 export { TypeParser } from './phpdoc-parser/parser/type-parser';
+export { ParserConfig } from './phpdoc-parser/parser-config';
 export { Printer } from './phpdoc-parser/printer/printer';
 export * from './phpdoc-parser/transpiler/helpers';
 export * from './phpdoc-parser/transpiler/php-doc-to-typescript-type-transpiler';

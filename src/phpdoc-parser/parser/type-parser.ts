@@ -3,7 +3,6 @@ import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
 import { ConstExprIntegerNode } from '../ast/const-expr/const-expr-integer-node';
 import { ConstExprStringNode } from '../ast/const-expr/const-expr-string-node';
 import { ConstFetchNode } from '../ast/const-expr/const-fetch-node';
-import { QuoteAwareConstExprStringNode } from '../ast/const-expr/quote-aware-const-expr-string-node';
 import { TemplateTagValueNode } from '../ast/php-doc/template-tag-value-node';
 import { ArrayShapeItemNode } from '../ast/type/array-shape-item-node';
 import {
@@ -44,7 +43,6 @@ export class TypeParser {
 
   constructor(
     private constExprParser: ConstExprParser | null = null,
-    private quoteAwareConstExprString = false,
     usedAttributes: { lines?: boolean; indexes?: boolean } = {},
   ) {
     this.useLinesAttributes = usedAttributes.lines ?? false;
@@ -60,15 +58,40 @@ export class TypeParser {
     }
     let type = this.parseAtomic(tokens);
 
-    if (tokens.isCurrentTokenType(Lexer.TOKEN_UNION)) {
-      type = this.parseUnion(tokens, type);
-    } else if (tokens.isCurrentTokenType(Lexer.TOKEN_INTERSECTION)) {
-      type = this.parseIntersection(tokens, type);
-    } else if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_SQUARE_BRACKET)) {
-      type = this.tryParseArrayOrOffsetAccess(tokens, type);
+    tokens.pushSavePoint();
+    tokens.skipNewLineTokensAndConsumeComments();
+
+    let enrichedType: TypeNode | null = null;
+    try {
+      enrichedType = this.enrichTypeOnUnionOrIntersection(tokens, type);
+    } catch {
+      enrichedType = null;
+    }
+
+    if (enrichedType !== null) {
+      type = enrichedType;
+      tokens.dropSavePoint();
+    } else {
+      tokens.rollback();
+      type = this.enrichTypeOnUnionOrIntersection(tokens, type) ?? type;
     }
 
     return this.enrichWithAttributes(tokens, type, startLine, startIndex);
+  }
+
+  private enrichTypeOnUnionOrIntersection(
+    tokens: TokenIterator,
+    type: TypeNode,
+  ): TypeNode | null {
+    if (tokens.isCurrentTokenType(Lexer.TOKEN_UNION)) {
+      return this.parseUnion(tokens, type);
+    }
+
+    if (tokens.isCurrentTokenType(Lexer.TOKEN_INTERSECTION)) {
+      return this.parseIntersection(tokens, type);
+    }
+
+    return null;
   }
 
   public enrichWithAttributes<T extends BaseNode>(
@@ -81,6 +104,8 @@ export class TypeParser {
       type.setAttribute(Attribute.START_LINE, startLine);
       type.setAttribute(Attribute.END_LINE, tokens.currentTokenLine());
     }
+
+    tokens.flushComments();
 
     if (this.useIndexAttributes) {
       type.setAttribute(Attribute.START_INDEX, startIndex);
@@ -151,7 +176,7 @@ export class TypeParser {
       if (tokens.isCurrentTokenValue('is')) {
         type = this.parseConditional(tokens, type);
       } else {
-        tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+        tokens.skipNewLineTokensAndConsumeComments();
 
         if (tokens.isCurrentTokenType(Lexer.TOKEN_UNION)) {
           type = this.subParseUnion(tokens, type);
@@ -171,9 +196,9 @@ export class TypeParser {
     let type: TypeNode;
 
     if (tokens.tryConsumeTokenType(Lexer.TOKEN_OPEN_PARENTHESES)) {
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
       type = this.subParse(tokens);
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
 
       tokens.consumeTokenType(Lexer.TOKEN_CLOSE_PARENTHESES);
 
@@ -304,9 +329,7 @@ export class TypeParser {
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_UNION)) {
       // Allow multiple consecutive newlines
-      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-        // consume all newlines
-      }
+      tokens.skipNewLineTokensAndConsumeComments();
       types.push(this.parseAtomic(tokens));
     }
 
@@ -318,14 +341,10 @@ export class TypeParser {
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_UNION)) {
       // Allow multiple consecutive newlines
-      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-        // consume all newlines
-      }
+      tokens.skipNewLineTokensAndConsumeComments();
       types.push(this.parseAtomic(tokens));
       // Allow multiple consecutive newlines after type
-      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-        // consume all newlines
-      }
+      tokens.skipNewLineTokensAndConsumeComments();
     }
 
     return new UnionTypeNode(types);
@@ -336,9 +355,7 @@ export class TypeParser {
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_INTERSECTION)) {
       // Allow multiple consecutive newlines
-      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-        // consume all newlines
-      }
+      tokens.skipNewLineTokensAndConsumeComments();
       types.push(this.parseAtomic(tokens));
     }
 
@@ -353,14 +370,10 @@ export class TypeParser {
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_INTERSECTION)) {
       // Allow multiple consecutive newlines
-      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-        // consume all newlines
-      }
+      tokens.skipNewLineTokensAndConsumeComments();
       types.push(this.parseAtomic(tokens));
       // Allow multiple consecutive newlines after type
-      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
-        // consume all newlines
-      }
+      tokens.skipNewLineTokensAndConsumeComments();
     }
 
     return new IntersectionTypeNode(types);
@@ -380,15 +393,15 @@ export class TypeParser {
 
     const targetType = this.parse(tokens);
 
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
     tokens.consumeTokenType(Lexer.TOKEN_NULLABLE);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     const ifType = this.parse(tokens);
 
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
     tokens.consumeTokenType(Lexer.TOKEN_COLON);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     const elseType = this.subParse(tokens);
 
@@ -416,15 +429,15 @@ export class TypeParser {
 
     const targetType = this.parse(tokens);
 
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
     tokens.consumeTokenType(Lexer.TOKEN_NULLABLE);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     const ifType = this.parse(tokens);
 
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
     tokens.consumeTokenType(Lexer.TOKEN_COLON);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     const elseType = this.subParse(tokens);
 
@@ -479,7 +492,7 @@ export class TypeParser {
     baseType: IdentifierTypeNode,
   ): GenericTypeNode {
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     const genericTypes: GenericTypeNode[] = [];
     const variances: GenericTypeNodeVariance[] = [];
@@ -488,10 +501,10 @@ export class TypeParser {
     genericTypes.push(genericType as GenericTypeNode);
     variances.push(variance);
 
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
 
       if (tokens.tryConsumeTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET)) {
         // trailing comma
@@ -502,10 +515,10 @@ export class TypeParser {
         this.parseGenericTypeArgument(tokens);
       genericTypes.push(genericTypeToAddInWhileLoop as GenericTypeNode);
       variances.push(varianceToAddInWhileLoop);
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
     }
 
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
     tokens.consumeTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET);
 
     const type = new GenericTypeNode(baseType, genericTypes, variances);
@@ -570,23 +583,23 @@ export class TypeParser {
       : [];
 
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_PARENTHESES);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     const parameters: CallableTypeParameterNode[] = [];
 
     if (!tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PARENTHESES)) {
       parameters.push(this.parseCallableParameter(tokens));
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
 
       while (tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
-        tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+        tokens.skipNewLineTokensAndConsumeComments();
 
         if (tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_PARENTHESES)) {
           break;
         }
 
         parameters.push(this.parseCallableParameter(tokens));
-        tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+        tokens.skipNewLineTokensAndConsumeComments();
       }
     }
 
@@ -612,7 +625,7 @@ export class TypeParser {
 
     let isFirst = true;
     while (isFirst || tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
 
       // trailing comma case
       if (
@@ -624,7 +637,7 @@ export class TypeParser {
       isFirst = false;
 
       templates.push(this.parseCallableTemplateArgument(tokens));
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
     }
 
     tokens.consumeTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET);
@@ -851,7 +864,7 @@ export class TypeParser {
     let done = false;
 
     do {
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
 
       if (tokens.tryConsumeTokenType(Lexer.TOKEN_CLOSE_CURLY_BRACKET)) {
         return new ArrayShapeNode(items, true, kind);
@@ -860,7 +873,7 @@ export class TypeParser {
       if (tokens.tryConsumeTokenType(Lexer.TOKEN_VARIADIC)) {
         sealed = false;
 
-        tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+        tokens.skipNewLineTokensAndConsumeComments();
         if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET)) {
           if (
             kind === ArrayShapeNodeKind.ARRAY ||
@@ -870,7 +883,7 @@ export class TypeParser {
           } else {
             unsealedType = this.parseListShapeUnsealedType(tokens);
           }
-          tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+          tokens.skipNewLineTokensAndConsumeComments();
         }
 
         tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA);
@@ -878,13 +891,13 @@ export class TypeParser {
       }
 
       items.push(this.parseArrayShapeItem(tokens));
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
       if (!tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
         done = true;
       }
     } while (!done);
 
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
     tokens.consumeTokenType(Lexer.TOKEN_CLOSE_CURLY_BRACKET);
 
     if (sealed) {
@@ -948,28 +961,16 @@ export class TypeParser {
       );
       tokens.next();
     } else if (tokens.isCurrentTokenType(Lexer.TOKEN_SINGLE_QUOTED_STRING)) {
-      if (this.quoteAwareConstExprString) {
-        key = new QuoteAwareConstExprStringNode(
-          StringUnescaper.unescapeString(tokens.currentTokenValue()),
-          QuoteAwareConstExprStringNode.SINGLE_QUOTED,
-        );
-      } else {
-        key = new ConstExprStringNode(
-          tokens.currentTokenValue().replace(/(^'|'$)/g, ''),
-        );
-      }
+      key = new ConstExprStringNode(
+        StringUnescaper.unescapeString(tokens.currentTokenValue()),
+        ConstExprStringNode.SINGLE_QUOTED,
+      );
       tokens.next();
     } else if (tokens.isCurrentTokenType(Lexer.TOKEN_DOUBLE_QUOTED_STRING)) {
-      if (this.quoteAwareConstExprString) {
-        key = new QuoteAwareConstExprStringNode(
-          StringUnescaper.unescapeString(tokens.currentTokenValue()),
-          QuoteAwareConstExprStringNode.DOUBLE_QUOTED,
-        );
-      } else {
-        key = new ConstExprStringNode(
-          tokens.currentTokenValue().replace(/(^"|"$)/g, ''),
-        );
-      }
+      key = new ConstExprStringNode(
+        StringUnescaper.unescapeString(tokens.currentTokenValue()),
+        ConstExprStringNode.DOUBLE_QUOTED,
+      );
       tokens.next();
     } else {
       const identifier = tokens.currentTokenValue();
@@ -995,18 +996,18 @@ export class TypeParser {
     const startIndex = tokens.currentTokenIndex();
 
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     let valueType = this.parse(tokens);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     let keyType: TypeNode | null = null;
     if (tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
 
       keyType = valueType;
       valueType = this.parse(tokens);
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
     }
 
     tokens.consumeTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET);
@@ -1026,10 +1027,10 @@ export class TypeParser {
     const startIndex = tokens.currentTokenIndex();
 
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     const valueType = this.parse(tokens);
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
 
     tokens.consumeTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET);
 
@@ -1047,7 +1048,7 @@ export class TypeParser {
     const items: ObjectShapeItemNode[] = [];
 
     do {
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
 
       if (tokens.tryConsumeTokenType(Lexer.TOKEN_CLOSE_CURLY_BRACKET)) {
         return new ObjectShapeNode(items);
@@ -1055,10 +1056,10 @@ export class TypeParser {
 
       items.push(this.parseObjectShapeItem(tokens));
 
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      tokens.skipNewLineTokensAndConsumeComments();
     } while (tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA));
 
-    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    tokens.skipNewLineTokensAndConsumeComments();
     tokens.consumeTokenType(Lexer.TOKEN_CLOSE_CURLY_BRACKET);
 
     return new ObjectShapeNode(items);
@@ -1090,28 +1091,16 @@ export class TypeParser {
     let key: ConstExprStringNode | IdentifierTypeNode;
 
     if (tokens.isCurrentTokenType(Lexer.TOKEN_SINGLE_QUOTED_STRING)) {
-      if (this.quoteAwareConstExprString) {
-        key = new QuoteAwareConstExprStringNode(
-          StringUnescaper.unescapeString(tokens.currentTokenValue()),
-          QuoteAwareConstExprStringNode.SINGLE_QUOTED,
-        );
-      } else {
-        key = new ConstExprStringNode(
-          tokens.currentTokenValue().replace(/(^'|'$)/g, ''),
-        );
-      }
+      key = new ConstExprStringNode(
+        StringUnescaper.unescapeString(tokens.currentTokenValue()),
+        ConstExprStringNode.SINGLE_QUOTED,
+      );
       tokens.next();
     } else if (tokens.isCurrentTokenType(Lexer.TOKEN_DOUBLE_QUOTED_STRING)) {
-      if (this.quoteAwareConstExprString) {
-        key = new QuoteAwareConstExprStringNode(
-          StringUnescaper.unescapeString(tokens.currentTokenValue()),
-          QuoteAwareConstExprStringNode.DOUBLE_QUOTED,
-        );
-      } else {
-        key = new ConstExprStringNode(
-          tokens.currentTokenValue().replace(/(^"|"$)/g, ''),
-        );
-      }
+      key = new ConstExprStringNode(
+        StringUnescaper.unescapeString(tokens.currentTokenValue()),
+        ConstExprStringNode.DOUBLE_QUOTED,
+      );
       tokens.next();
     } else {
       key = new IdentifierTypeNode(tokens.currentTokenValue());

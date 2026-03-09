@@ -69,6 +69,8 @@ export class Lexer {
 
   public static TOKEN_ARROW = 'TOKEN_ARROW';
 
+  public static TOKEN_COMMENT = 'TOKEN_COMMENT';
+
   public static TOKEN_LABELS = {
     [Lexer.TOKEN_REFERENCE]: '&',
     [Lexer.TOKEN_UNION]: '|',
@@ -84,6 +86,7 @@ export class Lexer {
     [Lexer.TOKEN_OPEN_CURLY_BRACKET]: '{',
     [Lexer.TOKEN_CLOSE_CURLY_BRACKET]: '}',
     [Lexer.TOKEN_COMMA]: ',',
+    [Lexer.TOKEN_COMMENT]: '//',
     [Lexer.TOKEN_COLON]: ':',
     [Lexer.TOKEN_VARIADIC]: '...',
     [Lexer.TOKEN_DOUBLE_COLON]: '::',
@@ -160,6 +163,7 @@ export class Lexer {
       [Lexer.TOKEN_OPEN_CURLY_BRACKET]: '\\{',
       [Lexer.TOKEN_CLOSE_CURLY_BRACKET]: '\\}',
       [Lexer.TOKEN_COMMA]: ',',
+      [Lexer.TOKEN_COMMENT]: '\\/\\/[^\\r\\n]*(?=\\n|\\r|\\*\\/)',
       [Lexer.TOKEN_VARIADIC]: '\\.\\.\\.',
       [Lexer.TOKEN_DOUBLE_COLON]: '::',
       [Lexer.TOKEN_DOUBLE_ARROW]: '=>',
