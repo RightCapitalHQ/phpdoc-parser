@@ -307,7 +307,7 @@ export class TypeParser {
     }
 
     try {
-      const constExpr = this.constExprParser.parse(tokens, true);
+      const constExpr = this.constExprParser.parse(tokens);
       if (constExpr instanceof ConstExprArrayNode) {
         throw exception;
       }
@@ -766,7 +766,7 @@ export class TypeParser {
     }
 
     try {
-      const constExpr = this.constExprParser.parse(tokens, true);
+      const constExpr = this.constExprParser.parse(tokens);
 
       if (constExpr instanceof ConstExprArrayNode) {
         throw exception;
