@@ -2,12 +2,15 @@ import type { BaseNode } from '../ast/base-node';
 import { ConstExprArrayNode } from '../ast/const-expr/const-expr-array-node';
 import { ConstExprIntegerNode } from '../ast/const-expr/const-expr-integer-node';
 import { ConstExprStringNode } from '../ast/const-expr/const-expr-string-node';
+import { ConstFetchNode } from '../ast/const-expr/const-fetch-node';
 import { QuoteAwareConstExprStringNode } from '../ast/const-expr/quote-aware-const-expr-string-node';
+import { TemplateTagValueNode } from '../ast/php-doc/template-tag-value-node';
 import { ArrayShapeItemNode } from '../ast/type/array-shape-item-node';
 import {
   ArrayShapeNode,
-  type ArrayShapeNodeKind,
+  ArrayShapeNodeKind,
 } from '../ast/type/array-shape-node';
+import { ArrayShapeUnsealedTypeNode } from '../ast/type/array-shape-unsealed-type-node';
 import { ArrayTypeNode } from '../ast/type/array-type-node';
 import { CallableTypeNode } from '../ast/type/callable-type-node';
 import { CallableTypeParameterNode } from '../ast/type/callable-type-parameter-node';
@@ -90,6 +93,50 @@ export class TypeParser {
     return type;
   }
 
+  public parseTemplateTagValue(
+    tokens: TokenIterator,
+    parseDescription?: (tokens: TokenIterator) => string,
+  ): TemplateTagValueNode {
+    const name = tokens.currentTokenValue();
+    tokens.consumeTokenType(Lexer.TOKEN_IDENTIFIER);
+
+    let upperBound: TypeNode | null = null;
+    let lowerBound: TypeNode | null = null;
+
+    if (
+      tokens.tryConsumeTokenValue('of') ||
+      tokens.tryConsumeTokenValue('as')
+    ) {
+      upperBound = this.parse(tokens);
+    }
+
+    if (tokens.tryConsumeTokenValue('super')) {
+      lowerBound = this.parse(tokens);
+    }
+
+    let defaultValue: TypeNode | null = null;
+    if (tokens.tryConsumeTokenValue('=')) {
+      defaultValue = this.parse(tokens);
+    }
+
+    let description = '';
+    if (parseDescription) {
+      description = parseDescription(tokens);
+    }
+
+    if (name === '') {
+      throw new Error('Template tag name cannot be empty.');
+    }
+
+    return new TemplateTagValueNode(
+      name,
+      upperBound,
+      description,
+      defaultValue,
+      lowerBound,
+    );
+  }
+
   private subParse(tokens: TokenIterator): TypeNode {
     const startLine = tokens.currentTokenLine();
     const startIndex = tokens.currentTokenIndex();
@@ -156,12 +203,44 @@ export class TypeParser {
       type = identifierTypeNode;
 
       if (!tokens.isCurrentTokenType(Lexer.TOKEN_DOUBLE_COLON)) {
+        tokens.dropSavePoint();
         if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET)) {
-          type = this.parseGeneric(tokens, identifierTypeNode);
+          tokens.pushSavePoint();
+
+          const isHtml = this.isHtml(tokens);
+          tokens.rollback();
+          if (isHtml) {
+            return this.enrichWithAttributes(
+              tokens,
+              type,
+              startLine,
+              startIndex,
+            );
+          }
+
+          const origType = type;
+          type = this.tryParseCallable(tokens, identifierTypeNode, true);
+          if (type === origType) {
+            type = this.parseGeneric(tokens, identifierTypeNode);
+
+            if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_SQUARE_BRACKET)) {
+              type = this.tryParseArrayOrOffsetAccess(tokens, type);
+            }
+          }
+        } else if (
+          tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_PARENTHESES)
+        ) {
+          type = this.tryParseCallable(tokens, identifierTypeNode, false);
         } else if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_SQUARE_BRACKET)) {
           type = this.tryParseArrayOrOffsetAccess(tokens, type);
         } else if (
-          ['array', 'list', 'object'].includes(identifierTypeNode.name) &&
+          [
+            'array',
+            'list',
+            'non-empty-array',
+            'non-empty-list',
+            'object',
+          ].includes(identifierTypeNode.name) &&
           tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_CURLY_BRACKET) &&
           !tokens.isPrecededByHorizontalWhitespace()
         ) {
@@ -176,7 +255,10 @@ export class TypeParser {
           }
 
           if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_SQUARE_BRACKET)) {
-            type = this.tryParseArrayOrOffsetAccess(tokens, type);
+            type = this.tryParseArrayOrOffsetAccess(
+              tokens,
+              this.enrichWithAttributes(tokens, type, startLine, startIndex),
+            );
           }
         }
         return this.enrichWithAttributes(tokens, type, startLine, startIndex);
@@ -221,6 +303,10 @@ export class TypeParser {
     const types = [type];
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_UNION)) {
+      // Allow multiple consecutive newlines
+      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
+        // consume all newlines
+      }
       types.push(this.parseAtomic(tokens));
     }
 
@@ -231,9 +317,15 @@ export class TypeParser {
     const types = [type];
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_UNION)) {
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      // Allow multiple consecutive newlines
+      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
+        // consume all newlines
+      }
       types.push(this.parseAtomic(tokens));
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      // Allow multiple consecutive newlines after type
+      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
+        // consume all newlines
+      }
     }
 
     return new UnionTypeNode(types);
@@ -243,6 +335,10 @@ export class TypeParser {
     const types = [type];
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_INTERSECTION)) {
+      // Allow multiple consecutive newlines
+      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
+        // consume all newlines
+      }
       types.push(this.parseAtomic(tokens));
     }
 
@@ -256,9 +352,15 @@ export class TypeParser {
     const types = [type];
 
     while (tokens.tryConsumeTokenType(Lexer.TOKEN_INTERSECTION)) {
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      // Allow multiple consecutive newlines
+      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
+        // consume all newlines
+      }
       types.push(this.parseAtomic(tokens));
-      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+      // Allow multiple consecutive newlines after type
+      while (tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL)) {
+        // consume all newlines
+      }
     }
 
     return new IntersectionTypeNode(types);
@@ -461,7 +563,12 @@ export class TypeParser {
   private parseCallable(
     tokens: TokenIterator,
     identifier: IdentifierTypeNode,
+    hasTemplate: boolean,
   ): CallableTypeNode {
+    const templates = hasTemplate
+      ? this.parseCallableTemplates(tokens)
+      : [];
+
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_PARENTHESES);
     tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
 
@@ -486,9 +593,57 @@ export class TypeParser {
     tokens.consumeTokenType(Lexer.TOKEN_CLOSE_PARENTHESES);
     tokens.consumeTokenType(Lexer.TOKEN_COLON);
 
-    const returnType = this.parseCallableReturnType(tokens);
+    const startLine = tokens.currentTokenLine();
+    const startIndex = tokens.currentTokenIndex();
+    const returnType = this.enrichWithAttributes(
+      tokens,
+      this.parseCallableReturnType(tokens),
+      startLine,
+      startIndex,
+    );
 
-    return new CallableTypeNode(identifier, parameters, returnType);
+    return new CallableTypeNode(identifier, parameters, returnType, templates);
+  }
+
+  private parseCallableTemplates(tokens: TokenIterator): TemplateTagValueNode[] {
+    tokens.consumeTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET);
+
+    const templates: TemplateTagValueNode[] = [];
+
+    let isFirst = true;
+    while (isFirst || tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
+      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+
+      // trailing comma case
+      if (
+        !isFirst &&
+        tokens.isCurrentTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET)
+      ) {
+        break;
+      }
+      isFirst = false;
+
+      templates.push(this.parseCallableTemplateArgument(tokens));
+      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    }
+
+    tokens.consumeTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET);
+
+    return templates;
+  }
+
+  private parseCallableTemplateArgument(
+    tokens: TokenIterator,
+  ): TemplateTagValueNode {
+    const startLine = tokens.currentTokenLine();
+    const startIndex = tokens.currentTokenIndex();
+
+    return this.enrichWithAttributes(
+      tokens,
+      this.parseTemplateTagValue(tokens),
+      startLine,
+      startIndex,
+    );
   }
 
   private parseCallableParameter(
@@ -626,10 +781,11 @@ export class TypeParser {
   private tryParseCallable(
     tokens: TokenIterator,
     identifier: IdentifierTypeNode,
+    hasTemplate: boolean,
   ): TypeNode {
     try {
       tokens.pushSavePoint();
-      const type = this.parseCallable(tokens, identifier);
+      const type = this.parseCallable(tokens, identifier, hasTemplate);
       tokens.dropSavePoint();
       return type;
     } catch (e) {
@@ -688,8 +844,11 @@ export class TypeParser {
   ): ArrayShapeNode {
     tokens.consumeTokenType(Lexer.TOKEN_OPEN_CURLY_BRACKET);
 
-    const items: (string | ArrayShapeItemNode)[] = [];
+    const items: ArrayShapeItemNode[] = [];
     let sealed = true;
+    let unsealedType: ArrayShapeUnsealedTypeNode | null = null;
+
+    let done = false;
 
     do {
       tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
@@ -700,18 +859,39 @@ export class TypeParser {
 
       if (tokens.tryConsumeTokenType(Lexer.TOKEN_VARIADIC)) {
         sealed = false;
+
+        tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+        if (tokens.isCurrentTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET)) {
+          if (
+            kind === ArrayShapeNodeKind.ARRAY ||
+            kind === ArrayShapeNodeKind.NON_EMPTY_ARRAY
+          ) {
+            unsealedType = this.parseArrayShapeUnsealedType(tokens);
+          } else {
+            unsealedType = this.parseListShapeUnsealedType(tokens);
+          }
+          tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+        }
+
         tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA);
         break;
       }
 
       items.push(this.parseArrayShapeItem(tokens));
       tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
-    } while (tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA));
+      if (!tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
+        done = true;
+      }
+    } while (!done);
 
     tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
     tokens.consumeTokenType(Lexer.TOKEN_CLOSE_CURLY_BRACKET);
 
-    return new ArrayShapeNode(items, sealed, kind);
+    if (sealed) {
+      return new ArrayShapeNode(items, true, kind);
+    }
+
+    return new ArrayShapeNode(items, false, kind, unsealedType);
   }
 
   private parseArrayShapeItem(tokens: TokenIterator): ArrayShapeItemNode {
@@ -749,10 +929,18 @@ export class TypeParser {
 
   private parseArrayShapeKey(
     tokens: TokenIterator,
-  ): ConstExprIntegerNode | ConstExprStringNode | IdentifierTypeNode {
+  ):
+    | ConstExprIntegerNode
+    | ConstExprStringNode
+    | ConstFetchNode
+    | IdentifierTypeNode {
     const startLine = tokens.currentTokenLine();
     const startIndex = tokens.currentTokenIndex();
-    let key: ConstExprIntegerNode | IdentifierTypeNode | ConstExprStringNode;
+    let key:
+      | ConstExprIntegerNode
+      | ConstExprStringNode
+      | ConstFetchNode
+      | IdentifierTypeNode;
 
     if (tokens.isCurrentTokenType(Lexer.TOKEN_INTEGER)) {
       key = new ConstExprIntegerNode(
@@ -784,13 +972,73 @@ export class TypeParser {
       }
       tokens.next();
     } else {
-      key = new IdentifierTypeNode(tokens.currentTokenValue());
+      const identifier = tokens.currentTokenValue();
       tokens.consumeTokenType(Lexer.TOKEN_IDENTIFIER);
+
+      if (tokens.tryConsumeTokenType(Lexer.TOKEN_DOUBLE_COLON)) {
+        const classConstantName = tokens.currentTokenValue();
+        tokens.consumeTokenType(Lexer.TOKEN_IDENTIFIER);
+
+        key = new ConstFetchNode(identifier, classConstantName);
+      } else {
+        key = new IdentifierTypeNode(identifier);
+      }
     }
 
-    return this.enrichWithAttributes<
-      ConstExprIntegerNode | IdentifierTypeNode | ConstExprStringNode
-    >(tokens, key, startLine, startIndex);
+    return this.enrichWithAttributes(tokens, key, startLine, startIndex);
+  }
+
+  private parseArrayShapeUnsealedType(
+    tokens: TokenIterator,
+  ): ArrayShapeUnsealedTypeNode {
+    const startLine = tokens.currentTokenLine();
+    const startIndex = tokens.currentTokenIndex();
+
+    tokens.consumeTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET);
+    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+
+    let valueType = this.parse(tokens);
+    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+
+    let keyType: TypeNode | null = null;
+    if (tokens.tryConsumeTokenType(Lexer.TOKEN_COMMA)) {
+      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+
+      keyType = valueType;
+      valueType = this.parse(tokens);
+      tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+    }
+
+    tokens.consumeTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET);
+
+    return this.enrichWithAttributes(
+      tokens,
+      new ArrayShapeUnsealedTypeNode(valueType, keyType),
+      startLine,
+      startIndex,
+    );
+  }
+
+  private parseListShapeUnsealedType(
+    tokens: TokenIterator,
+  ): ArrayShapeUnsealedTypeNode {
+    const startLine = tokens.currentTokenLine();
+    const startIndex = tokens.currentTokenIndex();
+
+    tokens.consumeTokenType(Lexer.TOKEN_OPEN_ANGLE_BRACKET);
+    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+
+    const valueType = this.parse(tokens);
+    tokens.tryConsumeTokenType(Lexer.TOKEN_PHPDOC_EOL);
+
+    tokens.consumeTokenType(Lexer.TOKEN_CLOSE_ANGLE_BRACKET);
+
+    return this.enrichWithAttributes(
+      tokens,
+      new ArrayShapeUnsealedTypeNode(valueType, null),
+      startLine,
+      startIndex,
+    );
   }
 
   private parseObjectShape(tokens: TokenIterator): ObjectShapeNode {
