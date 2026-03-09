@@ -11,6 +11,7 @@ import {
   ParamClosureThisTagValueNode,
   ParamImmediatelyInvokedCallableTagValueNode,
   ParamLaterInvokedCallableTagValueNode,
+  PhpDocNode,
   PhpDocParser,
   PureUnlessCallableIsImpureTagValueNode,
   RequireExtendsTagValueNode,
@@ -109,6 +110,41 @@ describe('Upstream 2024 Features', () => {
       expect(value.type).toBeInstanceOf(IdentifierTypeNode);
       expect((value.type as IdentifierTypeNode).name).toBe('ChildA');
       expect(value.description).toBe('This class is sealed');
+    });
+  });
+
+  describe('PhpDocNode.getSealedTagValues()', () => {
+    it('should return sealed tag values', () => {
+      const lexer = new Lexer();
+      const constExprParser = new ConstExprParser();
+      const typeParser = new TypeParser(constExprParser);
+      const phpDocParser = new PhpDocParser(typeParser, constExprParser);
+
+      const tokens = new TokenIterator(
+        lexer.tokenize('/** @phpstan-sealed ChildA|ChildB */'),
+      );
+
+      const phpDoc = phpDocParser.parse(tokens);
+      const sealedValues = phpDoc.getSealedTagValues();
+      expect(sealedValues).toHaveLength(1);
+      expect(sealedValues[0]).toBeInstanceOf(SealedTagValueNode);
+      expect(sealedValues[0].type).toBeInstanceOf(UnionTypeNode);
+    });
+
+    it('should return sealed tag values for @psalm-inheritors', () => {
+      const lexer = new Lexer();
+      const constExprParser = new ConstExprParser();
+      const typeParser = new TypeParser(constExprParser);
+      const phpDocParser = new PhpDocParser(typeParser, constExprParser);
+
+      const tokens = new TokenIterator(
+        lexer.tokenize('/** @psalm-inheritors ChildA|ChildB */'),
+      );
+
+      const phpDoc = phpDocParser.parse(tokens);
+      const sealedValues = phpDoc.getSealedTagValues('@psalm-inheritors');
+      expect(sealedValues).toHaveLength(1);
+      expect(sealedValues[0]).toBeInstanceOf(SealedTagValueNode);
     });
   });
 
