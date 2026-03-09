@@ -9,6 +9,7 @@ import { PhpDocTagNode } from './php-doc-tag-node';
 import type { PhpDocTagValueNode } from './php-doc-tag-value-node';
 import { PropertyTagValueNode } from './property-tag-value-node';
 import { ReturnTagValueNode } from './return-tag-value-node';
+import { SealedTagValueNode } from './sealed-tag-value-node';
 import { TemplateTagValueNode } from './template-tag-value-node';
 import { ThrowsTagValueNode } from './throws-tag-value-node';
 import { TypelessParamTagValueNode } from './typeless-param-tag-value-node';
@@ -132,6 +133,17 @@ export class PhpDocNode extends BaseNode {
       .filter(
         (value: PhpDocTagValueNode): value is MixinTagValueNode =>
           value instanceof MixinTagValueNode,
+      );
+  }
+
+  public getSealedTagValues(
+    tagName = '@phpstan-sealed',
+  ): SealedTagValueNode[] {
+    return this.getTagsByName(tagName)
+      .map((tag) => tag.value)
+      .filter(
+        (value: PhpDocTagValueNode): value is SealedTagValueNode =>
+          value instanceof SealedTagValueNode,
       );
   }
 
