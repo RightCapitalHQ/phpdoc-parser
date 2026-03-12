@@ -8,15 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@types/node':
-        specifier: 22.19.11
-        version: 22.19.11
       lodash:
         specifier: 4.17.23
         version: 4.17.23
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
     devDependencies:
       '@babel/core':
         specifier: 7.26.9
@@ -45,6 +39,9 @@ importers:
       '@types/lodash':
         specifier: 4.17.16
         version: 4.17.16
+      '@types/node':
+        specifier: 22.19.11
+        version: 22.19.11
       beachball:
         specifier: 2.51.0
         version: 2.51.0(typescript@5.9.3)
@@ -63,6 +60,9 @@ importers:
       prettier:
         specifier: 3.5.3
         version: 3.5.3
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
       vitest:
         specifier: 3.0.7
         version: 3.0.7(@types/node@22.19.11)(jiti@2.5.1)
@@ -2184,7 +2184,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+    deprecated: Glob versions prior to v9 are no longer supported
 
   global-directory@4.0.1:
     resolution: {integrity: sha512-wHTUcDUoZ1H5/0iVqEudYW4/kAlN5cZ3j/bXn0Dpbizl9iaUVeWSHqiOjsgk6OW2bkLclbBjzewBz6weQ1zA2Q==}
