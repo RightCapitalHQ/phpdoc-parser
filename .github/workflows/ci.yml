@@ -96,9 +96,12 @@ jobs:
         run: pnpm run build
 
       - name: Publish (development)
-        if: github.repository == 'RightCapitalHQ/phpdoc-parser' && github.base_ref == github.event.repository.default_branch
+        if: >-
+          github.repository == 'RightCapitalHQ/phpdoc-parser' &&
+          (github.base_ref == github.event.repository.default_branch ||
+           (github.event_name == 'workflow_dispatch' && github.ref_name != github.event.repository.default_branch))
         env:
-          HEAD_REF: ${{ github.head_ref }}
+          HEAD_REF: ${{ github.head_ref || github.ref_name }}
         run: |
           preid="${HEAD_REF//\//-}".${{ github.run_number }}.${{ github.run_attempt }}
           npm --no-git-tag-version version prerelease --preid="${preid}"
