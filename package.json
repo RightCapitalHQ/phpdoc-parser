@@ -36,11 +36,14 @@
     }
   },
   "dependencies": {
-    "@types/node": "22.19.11",
-    "lodash": "4.17.23",
-    "typescript": "5.9.3"
+    "lodash": "4.17.23"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.8.0"
   },
   "devDependencies": {
+    "@types/node": "22.19.11",
+    "typescript": "5.9.3",
     "@babel/core": "7.26.9",
     "@babel/preset-env": "7.26.9",
     "@babel/preset-typescript": "7.26.0",
