@@ -37,7 +37,8 @@ jobs:
       - run: pnpm install
 
       - name: Check and generate changefile for Renovate
-        uses: RightCapitalHQ/frontend-style-guide/.github/actions/renovate-auto-beachball-changefile@main
+        # Pin to the last commit on main before this action was removed (replaced by renovate-auto-version-plan)
+        uses: RightCapitalHQ/frontend-style-guide/.github/actions/renovate-auto-beachball-changefile@e7e6cdd89b0a5e56bb7b1b5280aae241d9e4e848
 
   check-beachball-changefile:
     if: github.base_ref == github.event.repository.default_branch
