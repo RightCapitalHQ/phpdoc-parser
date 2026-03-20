@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix(ci): pin renovate-auto-beachball-changefile action to last available commit",
-  "packageName": "@rightcapital/phpdoc-parser",
-  "email": "noreply@anthropic.com",
-  "dependentChangeType": "none"
-}

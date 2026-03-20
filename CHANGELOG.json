@@ -2,6 +2,29 @@
   "name": "@rightcapital/phpdoc-parser",
   "entries": [
     {
+      "date": "Fri, 20 Mar 2026 09:25:11 GMT",
+      "version": "0.6.1",
+      "tag": "@rightcapital/phpdoc-parser_v0.6.1",
+      "comments": {
+        "none": [
+          {
+            "author": "noreply@anthropic.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "73a813cc05612ab82966ce1e2b6a9b4b0228a4ab",
+            "comment": "fix(ci): pin renovate-auto-beachball-changefile action to last available commit"
+          }
+        ],
+        "patch": [
+          {
+            "author": "29139614+renovate[bot]@users.noreply.github.com",
+            "package": "@rightcapital/phpdoc-parser",
+            "commit": "73a813cc05612ab82966ce1e2b6a9b4b0228a4ab",
+            "comment": "chore(deps): update automerge non-major updates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Jul 2025 23:03:45 GMT",
       "version": "0.5.2",
       "tag": "@rightcapital/phpdoc-parser_v0.5.2",
