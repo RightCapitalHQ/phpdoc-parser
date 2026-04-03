@@ -10,59 +10,21 @@ jobs:
   install:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4.4.0
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: pnpm
       - run: pnpm install
-
-  check-renovate-changefile:
-    if: startsWith(github.event.pull_request.head.ref, 'renovate/') && github.base_ref == github.event.repository.default_branch
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.RENOVATE_AUTO_BEACHBALL_CHANGEFILE_TOKEN }}
-
-      # Install dependencies (example using pnpm)
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: pnpm
-      - run: pnpm install
-
-      - name: Check and generate changefile for Renovate
-        # Pin to the last commit on main before this action was removed (replaced by renovate-auto-version-plan)
-        uses: RightCapitalHQ/frontend-style-guide/.github/actions/renovate-auto-beachball-changefile@e7e6cdd89b0a5e56bb7b1b5280aae241d9e4e848
-
-  check-beachball-changefile:
-    if: github.base_ref == github.event.repository.default_branch
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4.4.0
-        with:
-          node-version-file: .node-version
-          cache: pnpm
-      - run: pnpm install
-
-      - name: Check
-        run: pnpm exec beachball check
 
   test:
     needs: install
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4.4.0
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: pnpm
@@ -77,40 +39,66 @@ jobs:
       - name: Test
         run: pnpm run test
 
-  build:
-    if: ${{ always() && !failure() && !cancelled() }}
-    needs: [test, check-beachball-changefile]
+  check-version-plan:
+    needs: install
+    if: github.base_ref == github.event.repository.default_branch && github.head_ref != 'release' && !startsWith(github.head_ref, 'renovate/')
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4.4.0
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Prepare pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Prepare Node.js
+        uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: pnpm
-      - run: pnpm install
 
-      - name: Build
-        run: pnpm run build
+      - name: Install dependencies
+        run: pnpm install
 
-      - name: Publish (development)
-        if: >-
-          github.repository == 'RightCapitalHQ/phpdoc-parser' &&
-          (github.base_ref == github.event.repository.default_branch ||
-           (github.event_name == 'workflow_dispatch' && github.ref_name != github.event.repository.default_branch))
+      - name: Set SHAs for Nx
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Check version plan
+        run: pnpm exec nx release plan:check
+
+  check-renovate-version-plan:
+    needs: install
+    if: startsWith(github.event.pull_request.head.ref, 'renovate/') && github.base_ref == github.event.repository.default_branch
+    uses: RightCapitalHQ/actions/.github/workflows/nx-release-auto-plan.yml@nx-release-auto-plan/v0.4.2
+    secrets: inherit
+
+  prerelease:
+    if: >-
+      !failure() && !cancelled()
+      && github.event_name == 'pull_request'
+      && github.event.pull_request.head.repo.full_name == 'RightCapitalHQ/phpdoc-parser'
+      && github.base_ref == github.event.repository.default_branch
+      && github.head_ref != 'release'
+    needs: [test, check-version-plan, check-renovate-version-plan]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          app-id: ${{ secrets.RC_BOT_APP_ID }}
+          private-key: ${{ secrets.RC_BOT_PRIVATE_KEY }}
+          permission-actions: write
+      - name: Trigger prerelease workflow
         env:
-          HEAD_REF: ${{ github.head_ref || github.ref_name }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH_NAME: ${{ github.head_ref }}
+          RUN_NUMBER: ${{ github.run_number }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
         run: |
-          preid="${HEAD_REF//\//-}".${{ github.run_number }}.${{ github.run_attempt }}
-          npm --no-git-tag-version version prerelease --preid="${preid}"
-          pnpm publish --no-git-checks --access public --tag development
-
-      - name: Publish (main)
-        if: github.repository == 'RightCapitalHQ/phpdoc-parser' && github.ref_name == github.event.repository.default_branch
-        run: |
-          git config --local user.email "npm-publisher@rightcapital.com"
-          git config --local user.name "GitHub Actions[bot]"
-          pnpm beachball publish --access public --yes -m 'chore(release): applying package updates'
+          gh workflow run release.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            -f prerelease=true \
+            -f "branch_name=${BRANCH_NAME}" \
+            -f "run_number=${RUN_NUMBER}" \
+            -f "run_attempt=${RUN_ATTEMPT}"

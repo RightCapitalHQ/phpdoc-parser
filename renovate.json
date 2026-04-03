@@ -7,11 +7,11 @@
   "automergeType": "pr",
   "platformAutomerge": true,
   "prCreation": "immediate",
-  "commitBody": "Beachball-bump-type: patch",
+  "commitBody": "Nx-version-bump: patch",
   "lockFileMaintenance": {
     "automerge": true,
     "enabled": true,
-    "commitBody": "Beachball-bump-type: none"
+    "commitBody": "Nx-version-bump: none"
   },
   "packageRules": [
     {
@@ -28,7 +28,7 @@
       "groupName": "DevDependencies",
       "groupSlug": "auto-merge-dev-dependencies-updates",
       "matchDepTypes": ["devDependencies"],
-      "commitBody": "Beachball-bump-type: none"
+      "commitBody": "Nx-version-bump: none"
     }
   ]
 }

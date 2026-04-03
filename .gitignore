@@ -63,3 +63,8 @@ dist/
 
 ### JetBrains development tool ###
 /.idea
+
+# nx
+/.nx/cache
+/.nx/workspace-data
+!/.nx/version-plans/

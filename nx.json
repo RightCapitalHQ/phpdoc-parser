@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "release": {
+    "projects": ["."],
+    "versionPlans": {
+      "ignorePatternsForPlanCheck": [
+        ".*ignore",
+        "prettier.config.*",
+        "eslint.config.*",
+        "babel.config.js",
+        ".pnpm-store/**",
+        ".vscode/**",
+        "pnpm-lock.yaml"
+      ]
+    },
+    "version": {
+      "preVersionCommand": "pnpm run build"
+    },
+    "git": {
+      "commit": true,
+      "tag": true,
+      "commitMessage": "chore(release): applying package updates"
+    },
+    "changelog": {
+      "projectChangelogs": {
+        "renderer": "scripts/changelog-renderer.cjs",
+        "createRelease": "github"
+      },
+      "workspaceChangelog": false
+    },
+    "releaseTag": {
+      "pattern": "v{version}"
+    }
+  }
+}

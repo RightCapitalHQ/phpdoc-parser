@@ -50,13 +50,13 @@ and Your commit message is following the spec of the Conventional Commits ( http
 
 ## Publishing and Changelog management
 
-we use [beachball](https://microsoft.github.io/beachball/) to automate the npm publishing and changelog. when you fire a PR. the only thing the contributor needs to take care is ensuring run
+We use [Nx Release](https://nx.dev/features/manage-releases) with version plans to automate npm publishing and changelog generation. When you open a PR, please run
 
 ```sh
 pnpm change
 ```
 
-to generate appropriate change file for us to bump the version and generate the changelog
+to generate a version plan file (under `.nx/version-plans/`) that describes the version bump and changelog entry.
 
 ## Issues and feature requests
 
