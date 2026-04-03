@@ -1,3 +1,14 @@
+## 0.6.2 (2026-04-03)
+
+### 🩹 Fixes
+
+- Migrate from beachball to Nx Release workflow. ([93e6cc8](https://github.com/RightCapitalHQ/phpdoc-parser/commit/93e6cc8))
+
+### ❤️ Thank You
+
+- Claude Opus 4.6 (1M context)
+- Jiahao Guo @frantic1048
+
 ### [0.6.1](https://github.com/RightCapitalHQ/phpdoc-parser/tree/@rightcapital/phpdoc-parser_v0.6.1) (2026-3-20)
 
 - chore(deps): update automerge non-major updates ([73a813c](https://github.com/RightCapitalHQ/phpdoc-parser/commit/73a813cc05612ab82966ce1e2b6a9b4b0228a4ab))
