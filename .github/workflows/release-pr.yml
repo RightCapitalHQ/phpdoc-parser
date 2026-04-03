@@ -1,0 +1,15 @@
+name: Release PR
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  create-release-pr:
+    uses: RightCapitalHQ/actions/.github/workflows/nx-release-pr.yml@nx-release-pr/v0.4.2
+    with:
+      release-branch: release
+      base: main
+      pr-title: 'chore(release): release packages'
+    secrets: inherit

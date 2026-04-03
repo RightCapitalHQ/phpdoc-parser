@@ -12,10 +12,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `pnpm run eslint` - Run ESLint linting
 - `pnpm run eslint:fix` - Run ESLint with auto-fix
 
+### Release
+
+- `pnpm run change` - Create a version plan (required for PRs with publishable changes)
+- `pnpm run check` - Check that a version plan exists (used in CI)
+- `pnpm run commit` - Interactive commit with conventional commit prompts
+
 ### Package Management
 
 - Uses pnpm as package manager (required, enforced by preinstall hook)
 - `pnpm install` - Install dependencies
+
+## Versioning
+
+- **Versioning**: Nx Release with version plans (markdown files in `.nx/version-plans/`)
+- **Workflow**: Create a `feature/*` branch, make changes, run `pnpm run change` to generate a version plan, open a PR to `main`
+- **Publishing**: Merging the auto-created Release PR (`release` → `main`) publishes to npm
+- **Conventional commits** are enforced via commitlint
 
 ## Architecture
 
