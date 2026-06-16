@@ -10,7 +10,9 @@
         "babel.config.js",
         ".pnpm-store/**",
         ".vscode/**",
-        "pnpm-lock.yaml"
+        "pnpm-lock.yaml",
+        "renovate.json",
+        "nx.json"
       ]
     },
     "version": {

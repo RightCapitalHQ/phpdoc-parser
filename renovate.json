@@ -1,8 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>RightCapitalHQ/renovate-config:library"],
-  "assignees": ["rainx"],
-  "reviewers": ["rainx"],
+  "assignees": ["frantic1048"],
+  "reviewers": ["frantic1048"],
   "labels": ["dependencies"],
   "automergeType": "pr",
   "platformAutomerge": true,
