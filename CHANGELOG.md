@@ -1,3 +1,13 @@
+## 0.6.3 (2026-11-16)
+
+### 🩹 Fixes
+
+- Fix the release pipeline so `dist/` is built before publishing; 0.6.2 was published without compiled output. ([e627649](https://github.com/RightCapitalHQ/phpdoc-parser/commit/e627649))
+
+### ❤️ Thank You
+
+- Jiahao Guo @frantic1048
+
 ## 0.6.2 (2026-04-03)
 
 ### 🩹 Fixes
