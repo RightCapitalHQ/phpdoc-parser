@@ -33,5 +33,10 @@
     "releaseTag": {
       "pattern": "v{version}"
     }
+  },
+  "targetDefaults": {
+    "nx-release-publish": {
+      "dependsOn": ["build"]
+    }
   }
 }
